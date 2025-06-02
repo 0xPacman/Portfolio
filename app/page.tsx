@@ -32,6 +32,12 @@ import {
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+  HardDrive,
+  Rocket,
+  TrendingUp,
+} from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
 
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
@@ -270,7 +276,7 @@ export default function Portfolio() {
                 <div className="relative inline-block">
                   <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-full blur-lg opacity-50 animate-pulse"></div>
                   <img
-                    src="/media/PDP.jpg"
+                    src="https://raw.githubusercontent.com/0xPacman/Portfolio/main/public/media/PDP.jpg"
                     alt="Ahmed Jadani - 0xPacman"
                     width={200}
                     height={200}
