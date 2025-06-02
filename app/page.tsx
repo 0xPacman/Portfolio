@@ -1,6 +1,5 @@
 "use client"
 
-import React from "react"
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -32,7 +31,18 @@ import {
   TrendingUp,
 } from "lucide-react"
 import Image from "next/image"
-import Link from "next/link"
+import Link from                   <div className="flex flex-wrap gap-2">
+                    {project.technologies.map((tech, techIndex) => (
+                      <div key={techIndex}>
+                        <Badge
+                          variant="outline"
+                          className={`${isDarkMode ? "border-yellow-400/40 text-yellow-300 bg-yellow-500/10" : "border-yellow-500/50 text-yellow-700 bg-yellow-400/20"} hover:${isDarkMode ? "bg-yellow-500/20" : "bg-yellow-400/30"} transition-colors`}
+                        >
+                          {tech}
+                        </Badge>
+                      </div>
+                    ))}
+                  </div>
 
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
