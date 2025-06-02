@@ -269,7 +269,7 @@ export default function Portfolio() {
               <div className="mb-8">
                 <div className="relative inline-block">
                   <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-full blur-lg opacity-50 animate-pulse"></div>
-                  <Image
+                  <img
                     src="/media/PDP.jpg"
                     alt="Ahmed Jadani - 0xPacman"
                     width={200}
