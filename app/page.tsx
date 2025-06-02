@@ -32,12 +32,6 @@ import {
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-  HardDrive,
-  Rocket,
-  TrendingUp,
-} from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
 
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
