@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import React from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -31,26 +31,15 @@ import {
   TrendingUp,
 } from "lucide-react"
 import Image from "next/image"
-import Link from                   <div className="flex flex-wrap gap-2">
-                    {project.technologies.map((tech, techIndex) => (
-                      <div key={techIndex}>
-                        <Badge
-                          variant="outline"
-                          className={`${isDarkMode ? "border-yellow-400/40 text-yellow-300 bg-yellow-500/10" : "border-yellow-500/50 text-yellow-700 bg-yellow-400/20"} hover:${isDarkMode ? "bg-yellow-500/20" : "bg-yellow-400/30"} transition-colors`}
-                        >
-                          {tech}
-                        </Badge>
-                      </div>
-                    ))}
-                  </div>
+import Link from "next/link"
 
 export default function Portfolio() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [activeSection, setActiveSection] = useState("home")
-  const [isDarkMode, setIsDarkMode] = useState(true)
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false)
+  const [activeSection, setActiveSection] = React.useState("home")
+  const [isDarkMode, setIsDarkMode] = React.useState(true)
   
   // Effect to update document class when theme changes
-  useEffect(() => {
+  React.useEffect(() => {
     if (isDarkMode) {
       document.documentElement.classList.add('dark')
     } else {
@@ -58,7 +47,7 @@ export default function Portfolio() {
     }
   }, [isDarkMode])
 
-  useEffect(() => {
+  React.useEffect(() => {
     const handleScroll = () => {
       const sections = ["home", "about", "skills", "projects", "contact"]
       const scrollPosition = window.scrollY + 100
@@ -585,13 +574,14 @@ export default function Portfolio() {
 
                   <div className="flex flex-wrap gap-2 mb-6">
                     {project.technologies.map((tech, techIndex) => (
-                      <Badge
-                        key={techIndex}
-                        variant="outline"
-                        className={`${isDarkMode ? "border-yellow-400/40 text-yellow-300 bg-yellow-500/10" : "border-yellow-500/50 text-yellow-700 bg-yellow-400/20"} hover:${isDarkMode ? "bg-yellow-500/20" : "bg-yellow-400/30"} transition-colors`}
-                      >
-                        {tech}
-                      </Badge>
+                      <span key={techIndex}>
+                        <Badge
+                          variant="outline"
+                          className={`${isDarkMode ? "border-yellow-400/40 text-yellow-300 bg-yellow-500/10" : "border-yellow-500/50 text-yellow-700 bg-yellow-400/20"} hover:${isDarkMode ? "bg-yellow-500/20" : "bg-yellow-400/30"} transition-colors`}
+                        >
+                          {tech}
+                        </Badge>
+                      </span>
                     ))}
                   </div>
 

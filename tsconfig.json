@@ -4,7 +4,7 @@
     "allowJs": true,
     "target": "ES2017",
     "skipLibCheck": true,
-    "strict": false,
+    "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
