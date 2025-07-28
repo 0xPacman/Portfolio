@@ -40,13 +40,13 @@ const projects = [
   {
     title: "PasswordGEN - Secure Password Generator",
     description:
-      "GigaChad Password Generator - A robust command-line tool for generating cryptographically secure passwords with customizable length, character sets, and entropy options.",
-    technologies: ["Shell", "Cryptography", "Security", "CLI", "Random Generation"],
-    link: "https://github.com/0xPacman/PasswordGEN",
+      "GigaChad Password Generator - A robust password generator available both as web application and command-line tool. Features cryptographically secure password generation with customizable length, character sets, and entropy options. Now accessible online for instant use.",
+    technologies: ["Web", "Shell", "JavaScript", "Cryptography", "Security", "CLI"],
+    link: "https://0xpacman.github.io/PasswordGEN/",
     github: "https://github.com/0xPacman/PasswordGEN",
     image: "https://plus.unsplash.com/premium_photo-1681487746049-c39357159f69?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     featured: false,
-    metrics: { security: "High", entropy: "Max", cli: "Fast" },
+    metrics: { security: "High", entropy: "Max", platform: "Dual" },
   },
   {
     title: "GITscript - Git Automation Tool",
