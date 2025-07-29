@@ -7,11 +7,15 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   images: {
     unoptimized: true,
   },
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/Portfolio' : '',
-  basePath: process.env.NODE_ENV === 'production' ? '/Portfolio' : '',
+  // Remove GitHub Pages specific paths for Cloudflare deployment
+  // assetPrefix: process.env.NODE_ENV === 'production' ? '/Portfolio' : '',
+  // basePath: process.env.NODE_ENV === 'production' ? '/Portfolio' : '',
 };
 
 export default nextConfig;

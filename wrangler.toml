@@ -1,0 +1,19 @@
+# Cloudflare Pages configuration
+name = "ahmed-jadani-portfolio"
+compatibility_date = "2024-07-29"
+compatibility_flags = ["nodejs_compat"]
+
+[env.production]
+compatibility_flags = ["nodejs_compat"]
+
+[env.preview] 
+compatibility_flags = ["nodejs_compat"]
+
+# Build configuration for Next.js
+[build]
+command = "pnpm run build"
+publish = "out"
+
+# Environment variables (if needed)
+[vars]
+NODE_ENV = "production"
