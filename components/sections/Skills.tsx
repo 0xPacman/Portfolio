@@ -41,58 +41,54 @@ export const Skills = ({ isDarkMode, skillsRef }: SkillsProps) => {
   const textAccent = "text-amber-500 dark:text-amber-400"
 
   return (
-    <section id="skills" ref={skillsRef} className="py-20 px-4 sm:px-6 lg:px-8 relative z-10">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className={`text-4xl sm:text-5xl font-bold ${textPrimary} mb-6`}>Technical Expertise</h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-yellow-500 to-yellow-600 mx-auto mb-6"></div>
-          <p className={`${textSecondary} max-w-2xl mx-auto text-lg`}>
-            Mastery across private cloud infrastructure, public cloud platforms, and enterprise data center operations
-          </p>
-        </div>
-
-        <Card className={`${cardClasses} shadow-2xl`}>
-          <CardContent className="p-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {skills.map((skill, index) => (
-                <div key={index} className="group" ref={skillRefs.current[index]}>
-                  <Card
-                    className={`${isDarkMode ? "bg-black/20" : "bg-white/40"} backdrop-blur-sm ${isDarkMode ? "border-yellow-400/20" : "border-yellow-500/30"} shadow-xl transition-all duration-300 ${isDarkMode ? "hover:bg-black/30" : "hover:bg-white/50"}`}
-                  >
-                    <CardContent className="p-6">
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center">
-                          <skill.icon
-                            size={24}
-                            className={`${textAccent} mr-3 group-hover:scale-110 transition-transform`}
-                          />
-                          <div>
-                            <h3 className={`font-semibold ${textPrimary} text-sm`}>{skill.name}</h3>
-                            <Badge
-                              variant="secondary"
-                              className={`text-xs mt-1 ${isDarkMode ? "bg-yellow-500/20 text-yellow-300" : "bg-yellow-400/30 text-yellow-700"} border-0`}
-                            >
-                              {skill.category}
-                            </Badge>
-                          </div>
-                        </div>
-                        <div className={`${textAccent} font-bold text-sm`}>{skill.level}%</div>
-                      </div>
-                      <div className={`w-full ${isDarkMode ? "bg-gray-800/50" : "bg-gray-200/50"} rounded-full h-2`}>
-                        <div
-                          className="skill-bar bg-gradient-to-r from-yellow-500 to-yellow-600 h-2 rounded-full"
-                          data-level={skill.level}
-                          style={{ width: `0%` }}
-                        ></div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+    <div className="space-y-8">
+      <div className="text-center mb-12">
+        <h2 className={`text-3xl font-bold ${textPrimary} mb-4`}>Technical Expertise</h2>
+        <p className={`${textSecondary} max-w-2xl mx-auto`}>
+          Mastery across private cloud infrastructure, public cloud platforms, and enterprise data center operations
+        </p>
       </div>
-    </section>
+
+      <div className="grid gap-4">
+        {skills.map((skill, index) => {
+          const Icon = skill.icon
+          return (
+            <div ref={skillRefs.current[index]} key={index}>
+              <Card className={`${cardClasses} shadow-lg hover:shadow-xl transition-all duration-300 group`}>
+                <CardContent className="p-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-4 flex-1">
+                      <div className={`p-2 rounded-lg ${isDarkMode ? "bg-yellow-500/20" : "bg-yellow-400/30"}`}>
+                        <Icon className={`${textAccent}`} size={20} />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex justify-between items-center mb-2">
+                          <h3 className={`font-semibold ${textPrimary}`}>{skill.name}</h3>
+                          <Badge variant="secondary" className={`${isDarkMode ? "bg-yellow-500/20 text-yellow-300" : "bg-yellow-400/30 text-yellow-700"} border-0 text-xs`}>
+                            {skill.category}
+                          </Badge>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <div className={`flex-1 h-2 rounded-full ${isDarkMode ? "bg-gray-700" : "bg-gray-200"}`}>
+                            <div
+                              className="skill-bar h-full bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-full transition-all duration-1000 ease-out"
+                              data-level={skill.level}
+                              style={{ width: "0%" }}
+                            />
+                          </div>
+                          <span className={`text-sm font-medium ${textAccent} min-w-[3rem] text-right`}>
+                            {skill.level}%
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          )
+        })}
+      </div>
+    </div>
   )
 }

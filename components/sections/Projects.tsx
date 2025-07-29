@@ -73,80 +73,89 @@ export const Projects = ({ isDarkMode, projectsRef }: ProjectsProps) => {
   const textAccent = "text-amber-500 dark:text-amber-400"
 
   return (
-    <section id="projects" ref={projectsRef} className="py-20 px-4 sm:px-6 lg:px-8 relative z-10">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className={`text-4xl sm:text-5xl font-bold ${textPrimary} mb-6`}>Featured Projects</h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-yellow-500 to-yellow-600 mx-auto mb-6"></div>
-          <p className={`${textSecondary} max-w-2xl mx-auto text-lg`}>
-            Showcasing real projects from my GitHub portfolio demonstrating systems programming, automation tools, and security solutions
-          </p>
-        </div>
+    <div className="space-y-8">
+      <div className="text-center mb-12">
+        <h2 className={`text-3xl font-bold ${textPrimary} mb-4`}>Featured Projects</h2>
+        <p className={`${textSecondary} max-w-2xl mx-auto`}>
+          Showcasing real projects demonstrating systems programming, automation tools, and security solutions
+        </p>
+      </div>
 
-        <div className="grid lg:grid-cols-2 gap-8">
-          {projects.map((project, index) => (
-            <div ref={projectRefs.current[index]} key={index}>
+      <div className="grid gap-6">
+        {projects.map((project, index) => (
+          <div ref={projectRefs.current[index]} key={index}>
             <Card
-              className={`group hover:shadow-3xl transition-all duration-300 hover:scale-105 ${
+              className={`group hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] ${
                 project.featured
-                  ? `${isDarkMode ? "bg-gradient-to-br from-black/50 to-yellow-900/20" : "bg-gradient-to-br from-white/70 to-yellow-100/50"} backdrop-blur-md ${isDarkMode ? "border-yellow-400/40" : "border-yellow-500/50"}`
+                  ? `${isDarkMode ? "bg-gradient-to-r from-black/60 to-yellow-900/30" : "bg-gradient-to-r from-white/80 to-yellow-100/60"} backdrop-blur-md ${isDarkMode ? "border-yellow-400/50" : "border-yellow-500/60"}`
                   : cardClasses
-              } shadow-2xl h-full flex flex-col`}
+              } shadow-xl`}
             >
-              <div className="relative overflow-hidden rounded-t-lg">
-                <Image
-                  src={project.image || "/placeholder.svg"}
-                  alt={project.title}
-                  width={400}
-                  height={200}
-                  className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
-                />
-                {project.featured && (
-                  <Badge className="absolute top-4 right-4 bg-gradient-to-r from-yellow-500 to-yellow-600 text-black border-0 shadow-lg">
-                    <Star className="mr-2" size={16} />
-                    Featured
-                  </Badge>
-                )}
-              </div>
-              <CardHeader className="flex-grow">
-                <CardTitle className={`${textPrimary} text-xl`}>{project.title}</CardTitle>
-                <CardDescription className={`${textSecondary} mt-2 text-sm`}>{project.description}</CardDescription>
-              </CardHeader>
-              <CardContent className="flex-grow">
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.technologies.map((tech, i) => (
-                    <Badge key={i} variant="secondary" className={`${isDarkMode ? "bg-yellow-500/20 text-yellow-300" : "bg-yellow-400/30 text-yellow-700"} border-0`}>
-                      {tech}
-                    </Badge>
-                  ))}
-                </div>
-                <div className={`grid grid-cols-3 gap-4 text-center p-4 rounded-lg ${isDarkMode ? "bg-black/20" : "bg-white/40"}`}>
-                  {Object.entries(project.metrics).map(([key, value]) => (
-                    <div key={key}>
-                      <p className={`font-bold text-lg ${textAccent}`}>{value}</p>
-                      <p className={`text-xs ${textSecondary} capitalize`}>{key}</p>
+              <div className="p-6">
+                <div className="flex gap-6">
+                  {/* Project Image */}
+                  <div className="relative flex-shrink-0 w-32 h-32 overflow-hidden rounded-xl">
+                    <Image
+                      src={project.image || "/placeholder.svg"}
+                      alt={project.title}
+                      width={128}
+                      height={128}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    />
+                    {project.featured && (
+                      <Badge className="absolute top-2 right-2 bg-gradient-to-r from-yellow-500 to-yellow-600 text-black border-0 text-xs">
+                        <Star className="mr-1" size={12} />
+                        Featured
+                      </Badge>
+                    )}
+                  </div>
+
+                  {/* Project Content */}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex justify-between items-start mb-3">
+                      <h3 className={`text-xl font-semibold ${textPrimary} line-clamp-1`}>{project.title}</h3>
+                      <div className="flex gap-2 ml-4">
+                        <Link href={project.link} target="_blank">
+                          <Button variant="outline" size="sm" className={`${isDarkMode ? "border-yellow-400/50 hover:bg-yellow-400/10" : "border-yellow-500/50 hover:bg-yellow-500/10"} ${textPrimary}`}>
+                            <ExternalLink size={14} className="mr-1" />
+                            Demo
+                          </Button>
+                        </Link>
+                        <Link href={project.github} target="_blank">
+                          <Button variant="ghost" size="sm" className={`${textSecondary} hover:text-yellow-500`}>
+                            <Github size={16} />
+                          </Button>
+                        </Link>
+                      </div>
                     </div>
-                  ))}
+
+                    <p className={`${textSecondary} text-sm mb-4 line-clamp-2`}>{project.description}</p>
+
+                    {/* Technologies */}
+                    <div className="flex flex-wrap gap-1 mb-4">
+                      {project.technologies.map((tech, i) => (
+                        <Badge key={i} variant="secondary" className={`${isDarkMode ? "bg-yellow-500/20 text-yellow-300" : "bg-yellow-400/30 text-yellow-700"} border-0 text-xs`}>
+                          {tech}
+                        </Badge>
+                      ))}
+                    </div>
+
+                    {/* Metrics */}
+                    <div className={`grid grid-cols-3 gap-3 text-center p-3 rounded-lg ${isDarkMode ? "bg-black/20" : "bg-white/40"}`}>
+                      {Object.entries(project.metrics).map(([key, value]) => (
+                        <div key={key}>
+                          <p className={`font-bold text-sm ${textAccent}`}>{value}</p>
+                          <p className={`text-xs ${textSecondary} capitalize`}>{key}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-              </CardContent>
-              <div className="p-6 pt-0 flex justify-between items-center">
-                <Link href={project.link} target="_blank">
-                  <Button variant="outline" className={`${isDarkMode ? "border-yellow-400/50 hover:bg-yellow-400/10" : "border-yellow-500/50 hover:bg-yellow-500/10"} ${textPrimary}`}>
-                    <ExternalLink size={16} className="mr-2" />
-                    Live Demo
-                  </Button>
-                </Link>
-                <Link href={project.github} target="_blank">
-                  <Button variant="ghost" className={`${textSecondary} hover:text-white`}>
-                    <Github size={20} />
-                  </Button>
-                </Link>
               </div>
             </Card>
-            </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
-    </section>
+    </div>
   )
 }
