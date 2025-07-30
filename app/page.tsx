@@ -21,13 +21,16 @@ import {
   ExternalLink,
   MapPin,
   Building2,
-  Zap
+  Zap,
+  Menu,
+  X
 } from "lucide-react"
 import Link from "next/link"
 
 export default function Portfolio() {
   const [activeSection, setActiveSection] = React.useState("about")
   const [isDarkMode, setIsDarkMode] = React.useState(true)
+  const [isSidebarOpen, setIsSidebarOpen] = React.useState(false)
 
   const aboutRef = React.useRef<HTMLDivElement>(null)
   const skillsRef = React.useRef<HTMLDivElement>(null)
@@ -46,8 +49,30 @@ export default function Portfolio() {
     }
   }, [isDarkMode])
 
+  // Close sidebar when clicking outside on mobile
+  React.useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (isSidebarOpen && window.innerWidth < 1024) {
+        const sidebar = document.getElementById('sidebar')
+        const toggleButton = document.getElementById('sidebar-toggle')
+        if (sidebar && toggleButton && 
+            !sidebar.contains(event.target as Node) && 
+            !toggleButton.contains(event.target as Node)) {
+          setIsSidebarOpen(false)
+        }
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [isSidebarOpen])
+
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode)
+  }
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen)
   }
 
   const menuItems = [
@@ -90,6 +115,27 @@ export default function Portfolio() {
 
   return (
     <div className={`min-h-screen ${bgClasses} relative overflow-hidden transition-all duration-500`}>
+      {/* Mobile Sidebar Toggle Button */}
+      <Button
+        id="sidebar-toggle"
+        variant="ghost"
+        size="icon"
+        onClick={toggleSidebar}
+        className={`fixed top-4 left-4 z-50 lg:hidden ${textSecondary} hover:text-yellow-500 transition-colors ${
+          isDarkMode ? 'bg-black/40 backdrop-blur-xl' : 'bg-white/60 backdrop-blur-xl'
+        } border border-yellow-500/20`}
+      >
+        {isSidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+      </Button>
+
+      {/* Mobile Overlay */}
+      {isSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-30 lg:hidden transition-opacity duration-300"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div
@@ -112,9 +158,17 @@ export default function Portfolio() {
       </div>
 
       {/* Main Layout */}
-      <div className="flex h-screen">
+      <div className="flex h-screen lg:static">
         {/* Sidebar */}
-        <div className={`w-80 ${sidebarClasses} border-r shadow-2xl flex flex-col relative z-20`}>
+        <div 
+          id="sidebar"
+          className={`
+            fixed lg:static inset-y-0 left-0 z-40
+            w-80 ${sidebarClasses} border-r shadow-2xl flex flex-col
+            transform transition-transform duration-300 ease-in-out
+            ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+          `}
+        >
           {/* Header/Profile Section */}
           <div className="p-8 border-b border-yellow-500/20">
             <div className="flex items-center justify-between mb-6">
@@ -186,7 +240,13 @@ export default function Portfolio() {
                 return (
                   <button
                     key={item.id}
-                    onClick={() => setActiveSection(item.id)}
+                    onClick={() => {
+                      setActiveSection(item.id)
+                      // Close sidebar on mobile after selection
+                      if (window.innerWidth < 1024) {
+                        setIsSidebarOpen(false)
+                      }
+                    }}
                     className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all duration-300 group ${
                       isActive
                         ? `bg-gradient-to-r from-yellow-500 to-yellow-600 text-black shadow-lg shadow-yellow-500/30 transform scale-105`
@@ -221,10 +281,10 @@ export default function Portfolio() {
         </div>
 
         {/* Main Content Area */}
-        <div className="flex-1 overflow-auto">
-          <div className="h-full p-8">
+        <div className="flex-1 overflow-auto lg:ml-0">
+          <div className="h-full p-4 md:p-8 pt-16 lg:pt-8">
             <Card className={`h-full ${contentClasses} border shadow-2xl`}>
-              <CardContent className="p-8 h-full overflow-auto">
+              <CardContent className="p-4 md:p-8 h-full overflow-auto">
                 <div className="max-w-5xl mx-auto">
                   {renderContent()}
                 </div>
