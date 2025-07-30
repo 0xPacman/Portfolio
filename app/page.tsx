@@ -1,7 +1,6 @@
 "use client"
 
 import React from "react"
-import { useGsapFloatingShapes } from "@/components/gsap-floating-shapes"
 import { About } from "@/components/sections/About"
 import { Skills } from "@/components/sections/Skills"
 import { Projects } from "@/components/sections/Projects"
@@ -37,8 +36,6 @@ export default function Portfolio() {
   const shape1 = React.useRef<HTMLDivElement>(null)
   const shape2 = React.useRef<HTMLDivElement>(null)
   const shape3 = React.useRef<HTMLDivElement>(null)
-
-  useGsapFloatingShapes([shape1, shape2, shape3])
 
   // Effect to update document class when theme changes
   React.useEffect(() => {
@@ -97,15 +94,15 @@ export default function Portfolio() {
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div
           ref={shape1}
-          className={`absolute -top-40 -right-40 w-96 h-96 ${isDarkMode ? "bg-yellow-500/10" : "bg-yellow-400/20"} rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-pulse`}
+          className={`absolute -top-40 -right-40 w-96 h-96 ${isDarkMode ? "bg-yellow-500/10" : "bg-yellow-400/20"} rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-float-1`}
         />
         <div
           ref={shape2}
-          className={`absolute -bottom-40 -left-40 w-96 h-96 ${isDarkMode ? "bg-yellow-600/10" : "bg-yellow-500/20"} rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-pulse animation-delay-2000`}
+          className={`absolute -bottom-40 -left-40 w-96 h-96 ${isDarkMode ? "bg-yellow-600/10" : "bg-yellow-500/20"} rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-float-2`}
         />
         <div
           ref={shape3}
-          className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 ${isDarkMode ? "bg-yellow-400/5" : "bg-yellow-300/15"} rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-pulse animation-delay-4000`}
+          className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 ${isDarkMode ? "bg-yellow-400/5" : "bg-yellow-300/15"} rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-float-3`}
         />
         
         {/* Geometric shapes */}
@@ -122,7 +119,7 @@ export default function Portfolio() {
           <div className="p-8 border-b border-yellow-500/20">
             <div className="flex items-center justify-between mb-6">
               <Avatar className="w-16 h-16 ring-2 ring-yellow-500/50">
-                <AvatarImage src="/placeholder-user.jpg" alt="Ahmed Jadani" />
+                <AvatarImage src="/media/PDP.jpg" alt="Ahmed Jadani" />
                 <AvatarFallback className="bg-yellow-500 text-black font-bold text-xl">AJ</AvatarFallback>
               </Avatar>
               <Button
@@ -170,7 +167,7 @@ export default function Portfolio() {
             {/* Quick Stats */}
             <div className="grid grid-cols-2 gap-4 mt-6">
               <div className={`text-center p-3 rounded-lg ${isDarkMode ? "bg-yellow-500/10" : "bg-yellow-400/20"}`}>
-                <div className={`text-lg font-bold ${textAccent}`}>5+</div>
+                <div className={`text-lg font-bold ${textAccent}`}>3+</div>
                 <div className={`text-xs ${textSecondary}`}>Years Exp</div>
               </div>
               <div className={`text-center p-3 rounded-lg ${isDarkMode ? "bg-yellow-500/10" : "bg-yellow-400/20"}`}>

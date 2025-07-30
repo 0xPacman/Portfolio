@@ -157,3 +157,54 @@ html {
 .pulse-yellow {
   animation: pulse-yellow 2s ease-in-out infinite;
 }
+
+/* Skill bar animation fallback */
+.skill-bar {
+  transition: width 2s ease-out;
+  will-change: width;
+}
+
+/* Floating animations for background shapes */
+@keyframes float1 {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(30px, -30px) rotate(90deg); }
+  50% { transform: translate(-20px, -50px) rotate(180deg); }
+  75% { transform: translate(-40px, 20px) rotate(270deg); }
+}
+
+@keyframes float2 {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(-25px, 40px) rotate(-90deg); }
+  50% { transform: translate(35px, 30px) rotate(-180deg); }
+  75% { transform: translate(15px, -25px) rotate(-270deg); }
+}
+
+@keyframes float3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(20px, -20px) scale(1.1); }
+}
+
+.animate-float-1 {
+  animation: float1 6s ease-in-out infinite;
+}
+
+.animate-float-2 {
+  animation: float2 8s ease-in-out infinite;
+}
+
+.animate-float-3 {
+  animation: float3 4s ease-in-out infinite;
+}
+
+/* Animation delays for staggered effect */
+.animation-delay-1000 {
+  animation-delay: 1s;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}

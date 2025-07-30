@@ -1,10 +1,10 @@
 'use client'
 
 import React from "react"
+import { motion } from "framer-motion"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Cloud, Server, Shield, Code, Monitor, Building2, HardDrive } from "lucide-react"
-import { useGsapSkillsAnimation } from "@/components/gsap-skills-animation";
+import { Cloud, Server, Shield, Code, Monitor, Building2, HardDrive, Zap } from "lucide-react"
 
 interface SkillsProps {
   isDarkMode: boolean
@@ -12,83 +12,174 @@ interface SkillsProps {
 }
 
 const skills = [
-  { name: "Oracle", icon: Cloud, level: 90, category: "Public Cloud" },
-  { name: "Azure", icon: Cloud, level: 90, category: "Public Cloud" },
-  { name: "Google Cloud", icon: Cloud, level: 85, category: "Public Cloud" },
-  { name: "Dell VxRail", icon: Server, level: 98, category: "Infrastructure" },
-  { name: "VMware", icon: Server, level: 95, category: "Virtualization" },
-  { name: "Nutanix", icon: Server, level: 87, category: "Virtualization" },
-  { name: "OpenStack", icon: Cloud, level: 88, category: "Private Cloud" },
-  { name: "Kubernetes", icon: Server, level: 84, category: "Orchestration" },
-  { name: "Docker", icon: Server, level: 95, category: "Containers" },
-  { name: "Scripting", icon: Code, level: 90, category: "Code" },
-  { name: "Ansible", icon: Code, level: 88, category: "Automation" },
-  { name: "Data Center", icon: Building2, level: 86, category: "Infrastructure" },
-  { name: "NSX", icon: Shield, level: 90, category: "Network and Security" },
-  { name: "Veeam B&R", icon: HardDrive, level: 90, category: "Storage" },
-  { name: "Monitoring Tools", icon: Monitor, level: 92, category: "Observability" },
+  { name: "Oracle Cloud", icon: Cloud, level: 90, category: "Public Cloud", color: "from-red-500 to-orange-500" },
+  { name: "Microsoft Azure", icon: Cloud, level: 90, category: "Public Cloud", color: "from-blue-500 to-cyan-500" },
+  { name: "Google Cloud", icon: Cloud, level: 85, category: "Public Cloud", color: "from-green-500 to-emerald-500" },
+  { name: "Dell VxRail", icon: Server, level: 98, category: "Infrastructure", color: "from-purple-500 to-violet-500" },
+  { name: "VMware vSphere", icon: Server, level: 95, category: "Virtualization", color: "from-indigo-500 to-blue-500" },
+  { name: "Nutanix", icon: Server, level: 87, category: "HCI", color: "from-pink-500 to-rose-500" },
+  { name: "OpenStack", icon: Cloud, level: 88, category: "Private Cloud", color: "from-teal-500 to-cyan-500" },
+  { name: "Kubernetes", icon: Server, level: 84, category: "Orchestration", color: "from-yellow-500 to-orange-500" },
+  { name: "Docker", icon: Server, level: 95, category: "Containers", color: "from-blue-600 to-blue-400" },
+  { name: "DevOps & Scripting", icon: Code, level: 90, category: "Automation", color: "from-green-600 to-green-400" },
+  { name: "Ansible", icon: Code, level: 88, category: "Config Mgmt", color: "from-red-600 to-red-400" },
+  { name: "VMware NSX", icon: Shield, level: 90, category: "Network Security", color: "from-orange-500 to-red-500" },
+  { name: "Veeam Backup", icon: HardDrive, level: 90, category: "Data Protection", color: "from-emerald-500 to-teal-500" },
+  { name: "Monitoring Stack", icon: Monitor, level: 92, category: "Observability", color: "from-violet-500 to-purple-500" },
 ]
 
-export const Skills = ({ isDarkMode, skillsRef }: SkillsProps) => {
-  const skillRefs = React.useRef<React.RefObject<HTMLDivElement>[]>(skills.map(() => React.createRef()));
-  useGsapSkillsAnimation(skillRefs.current);
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.2
+    }
+  }
+}
 
-  const cardClasses = isDarkMode
-    ? "bg-black/40 backdrop-blur-md border-yellow-500/30"
-    : "bg-white/60 backdrop-blur-md border-yellow-400/40"
+const cardVariants = {
+  hidden: { 
+    opacity: 0, 
+    y: 50,
+    scale: 0.9
+  },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    scale: 1,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 15,
+      duration: 0.6
+    }
+  },
+  hover: {
+    scale: 1.05,
+    y: -5,
+    transition: {
+      type: "spring",
+      stiffness: 300,
+      damping: 20
+    }
+  }
+}
+
+const progressVariants = {
+  hidden: { width: 0 },
+  visible: (level: number) => ({
+    width: `${level}%`,
+    transition: {
+      duration: 1.5,
+      ease: "easeOut",
+      delay: 0.5
+    }
+  })
+}
+
+export const Skills = ({ isDarkMode, skillsRef }: SkillsProps) => {
   const textPrimary = "text-foreground"
   const textSecondary = "text-muted-foreground"
-  const textAccent = "text-amber-500 dark:text-amber-400"
 
   return (
-    <div className="space-y-8">
-      <div className="text-center mb-12">
-        <h2 className={`text-3xl font-bold ${textPrimary} mb-4`}>Technical Expertise</h2>
-        <p className={`${textSecondary} max-w-2xl mx-auto`}>
-          Mastery across private cloud infrastructure, public cloud platforms, and enterprise data center operations
+    <div className="space-y-8" ref={skillsRef}>
+      {/* Header */}
+      <motion.div 
+        className="text-center mb-12"
+        initial={{ opacity: 0, y: -30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <h2 className={`text-4xl font-bold ${textPrimary} mb-4 bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent`}>
+          Technical Expertise
+        </h2>
+        <p className={`${textSecondary} max-w-3xl mx-auto text-lg`}>
+          Mastery across cloud platforms, virtualization, and enterprise infrastructure with hands-on experience in Morocco's leading data center
         </p>
-      </div>
+      </motion.div>
 
-      <div className="grid gap-4">
+      {/* Skills Grid */}
+      <motion.div 
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
         {skills.map((skill, index) => {
           const Icon = skill.icon
           return (
-            <div ref={skillRefs.current[index]} key={index}>
-              <Card className={`${cardClasses} shadow-lg hover:shadow-xl transition-all duration-300 group`}>
-                <CardContent className="p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4 flex-1">
-                      <div className={`p-2 rounded-lg ${isDarkMode ? "bg-yellow-500/20" : "bg-yellow-400/30"}`}>
-                        <Icon className={`${textAccent}`} size={20} />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex justify-between items-center mb-2">
-                          <h3 className={`font-semibold ${textPrimary}`}>{skill.name}</h3>
-                          <Badge variant="secondary" className={`${isDarkMode ? "bg-yellow-500/20 text-yellow-300" : "bg-yellow-400/30 text-yellow-700"} border-0 text-xs`}>
-                            {skill.category}
-                          </Badge>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <div className={`flex-1 h-2 rounded-full ${isDarkMode ? "bg-gray-700" : "bg-gray-200"}`}>
-                            <div
-                              className="skill-bar h-full bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-full transition-all duration-1000 ease-out"
-                              data-level={skill.level}
-                              style={{ width: "0%" }}
-                            />
-                          </div>
-                          <span className={`text-sm font-medium ${textAccent} min-w-[3rem] text-right`}>
-                            {skill.level}%
-                          </span>
-                        </div>
-                      </div>
+            <motion.div
+              key={skill.name}
+              variants={cardVariants}
+              whileHover="hover"
+              className="group"
+            >
+              <Card className={`h-full ${isDarkMode 
+                ? "bg-black/40 border-yellow-500/20 hover:border-yellow-400/40" 
+                : "bg-white/60 border-yellow-400/30 hover:border-yellow-500/50"
+              } backdrop-blur-md shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden relative`}>
+                
+                {/* Animated background gradient */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${skill.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
+                
+                <CardContent className="p-6 relative z-10">
+                  {/* Icon and Category */}
+                  <div className="flex items-center justify-between mb-4">
+                    <div className={`p-3 rounded-xl bg-gradient-to-br ${skill.color} shadow-lg`}>
+                      <Icon className="text-white" size={24} />
                     </div>
+                    <Badge 
+                      variant="secondary" 
+                      className={`${isDarkMode 
+                        ? "bg-yellow-500/20 text-yellow-300 border-yellow-400/30" 
+                        : "bg-yellow-400/30 text-yellow-700 border-yellow-500/40"
+                      } font-medium`}
+                    >
+                      {skill.category}
+                    </Badge>
+                  </div>
+
+                  {/* Skill Name */}
+                  <h3 className={`font-bold text-lg ${textPrimary} mb-4 group-hover:text-yellow-500 transition-colors`}>
+                    {skill.name}
+                  </h3>
+
+                  {/* Progress Bar */}
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className={`text-sm font-medium ${textSecondary}`}>Proficiency</span>
+                      <span className={`text-sm font-bold text-yellow-500`}>{skill.level}%</span>
+                    </div>
+                    
+                    <div className={`h-3 rounded-full overflow-hidden ${isDarkMode ? "bg-gray-700" : "bg-gray-200"}`}>
+                      <motion.div
+                        className={`h-full bg-gradient-to-r ${skill.color} rounded-full relative`}
+                        variants={progressVariants}
+                        custom={skill.level}
+                        initial="hidden"
+                        animate="visible"
+                      >
+                        {/* Shine effect */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 transform translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-1000" />
+                      </motion.div>
+                    </div>
+                  </div>
+
+                  {/* Experience indicator */}
+                  <div className="flex items-center mt-4 pt-4 border-t border-yellow-500/20">
+                    <Zap className="text-yellow-500 mr-2" size={16} />
+                    <span className={`text-xs ${textSecondary}`}>
+                      {skill.level >= 95 ? "Expert Level" : skill.level >= 85 ? "Advanced" : "Proficient"}
+                    </span>
                   </div>
                 </CardContent>
               </Card>
-            </div>
+            </motion.div>
           )
         })}
-      </div>
+      </motion.div>
     </div>
   )
 }

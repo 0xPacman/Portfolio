@@ -1,47 +1,116 @@
 import React from "react";
-import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 export function useGsapSkillsAnimation(skillRefs: React.RefObject<HTMLDivElement>[]) {
-  useGSAP(() => {
-    skillRefs.forEach((skillRef) => {
+  const [gsap, setGsap] = React.useState<any>(null);
+  const [ScrollTrigger, setScrollTrigger] = React.useState<any>(null);
+
+  React.useEffect(() => {
+    let mounted = true;
+
+    // Dynamic import GSAP only on client side
+    const loadGSAP = async () => {
+      try {
+        const gsapModule = await import('gsap');
+        const scrollTriggerModule = await import('gsap/ScrollTrigger');
+        
+        if (!mounted) return;
+        
+        const gsapInstance = gsapModule.gsap;
+        const ScrollTriggerInstance = scrollTriggerModule.ScrollTrigger;
+        
+        gsapInstance.registerPlugin(ScrollTriggerInstance);
+        
+        setGsap(gsapInstance);
+        setScrollTrigger(ScrollTriggerInstance);
+      } catch (error) {
+        console.warn('Failed to load GSAP:', error);
+      }
+    };
+
+    loadGSAP();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  React.useEffect(() => {
+    if (!gsap || !ScrollTrigger || skillRefs.length === 0) return;
+
+    const animations: any[] = [];
+
+    skillRefs.forEach((skillRef, index) => {
       if (!skillRef.current) return;
 
       const skillBar = skillRef.current.querySelector(".skill-bar") as HTMLDivElement;
-      const skillLevel = skillBar.dataset.level;
+      if (!skillBar) return;
+      
+      const skillLevel = skillBar.getAttribute("data-level");
+      if (!skillLevel) return;
 
-      if (skillBar && skillLevel) {
-        gsap.fromTo(skillBar, 
-          { width: "0%" }, 
-          {
-            width: `${skillLevel}%`,
-            duration: 1.5,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: skillRef.current,
-              start: "top 80%",
-              toggleActions: "play none none none",
-            }
-          }
-        );
-      }
+      // Set initial state
+      gsap.set(skillBar, { width: "0%" });
+
+      // Create animation
+      const animation = gsap.to(skillBar, {
+        width: `${skillLevel}%`,
+        duration: 1.5,
+        ease: "power3.out",
+        delay: index * 0.1,
+        scrollTrigger: {
+          trigger: skillRef.current,
+          start: "top 85%",
+          end: "bottom 15%",
+          toggleActions: "play none none none",
+        }
+      });
+
+      animations.push(animation);
 
       // Hover effect
       const card = skillRef.current;
-      const tl = gsap.timeline({ paused: true });
-      tl.to(card, { scale: 1.05, duration: 0.3, ease: "power2.out" })
-        .to(card, { boxShadow: "0px 10px 30px rgba(255, 215, 0, 0.3)", duration: 0.3 }, "-=0.3");
+      let hoverAnimation: any;
 
-      card.addEventListener("mouseenter", () => tl.play());
-      card.addEventListener("mouseleave", () => tl.reverse());
+      const handleMouseEnter = () => {
+        hoverAnimation = gsap.to(card, { 
+          scale: 1.02, 
+          duration: 0.3, 
+          ease: "power2.out" 
+        });
+      };
 
-      return () => {
-        card.removeEventListener("mouseenter", () => tl.play());
-        card.removeEventListener("mouseleave", () => tl.reverse());
-      }
+      const handleMouseLeave = () => {
+        if (hoverAnimation) {
+          hoverAnimation.reverse();
+        }
+      };
+
+      card.addEventListener("mouseenter", handleMouseEnter);
+      card.addEventListener("mouseleave", handleMouseLeave);
+
+      // Store cleanup function
+      animations.push(() => {
+        card.removeEventListener("mouseenter", handleMouseEnter);
+        card.removeEventListener("mouseleave", handleMouseLeave);
+        if (hoverAnimation) {
+          hoverAnimation.kill();
+        }
+      });
     });
-  }, { dependencies: [skillRefs] });
+
+    // Cleanup function
+    return () => {
+      animations.forEach((item) => {
+        if (typeof item === 'function') {
+          item(); // Execute cleanup function
+        } else if (item && item.kill) {
+          item.kill(); // Kill GSAP animation
+        }
+      });
+      
+      if (ScrollTrigger) {
+        ScrollTrigger.refresh();
+      }
+    };
+  }, [gsap, ScrollTrigger, skillRefs]);
 }

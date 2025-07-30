@@ -22,9 +22,6 @@ export const About: React.FC<AboutProps> = ({ isDarkMode, aboutRef }) => {
     <div className="space-y-8">
       <div className="text-center mb-12">
         <h2 className={`text-3xl font-bold ${textPrimary} mb-4`}>About Me</h2>
-        <p className={`${textSecondary} max-w-2xl mx-auto`}>
-          Cloud Infrastructure Engineer passionate about building scalable, secure cloud solutions
-        </p>
       </div>
 
       <div className="space-y-6">
@@ -34,7 +31,7 @@ export const About: React.FC<AboutProps> = ({ isDarkMode, aboutRef }) => {
             <div className="relative">
               <div className="w-48 h-48 rounded-2xl overflow-hidden border-4 border-yellow-500/30 shadow-2xl shadow-yellow-500/30">
                 <Image
-                  src="/placeholder-user.jpg"
+                  src="/media/PDP.jpg"
                   alt="Ahmed Jadani"
                   width={192}
                   height={192}
@@ -93,6 +90,7 @@ export const About: React.FC<AboutProps> = ({ isDarkMode, aboutRef }) => {
             <CardContent className="p-4 text-center">
               <div className={`text-3xl font-bold ${textPrimary} mb-2`}>3+</div>
               <div className={`${textSecondary} text-sm`}>Years Experience</div>
+              <div className={`${textSecondary} text-xs mt-1 opacity-75`}>(+5 years in total IT experience)</div>
               <Star className={`mx-auto mt-2 ${textAccent}`} size={20} />
             </CardContent>
           </Card>
