@@ -40,7 +40,7 @@ const projects = [
     category: "Security Tool",
     tech: ["Bash", "Web", "CLI", "Cryptography"],
     links: {
-      demo: "https://0xpacman.github.io/PasswordGEN/",
+      demo: "https://password.0xpacman.com",
       github: "https://github.com/0xPacman/PasswordGEN"
     },
     features: ["Strong Entropy", "Multi-platform", "Open Source", "Security Focused"],
@@ -49,7 +49,7 @@ const projects = [
     status: "Live"
   },
   {
-    title: "Atlas Cloud Infrastructure",
+    title: "Atlas Cloud Services Infrastructure",
     description: "Contributing as Cloud Infrastructure Engineer to Morocco's premier cloud infrastructure serving 100+ enterprises with 99.9% uptime using VMware, Dell VxRail, and multi-cloud orchestration.",
     image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     category: "Enterprise Cloud",
@@ -111,7 +111,7 @@ const projects = [
   {
     title: "Network Security Stack",
     description: "Implemented comprehensive network security using VMware NSX, including micro-segmentation, DFW policies, and automated threat response for enterprise environments.",
-    image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    image: "https://plus.unsplash.com/premium_photo-1683836722479-411e30b8b6e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     category: "Network Security",
     tech: ["VMware NSX", "Security", "Micro-segmentation", "Automation"],
     links: {
