@@ -34,6 +34,21 @@ interface ProjectLink {
 
 const projects = [
   {
+    title: "Paste",
+    description: "Simple and secure pastebin service for sharing code snippets and text. Clean interface with syntax highlighting and expiration options for enhanced privacy.",
+    image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    category: "Web Service",
+    tech: ["Web", "Pastebin", "Privacy", "Code Sharing"],
+    links: {
+      demo: "https://paste.0xpacman.com",
+      github: "https://github.com/0xPacman/Paste"
+    },
+    features: ["Syntax Highlighting", "Privacy Focused", "Clean UI", "Secure Sharing"],
+    icon: Code,
+    gradient: "from-teal-500 to-cyan-500",
+    status: "Live"
+  },
+  {
     title: "PasswordGEN",
     description: "Simple password generator. Features both web interface and CLI tool for maximum security.",
     image: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
