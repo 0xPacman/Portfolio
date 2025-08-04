@@ -26,6 +26,7 @@ const skills = [
   { name: "VMware NSX", icon: Shield, level: 90, category: "Network Security", color: "from-orange-500 to-red-500" },
   { name: "Veeam Backup", icon: HardDrive, level: 90, category: "Data Protection", color: "from-emerald-500 to-teal-500" },
   { name: "Monitoring Stack", icon: Monitor, level: 92, category: "Observability", color: "from-violet-500 to-purple-500" },
+  { name: "ITIL", icon: Building2, level: 85, category: "Management", color: "from-slate-500 to-gray-500" },
 ]
 
 const containerVariants = {
