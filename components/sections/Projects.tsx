@@ -49,6 +49,21 @@ const projects = [
     status: "Live"
   },
   {
+    title: "ColorGuesser",
+    description: "Interactive color guessing game that challenges players to identify colors. Features scoring system, and sleek modern interface.",
+    image: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    category: "Web Game",
+    tech: ["JavaScript", "CSS3", "Game Logic", "Interactive UI"],
+    links: {
+      demo: "https://colorguesser.0xpacman.com",
+      github: "https://github.com/0xPacman/ColorGuesser"
+    },
+    features: ["Multiple players", "Score Tracking", "Color Theory", "Responsive Design"],
+    icon: Zap,
+    gradient: "from-pink-500 to-rose-500",
+    status: "Live"
+  },
+  {
     title: "PasswordGEN",
     description: "Simple password generator. Features both web interface and CLI tool for maximum security.",
     image: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
@@ -208,7 +223,7 @@ export function Projects({ isDarkMode, projectsRef }: ProjectsProps) {
             Featured Projects
           </Badge>
           <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent mb-6">
-            My Portfolio
+            My Projects
           </h2>
           <p className={`text-lg max-w-2xl mx-auto ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
             Discover my latest projects showcasing expertise in cloud infrastructure, security tools, 
