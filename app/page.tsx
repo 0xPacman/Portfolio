@@ -270,10 +270,10 @@ export default function Portfolio() {
               <div className={`p-4 rounded-xl ${isDarkMode ? "bg-yellow-500/5" : "bg-yellow-400/10"} border border-yellow-500/20`}>
                 <div className="flex items-center gap-2 mb-2">
                   <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                  <span className={`text-sm font-medium ${textPrimary}`}>Available for Projects</span>
+                  <span className={`text-sm font-medium ${textPrimary}`}>Available for consulting</span>
                 </div>
                 <p className={`text-xs ${textSecondary}`}>
-                  Open to cloud infrastructure consulting and exciting collaborations
+                  Open to cloud & infrastructure consulting and exciting collaborations
                 </p>
               </div>
             </div>

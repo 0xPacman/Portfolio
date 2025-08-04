@@ -20,7 +20,7 @@ const skills = [
   { name: "Nutanix", icon: Server, level: 87, category: "HCI", color: "from-pink-500 to-rose-500" },
   { name: "OpenStack", icon: Cloud, level: 88, category: "Private Cloud", color: "from-teal-500 to-cyan-500" },
   { name: "Kubernetes", icon: Server, level: 84, category: "Orchestration", color: "from-yellow-500 to-orange-500" },
-  { name: "Docker", icon: Server, level: 95, category: "Containers", color: "from-blue-600 to-blue-400" },
+  { name: "Docker & Podman", icon: Server, level: 95, category: "Containers", color: "from-blue-600 to-blue-400" },
   { name: "DevOps & Scripting", icon: Code, level: 90, category: "Automation", color: "from-green-600 to-green-400" },
   { name: "Ansible", icon: Code, level: 88, category: "Config Mgmt", color: "from-red-600 to-red-400" },
   { name: "VMware NSX", icon: Shield, level: 90, category: "Network Security", color: "from-orange-500 to-red-500" },
