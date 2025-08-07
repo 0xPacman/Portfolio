@@ -114,7 +114,30 @@ export default function Portfolio() {
   }
 
   return (
-    <div className={`min-h-screen ${bgClasses} relative overflow-hidden transition-all duration-500`}>
+    <div 
+      className={`min-h-screen ${bgClasses} relative overflow-hidden transition-all duration-500`}
+      itemScope
+      itemType="https://schema.org/WebPage"
+    >
+      {/* Structured data for the page */}
+      <div itemProp="mainEntity" itemScope itemType="https://schema.org/Person" style={{ display: 'none' }}>
+        <meta itemProp="name" content="Ahmed Jadani" />
+        <meta itemProp="alternateName" content="Pacman" />
+        <meta itemProp="jobTitle" content="Cloud Infrastructure Engineer" />
+        <meta itemProp="description" content="Cloud Infrastructure Engineer specializing in enterprise-grade infrastructure, VMware technologies, and scalable cloud solutions." />
+        <meta itemProp="url" content="https://0xpacman.github.io/Portfolio" />
+        <meta itemProp="image" content="https://0xpacman.github.io/Portfolio/media/PDP.jpg" />
+        <div itemProp="address" itemScope itemType="https://schema.org/PostalAddress">
+          <meta itemProp="addressLocality" content="Benguerir" />
+          <meta itemProp="addressCountry" content="Morocco" />
+        </div>
+        <div itemProp="worksFor" itemScope itemType="https://schema.org/Organization">
+          <meta itemProp="name" content="Atlas Cloud Services" />
+          <meta itemProp="url" content="https://atlascs.ma" />
+        </div>
+        <meta itemProp="sameAs" content="https://github.com/0xPacman" />
+        <meta itemProp="sameAs" content="https://linkedin.com/in/0xpacman" />
+      </div>
       {/* Mobile Sidebar Toggle Button */}
       <Button
         id="sidebar-toggle"

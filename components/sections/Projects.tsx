@@ -202,7 +202,11 @@ export function Projects({ isDarkMode, projectsRef }: ProjectsProps) {
     <section
       ref={projectsRef}
       className="py-20 px-4 relative overflow-hidden"
+      itemScope
+      itemType="https://schema.org/ItemList"
     >
+      <meta itemProp="name" content="Ahmed Jadani's Projects" />
+      <meta itemProp="description" content="Collection of projects showcasing expertise in cloud infrastructure, security tools, web development, and system administration" />
       {/* Background Elements */}
       <div className="absolute inset-0 -z-10">
         <div className={`absolute top-20 left-10 w-72 h-72 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full blur-3xl animate-pulse ${isDarkMode ? 'opacity-30' : 'opacity-20'}`} />
@@ -250,7 +254,20 @@ export function Projects({ isDarkMode, projectsRef }: ProjectsProps) {
                   transition: { duration: 0.2 }
                 }}
                 className="group"
+                itemProp="itemListElement"
+                itemScope
+                itemType="https://schema.org/SoftwareApplication"
               >
+                <meta itemProp="name" content={project.title} />
+                <meta itemProp="description" content={project.description} />
+                <meta itemProp="applicationCategory" content={project.category} />
+                <meta itemProp="operatingSystem" content="Web Browser" />
+                {project.links.demo && <meta itemProp="url" content={project.links.demo} />}
+                {project.links.github && <meta itemProp="codeRepository" content={project.links.github} />}
+                <div itemProp="author" itemScope itemType="https://schema.org/Person" style={{ display: 'none' }}>
+                  <meta itemProp="name" content="Ahmed Jadani" />
+                  <meta itemProp="url" content="https://0xpacman.github.io/Portfolio" />
+                </div>
                 <Card className={`h-full overflow-hidden border-0 shadow-lg ${
                   isDarkMode 
                     ? 'bg-gray-800/50 backdrop-blur-sm hover:bg-gray-700/60' 

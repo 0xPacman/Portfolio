@@ -85,7 +85,14 @@ export const Skills = ({ isDarkMode, skillsRef }: SkillsProps) => {
   const textSecondary = "text-muted-foreground"
 
   return (
-    <div className="space-y-8" ref={skillsRef}>
+    <div 
+      className="space-y-8" 
+      ref={skillsRef}
+      itemScope 
+      itemType="https://schema.org/ItemList"
+    >
+      <meta itemProp="name" content="Ahmed Jadani's Technical Skills" />
+      <meta itemProp="description" content="Technical expertise and proficiency levels across cloud platforms, virtualization, and enterprise infrastructure" />
       {/* Header */}
       <motion.div 
         className="text-center mb-12"
@@ -116,7 +123,12 @@ export const Skills = ({ isDarkMode, skillsRef }: SkillsProps) => {
               variants={cardVariants}
               whileHover="hover"
               className="group"
+              itemProp="itemListElement"
+              itemScope
+              itemType="https://schema.org/Thing"
             >
+              <meta itemProp="name" content={skill.name} />
+              <meta itemProp="description" content={`${skill.level}% proficiency in ${skill.name} - ${skill.category}`} />
               <Card className={`h-full ${isDarkMode 
                 ? "bg-black/40 border-yellow-500/20 hover:border-yellow-400/40" 
                 : "bg-white/60 border-yellow-400/30 hover:border-yellow-500/50"

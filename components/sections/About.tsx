@@ -19,7 +19,7 @@ export const About: React.FC<AboutProps> = ({ isDarkMode, aboutRef }) => {
   const textAccent = "text-amber-500 dark:text-amber-400"
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8" itemScope itemType="https://schema.org/Person">
       <div className="text-center mb-12">
         <h2 className={`text-3xl font-bold ${textPrimary} mb-4`}>About Me</h2>
       </div>
@@ -36,6 +36,7 @@ export const About: React.FC<AboutProps> = ({ isDarkMode, aboutRef }) => {
                   width={192}
                   height={192}
                   className="w-full h-full object-cover"
+                  itemProp="image"
                 />
               </div>
               {/* Yellow glow effect */}
@@ -44,12 +45,14 @@ export const About: React.FC<AboutProps> = ({ isDarkMode, aboutRef }) => {
           </div>
           
           <div className="flex-1 text-center lg:text-left">
-            <h3 className={`text-2xl font-bold ${textPrimary} mb-3`}>Ahmed Jadani</h3>
-            <p className={`${textAccent} text-lg font-semibold mb-4`}>Cloud Infrastructure Engineer</p>
-            <p className={`${textSecondary} leading-relaxed`}>
+            <h3 className={`text-2xl font-bold ${textPrimary} mb-3`} itemProp="name">Ahmed Jadani</h3>
+            <meta itemProp="alternateName" content="Pacman" />
+            <p className={`${textAccent} text-lg font-semibold mb-4`} itemProp="jobTitle">Cloud Infrastructure Engineer</p>
+            <p className={`${textSecondary} leading-relaxed`} itemProp="description">
               Passionate about building scalable, secure cloud solutions and driving digital transformation 
               through innovative infrastructure design and automation.
             </p>
+            <meta itemProp="url" content="https://0xpacman.github.io/Portfolio" />
           </div>
         </div>
 
@@ -60,7 +63,10 @@ export const About: React.FC<AboutProps> = ({ isDarkMode, aboutRef }) => {
               Atlas Cloud Services Journey
             </h3>
             <p className={`${textSecondary} mb-4 leading-relaxed`}>
-              As a Cloud Infrastructure Engineer at <span className={textAccent}>Atlas Cloud Services</span>,
+              As a Cloud Infrastructure Engineer at <span className={textAccent} itemProp="worksFor" itemScope itemType="https://schema.org/Organization">
+                <span itemProp="name">Atlas Cloud Services</span>
+                <meta itemProp="url" content="https://atlascs.ma" />
+              </span>,
               Morocco's leading data center and public cloud provider, I architect and manage enterprise-grade
               infrastructure serving clients across Morocco.
             </p>
@@ -71,14 +77,29 @@ export const About: React.FC<AboutProps> = ({ isDarkMode, aboutRef }) => {
             </p>
             
             <div className="grid grid-cols-2 gap-4 mt-6">
-              <div className={`flex items-center ${textSecondary}`}>
+              <div className={`flex items-center ${textSecondary}`} itemProp="address" itemScope itemType="https://schema.org/PostalAddress">
                 <MapPin size={20} className={`${textAccent} mr-3`} />
-                <span>Benguerir, Morocco</span>
+                <span>
+                  <span itemProp="addressLocality">Benguerir</span>, <span itemProp="addressCountry">Morocco</span>
+                </span>
               </div>
               <div className={`flex items-center ${textSecondary}`}>
                 <Zap size={20} className={`${textAccent} mr-3`} />
                 <span>Available for consulting</span>
               </div>
+            </div>
+            
+            {/* Hidden schema data */}
+            <div style={{ display: 'none' }}>
+              <meta itemProp="sameAs" content="https://github.com/0xPacman" />
+              <meta itemProp="sameAs" content="https://linkedin.com/in/0xpacman" />
+              <meta itemProp="knowsAbout" content="Cloud Infrastructure" />
+              <meta itemProp="knowsAbout" content="VMware" />
+              <meta itemProp="knowsAbout" content="OpenStack" />
+              <meta itemProp="knowsAbout" content="Network Security" />
+              <meta itemProp="knowsAbout" content="System Administration" />
+              <meta itemProp="knowsAbout" content="DevOps" />
+              <meta itemProp="knowsAbout" content="Web Development" />
             </div>
           </CardContent>
         </Card>
@@ -89,7 +110,7 @@ export const About: React.FC<AboutProps> = ({ isDarkMode, aboutRef }) => {
           >
             <CardContent className="p-4 text-center">
               <div className={`text-3xl font-bold ${textPrimary} mb-2`}>3+</div>
-              <div className={`${textSecondary} text-sm`}>Years Experience</div>
+              <div className={`${textSecondary} text-sm`}>Years of Professional Experience</div>
               <div className={`${textSecondary} text-xs mt-1 opacity-75`}>(+5 years in total IT experience)</div>
               <Star className={`mx-auto mt-2 ${textAccent}`} size={20} />
             </CardContent>

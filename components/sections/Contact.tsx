@@ -10,7 +10,7 @@ interface ContactProps {
   contactRef: React.RefObject<HTMLDivElement>
 }
 
-export const Contact: React.FC<ContactProps> = ({ isDarkMode, contactRef }) => {
+export const Contact: React.FC<ContactProps> = ({ isDarkMode, contactRef }: ContactProps) => {
   const cardClasses = isDarkMode
     ? "bg-black/40 backdrop-blur-md border-yellow-500/30"
     : "bg-white/60 backdrop-blur-md border-yellow-400/40"
@@ -19,7 +19,13 @@ export const Contact: React.FC<ContactProps> = ({ isDarkMode, contactRef }) => {
   const textAccent = "text-amber-500 dark:text-amber-400"
 
   return (
-    <div className="space-y-8">
+    <div 
+      className="space-y-8"
+      itemScope
+      itemType="https://schema.org/ContactPage"
+    >
+      <meta itemProp="name" content="Contact Ahmed Jadani" />
+      <meta itemProp="description" content="Get in touch with Ahmed Jadani for cloud consulting, infrastructure projects, or professional collaboration opportunities" />
       <div className="text-center mb-12">
         <h2 className={`text-3xl font-bold ${textPrimary} mb-4`}>Let's Connect</h2>
         <p className={`${textSecondary} max-w-2xl mx-auto`}>
@@ -42,29 +48,42 @@ export const Contact: React.FC<ContactProps> = ({ isDarkMode, contactRef }) => {
           <div className="space-y-4">
             <div
               className={`flex items-center p-4 rounded-lg ${isDarkMode ? "bg-yellow-500/10" : "bg-yellow-400/20"} backdrop-blur-sm transition-all duration-300 hover:scale-105`}
+              itemProp="contactPoint"
+              itemScope
+              itemType="https://schema.org/ContactPoint"
             >
+              <meta itemProp="contactType" content="customer service" />
               <Mail size={20} className={`${textAccent} mr-4`} />
               <div>
-                <div className={`${textPrimary} font-medium`}>ahmed.jadani@atlascs.ma</div>
+                <div className={`${textPrimary} font-medium`} itemProp="email">ahmed.jadani@atlascs.ma</div>
                 <div className={`${textSecondary} text-sm`}>Professional inquiries</div>
               </div>
             </div>
             <div
               className={`flex items-center p-4 rounded-lg ${isDarkMode ? "bg-yellow-500/10" : "bg-yellow-400/20"} backdrop-blur-sm transition-all duration-300 hover:scale-105`}
+              itemProp="contactPoint"
+              itemScope
+              itemType="https://schema.org/ContactPoint"
             >
+              <meta itemProp="contactType" content="customer service" />
               <Phone size={20} className={`${textAccent} mr-4`} />
               <div>
-                <div className={`${textPrimary} font-medium`}>+212 708 429 995</div>
+                <div className={`${textPrimary} font-medium`} itemProp="telephone">+212 708 429 995</div>
                 <div className={`${textSecondary} text-sm`}>Available 9 AM - 6 PM GMT+1</div>
               </div>
             </div>
             <div
               className={`flex items-center p-4 rounded-lg ${isDarkMode ? "bg-yellow-500/10" : "bg-yellow-400/20"} backdrop-blur-sm transition-all duration-300 hover:scale-105`}
+              itemProp="address"
+              itemScope
+              itemType="https://schema.org/PostalAddress"
             >
               <Building2 size={20} className={`${textAccent} mr-4`} />
               <div>
-                <div className={`${textPrimary} font-medium`}>Atlas Cloud Services</div>
-                <div className={`${textSecondary} text-sm`}>Benguerir, Morocco</div>
+                <div className={`${textPrimary} font-medium`} itemProp="name">Atlas Cloud Services</div>
+                <div className={`${textSecondary} text-sm`}>
+                  <span itemProp="addressLocality">Benguerir</span>, <span itemProp="addressCountry">Morocco</span>
+                </div>
               </div>
             </div>
           </div>
