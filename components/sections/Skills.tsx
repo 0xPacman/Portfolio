@@ -54,14 +54,14 @@ const groups: SkillGroup[] = [
     { name: 'Veeam Backup', icon: HardDrive, level: 90, color: 'from-emerald-500 to-teal-500', certified: true },
   ]},
   { key: 'observability', title: 'Monitoring & Observability', description: 'Telemetry, analytics & operational insights.', icon: Monitor, items: [
-    { name: 'Zabbix', icon: Monitor, level: 82, color: 'from-violet-500 to-purple-500' },
-    { name: 'VMware Aria Operations™', icon: Monitor, level: 85, color: 'from-blue-500 to-indigo-500' },
+    { name: 'Zabbix', icon: Monitor, level: 72, color: 'from-violet-500 to-purple-500' },
+    { name: 'VMware Aria Operations™', icon: Monitor, level: 90, color: 'from-blue-500 to-indigo-500' },
     { name: 'VMware Aria Operations™ for Logs', icon: Monitor, level: 83, color: 'from-cyan-500 to-teal-500' },
     { name: 'VMware Aria Operations™ for Networks', icon: Monitor, level: 76, color: 'from-teal-500 to-cyan-500' },
   ]},
   { key: 'governance', title: 'Management & Governance', description: 'Process frameworks enabling service maturity.', icon: Building2, items: [
-    { name: 'ITIL', icon: Building2, level: 85, color: 'from-slate-500 to-gray-500', certified: true },
-    { name: 'FinOps', icon: Building2, level: 60, color: 'from-amber-500 to-yellow-500' },
+    { name: 'ITIL', icon: Building2, level: 65, color: 'from-slate-500 to-gray-500', certified: true },
+    { name: 'FinOps', icon: Building2, level: 55, color: 'from-amber-500 to-yellow-500' },
   ]},
 ]
 
