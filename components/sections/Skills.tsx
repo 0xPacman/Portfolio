@@ -19,6 +19,7 @@ const groups: SkillGroup[] = [
     { name: 'C', icon: Code, level: 94, color: 'from-sky-500 to-blue-500', certified: true },
     { name: 'C++', icon: Code, level: 72, color: 'from-indigo-500 to-purple-500', certified: true },
     { name: 'Python', icon: Code, level: 84, color: 'from-yellow-500 to-orange-500', certified: true },
+  { name: 'TypeScript', icon: Code, level: 60, color: 'from-blue-400 to-sky-400' },
     { name: 'PowerShell', icon: Code, level: 80, color: 'from-blue-600 to-cyan-500' },
     { name: 'Bash', icon: Code, level: 93, color: 'from-emerald-500 to-teal-500', certified: true },
   ]},

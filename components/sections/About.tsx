@@ -2,7 +2,7 @@
 
 import React from "react"
 import { Card, CardContent } from "@/components/ui/card"
-import { Building2, MapPin, Zap, Star, Users, TrendingUp, HardDrive } from "lucide-react"
+import { Building2, MapPin, Zap, Star, Users, TrendingUp } from "lucide-react"
 import Image from "next/image"
 
 interface AboutProps {
@@ -10,7 +10,7 @@ interface AboutProps {
   aboutRef: React.RefObject<HTMLDivElement>
 }
 
-export const About: React.FC<AboutProps> = ({ isDarkMode, aboutRef }) => {
+export const About: React.FC<AboutProps> = ({ isDarkMode, aboutRef }: AboutProps) => {
   const cardClasses = isDarkMode
     ? "bg-black/40 backdrop-blur-md border-yellow-500/30"
     : "bg-white/60 backdrop-blur-md border-yellow-400/40"
@@ -140,9 +140,9 @@ export const About: React.FC<AboutProps> = ({ isDarkMode, aboutRef }) => {
             className={`${isDarkMode ? "bg-gradient-to-br from-yellow-500/20 to-yellow-400/10" : "bg-gradient-to-br from-yellow-400/30 to-yellow-300/20"} backdrop-blur-md ${isDarkMode ? "border-yellow-400/30" : "border-yellow-500/40"} shadow-xl hover:shadow-2xl transition-all duration-300`}
           >
             <CardContent className="p-4 text-center">
-              <div className={`text-3xl font-bold ${textPrimary} mb-2`}>1PB+</div>
-              <div className={`${textSecondary} text-sm`}>Data Managed</div>
-              <HardDrive className={`mx-auto mt-2 ${textAccent}`} size={20} />
+              <div className={`text-3xl font-bold ${textPrimary} mb-2`}>20+</div>
+              <div className={`${textSecondary} text-sm`}>Certifications & Specializations</div>
+              <Star className={`mx-auto mt-2 ${textAccent}`} size={20} />
             </CardContent>
           </Card>
         </div>

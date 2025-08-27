@@ -248,7 +248,7 @@ export default function Portfolio() {
                 <div className={`text-xs ${textSecondary}`}>Years Exp</div>
               </div>
               <div className={`text-center p-3 rounded-lg ${isDarkMode ? "bg-yellow-500/10" : "bg-yellow-400/20"}`}>
-                <div className={`text-lg font-bold ${textAccent}`}>15+</div>
+                <div className={`text-lg font-bold ${textAccent}`}>20+</div>
                 <div className={`text-xs ${textSecondary}`}>Technologies</div>
               </div>
             </div>
