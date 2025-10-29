@@ -65,7 +65,7 @@ export const About: React.FC<AboutProps> = ({ isDarkMode, aboutRef }: AboutProps
             <p className={`${textSecondary} mb-4 leading-relaxed`}>
               As a Cloud Infrastructure Engineer at <span className={textAccent} itemProp="worksFor" itemScope itemType="https://schema.org/Organization">
                 <span itemProp="name">Atlas Cloud Services</span>
-                <meta itemProp="url" content="https://atlascs.ma" />
+                <meta itemProp="url" content="https://0xpacman.com" />
               </span>,
               Morocco's leading data center and public cloud provider, I architect and manage enterprise-grade
               infrastructure serving clients across Morocco.

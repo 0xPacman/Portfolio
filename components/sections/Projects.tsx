@@ -30,6 +30,7 @@ interface ProjectLink {
   demo?: string | null
   visit?: string | null
   github?: string | null
+  visitLabel?: string
 }
 
 const projects = [
@@ -80,15 +81,16 @@ const projects = [
   },
   {
     title: "Atlas Cloud Services Infrastructure",
-    description: "Contributing as Cloud Infrastructure Engineer to Morocco's premier cloud infrastructure serving 100+ enterprises with 99.9% uptime using VMware, Dell VxRail, and multi-cloud orchestration.",
+    description: "Lead modernization for Morocco's premier cloud platform as the single point of contact, orchestrating VMware, Dell VxRail, and multi-cloud operations for 100+ enterprises.",
     image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     category: "Enterprise Cloud",
     tech: ["VMware", "Dell VxRail", "NSX", "vSphere"],
     links: {
-      visit: "https://atlascs.ma",
+      visit: "/#contact",
+      visitLabel: "Contact Me",
       github: null
     },
-    features: ["99.9% Uptime", "Multi-cloud", "Enterprise Grade", "24/7 Support"],
+    features: ["Modernization Lead", "Single Point of Contact", "Multi-cloud Strategy", "99.9% Uptime"],
     icon: Cloud,
     gradient: "from-blue-500 to-cyan-500",
     status: "Production"
@@ -245,6 +247,8 @@ export function Projects({ isDarkMode, projectsRef }: ProjectsProps) {
         >
           {projects.map((project, index) => {
             const Icon = project.icon
+            const visitHref = project.links.visit
+            const visitIsExternal = Boolean(visitHref && /^https?:/i.test(visitHref))
             return (
               <motion.div
                 key={index}
@@ -364,15 +368,19 @@ export function Projects({ isDarkMode, projectsRef }: ProjectsProps) {
                         </Button>
                       )}
 
-                      {project.links.visit && (
+                      {visitHref && (
                         <Button
                           asChild
                           size="sm"
                           className="flex-1 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white border-0"
                         >
-                          <Link href={project.links.visit} target="_blank">
+                          <Link
+                            href={visitHref}
+                            target={visitIsExternal ? "_blank" : undefined}
+                            rel={visitIsExternal ? "noopener noreferrer" : undefined}
+                          >
                             <ExternalLink className="w-4 h-4 mr-2" />
-                            Visit
+                            {project.links.visitLabel ?? "Visit"}
                           </Link>
                         </Button>
                       )}

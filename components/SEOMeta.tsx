@@ -68,7 +68,7 @@ export function SEOMeta({
       {/* Preconnect to important domains */}
       <link rel="preconnect" href="https://github.com" />
       <link rel="preconnect" href="https://linkedin.com" />
-      <link rel="preconnect" href="https://atlascs.ma" />
+      <link rel="preconnect" href="https://0xpacman.com" />
     </Head>
   )
 }

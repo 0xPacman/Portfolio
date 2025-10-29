@@ -129,9 +129,7 @@ export const Contact: React.FC<ContactProps> = ({ isDarkMode, contactRef }: Cont
                 <Link href="https://linkedin.com/in/0xpacman" className="group inline-flex items-center gap-2 px-3 py-2 rounded-md text-xs font-medium border border-amber-500/30 hover:border-amber-500/60 transition bg-amber-500/10 hover:bg-amber-500/20">
                   <Linkedin size={14} className="text-amber-500" /> LinkedIn
                 </Link>
-                <a href="https://atlascs.ma" target="_blank" className="group inline-flex items-center gap-2 px-3 py-2 rounded-md text-xs font-medium border border-amber-500/30 hover:border-amber-500/60 transition bg-amber-500/10 hover:bg-amber-500/20">
-                  <Globe size={14} className="text-amber-500" /> Company
-                </a>
+                
               </div>
             </CardContent>
           </Card>

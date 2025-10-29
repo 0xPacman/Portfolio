@@ -15,7 +15,7 @@ export const personSchema: Person = {
   worksFor: {
     '@type': 'Organization',
     name: 'Atlas Cloud Services',
-    url: 'https://atlascs.ma'
+    url: 'https://0xpacman.com'
   },
   address: {
     '@type': 'PostalAddress',
@@ -25,7 +25,7 @@ export const personSchema: Person = {
   sameAs: [
     'https://github.com/0xPacman',
     'https://linkedin.com/in/0xpacman',
-    'https://atlascs.ma'
+    'https://0xpacman.com'
   ],
   knowsAbout: [
     'Cloud Infrastructure',

@@ -133,7 +133,7 @@ export default function Portfolio() {
         </div>
         <div itemProp="worksFor" itemScope itemType="https://schema.org/Organization">
           <meta itemProp="name" content="Atlas Cloud Services" />
-          <meta itemProp="url" content="https://atlascs.ma" />
+          <meta itemProp="url" content="https://0xpacman.com" />
         </div>
         <meta itemProp="sameAs" content="https://github.com/0xPacman" />
         <meta itemProp="sameAs" content="https://linkedin.com/in/0xpacman" />
@@ -234,7 +234,7 @@ export default function Portfolio() {
                   <Linkedin className="h-5 w-5" />
                 </Button>
               </Link>
-              <Link href="https://atlascs.ma" target="_blank">
+              <Link href="https://0xpacman.com" target="_blank">
                 <Button variant="ghost" size="icon" className={`${textSecondary} hover:text-yellow-500`}>
                   <ExternalLink className="h-5 w-5" />
                 </Button>

@@ -89,7 +89,7 @@ export default function RootLayout({
         {/* Preconnect to external domains */}
         <link rel="preconnect" href="https://github.com" />
         <link rel="preconnect" href="https://linkedin.com" />
-        <link rel="preconnect" href="https://atlascs.ma" />
+        <link rel="preconnect" href="https://0xpacman.com" />
       </head>
       <body suppressHydrationWarning className="min-h-screen bg-background text-foreground antialiased">
         <ThemeProvider

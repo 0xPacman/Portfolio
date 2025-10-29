@@ -164,7 +164,7 @@ export const Hero: React.FC<HeroProps> = ({ isDarkMode, scrollToSection }) => {
                 } backdrop-blur-sm shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105`}
               >
                 <Link
-                  href="https://atlascs.ma"
+                  href="https://0xpacman.com"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
