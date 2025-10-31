@@ -5,21 +5,30 @@ import { motion } from "framer-motion"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { 
-  ExternalLink, 
-  Github, 
-  Cloud, 
-  Shield, 
-  Server, 
-  Users, 
-  Globe, 
+import {
+  ExternalLink,
+  Github,
+  Cloud,
+  Shield,
+  Server,
+  Users,
+  Globe,
   Star,
   Code,
   Zap,
-  Monitor
+  Monitor,
+  Mail
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription
+} from "@/components/ui/dialog"
 
 interface ProjectsProps {
   isDarkMode: boolean
@@ -31,9 +40,26 @@ interface ProjectLink {
   visit?: string | null
   github?: string | null
   visitLabel?: string
+  contactEmail?: string | null
+  contactLabel?: string
 }
 
-const projects = [
+type IconType = typeof Cloud
+
+interface Project {
+  title: string
+  description: string
+  image: string
+  category: string
+  tech: string[]
+  links: ProjectLink
+  features: string[]
+  icon: IconType
+  gradient: string
+  status: string
+}
+
+const projects: Project[] = [
   {
     title: "Paste",
     description: "Simple and secure pastebin service for sharing code snippets and text. Clean interface with syntax highlighting and expiration options for enhanced privacy.",
@@ -86,9 +112,10 @@ const projects = [
     category: "Enterprise Cloud",
     tech: ["VMware", "Dell VxRail", "NSX", "vSphere"],
     links: {
-      visit: "/#contact",
-      visitLabel: "Contact Me",
-      github: null
+      visit: null,
+      github: null,
+      contactEmail: "ahmed.jadani@atlascs.ma",
+      contactLabel: "Email Me"
     },
     features: ["Modernization Lead", "Single Point of Contact", "Multi-cloud Strategy", "99.9% Uptime"],
     icon: Cloud,
@@ -200,6 +227,19 @@ const itemVariants = {
 }
 
 export function Projects({ isDarkMode, projectsRef }: ProjectsProps) {
+  const [copiedEmail, setCopiedEmail] = React.useState<string | null>(null)
+
+  const handleCopyEmail = React.useCallback((email: string) => {
+    if (navigator?.clipboard) {
+      navigator.clipboard.writeText(email)
+        .then(() => {
+          setCopiedEmail(email)
+          setTimeout(() => setCopiedEmail(null), 1600)
+        })
+        .catch(() => {})
+    }
+  }, [])
+
   return (
     <section
       ref={projectsRef}
@@ -249,6 +289,7 @@ export function Projects({ isDarkMode, projectsRef }: ProjectsProps) {
             const Icon = project.icon
             const visitHref = project.links.visit
             const visitIsExternal = Boolean(visitHref && /^https?:/i.test(visitHref))
+            const contactEmail = project.links.contactEmail
             return (
               <motion.div
                 key={index}
@@ -324,7 +365,7 @@ export function Projects({ isDarkMode, projectsRef }: ProjectsProps) {
                     {/* Technologies */}
                     <div className="flex flex-wrap gap-2 mb-4">
                       {project.tech.slice(0, 3).map((tech, techIndex) => (
-                        <Badge 
+                        <Badge
                           key={techIndex}
                           variant="secondary"
                           className="text-xs px-2 py-1"
@@ -338,8 +379,6 @@ export function Projects({ isDarkMode, projectsRef }: ProjectsProps) {
                         </Badge>
                       )}
                     </div>
-
-                    {/* Features */}
                     <div className="mb-6">
                       <div className="grid grid-cols-2 gap-2">
                         {project.features.slice(0, 4).map((feature, featureIndex) => (
@@ -366,6 +405,53 @@ export function Projects({ isDarkMode, projectsRef }: ProjectsProps) {
                             Demo
                           </Link>
                         </Button>
+                      )}
+
+                      {contactEmail && (
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <Button
+                              size="sm"
+                              className="flex-1 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white border-0"
+                            >
+                              <Mail className="w-4 h-4 mr-2" />
+                              {project.links.contactLabel ?? 'Email Me'}
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className="max-w-sm">
+                            <DialogHeader>
+                              <DialogTitle>Email Ahmed Jadani</DialogTitle>
+                              <DialogDescription>
+                                Reach out directly for Atlas Cloud Services engagements or enterprise cloud consulting.
+                              </DialogDescription>
+                            </DialogHeader>
+                            <div className="flex items-start gap-3 rounded-md border border-border/60 bg-muted/30 p-3">
+                              <div className="flex h-10 w-10 items-center justify-center rounded-md bg-gradient-to-br from-amber-500 to-yellow-500 text-black">
+                                <Mail className="w-4 h-4" />
+                              </div>
+                              <div className="flex-1">
+                                <p className="text-sm font-medium text-foreground">{contactEmail}</p>
+                                <p className="text-xs text-muted-foreground mt-1">
+                                  This is the dedicated professional channel for Atlas Cloud Services inquiries.
+                                </p>
+                              </div>
+                            </div>
+                            <div className="flex flex-wrap gap-3 pt-2">
+                              <Button asChild size="sm" className="bg-gradient-to-r from-amber-500 to-yellow-500 text-black hover:from-amber-500/90 hover:to-yellow-500/90">
+                                <a href={`mailto:${contactEmail}`}>Compose Email</a>
+                              </Button>
+                              <Button
+                                type="button"
+                                size="sm"
+                                variant="outline"
+                                onClick={() => handleCopyEmail(contactEmail)}
+                                className="border-amber-500/50 text-amber-600 hover:bg-amber-500/10"
+                              >
+                                {copiedEmail === contactEmail ? 'Copied!' : 'Copy Email'}
+                              </Button>
+                            </div>
+                          </DialogContent>
+                        </Dialog>
                       )}
 
                       {visitHref && (

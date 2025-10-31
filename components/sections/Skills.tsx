@@ -24,14 +24,14 @@ const groups: SkillGroup[] = [
     { name: 'Bash', icon: Code, level: 93, color: 'from-emerald-500 to-teal-500', certified: true },
   ]},
   { key: 'cloud', title: 'Cloud & Infrastructure', description: 'Public & private cloud platforms, virtualization & hyperconverged infrastructure.', icon: Cloud, items: [
-    { name: 'Oracle Cloud', icon: Cloud, level: 90, color: 'from-red-500 to-orange-500' },
+    { name: 'Oracle Cloud', icon: Cloud, level: 90, color: 'from-red-500 to-orange-500', certified: true },
     { name: 'Azure', icon: Cloud, level: 90, color: 'from-blue-500 to-cyan-500' },
     { name: 'Google Cloud', icon: Cloud, level: 85, color: 'from-green-500 to-emerald-500' },
     { name: 'OpenStack', icon: Cloud, level: 88, color: 'from-teal-500 to-cyan-500' },
     { name: 'Harvester', icon: Cloud, level: 50, color: 'from-lime-500 to-emerald-500' },
     { name: 'Proxmox', icon: Cloud, level: 50, color: 'from-stone-500 to-neutral-400' },
-    { name: 'Dell VxRail', icon: Server, level: 98, color: 'from-purple-500 to-violet-500' },
-    { name: 'VMware vSphere', icon: Server, level: 95, color: 'from-indigo-500 to-blue-500' },
+    { name: 'Dell VxRail', icon: Server, level: 98, color: 'from-purple-500 to-violet-500', certified: true },
+    { name: 'VMware vSphere', icon: Server, level: 95, color: 'from-indigo-500 to-blue-500', certified: true },
     { name: 'Nutanix HCI (AOS/AHV)', icon: Server, level: 89, color: 'from-pink-500 to-rose-500', certified: true },
   ]},
   { key: 'containers', title: 'Containers & Orchestration', description: 'Image lifecycle, runtime & cluster scheduling.', icon: Server, items: [
@@ -41,11 +41,11 @@ const groups: SkillGroup[] = [
   ]},
   { key: 'automation', title: 'Automation & Configuration', description: 'Infrastructure as Code, provisioning & policy automation.', icon: Code, items: [
     { name: 'Terraform', icon: Code, level: 70, color: 'from-fuchsia-500 to-purple-500' },
-    { name: 'VMware Aria Automation', icon: Code, level: 60, color: 'from-indigo-500 to-violet-500' },
+    { name: 'VMware Aria Automation', icon: Code, level: 60, color: 'from-indigo-500 to-violet-500', certified: true },
     { name: 'Ansible', icon: Code, level: 88, color: 'from-red-600 to-red-400' },
   ]},
   { key: 'network', title: 'Network & Security', description: 'Virtual networking & perimeter / segmentation security.', icon: Shield, items: [
-    { name: 'VMware NSX', icon: Shield, level: 70, color: 'from-orange-500 to-red-500' },
+    { name: 'VMware NSX', icon: Shield, level: 70, color: 'from-orange-500 to-red-500', certified: true },
     { name: 'Cisco ASA', icon: Shield, level: 68, color: 'from-amber-500 to-orange-500' },
     { name: 'Fortinet Firewall', icon: Shield, level: 60, color: 'from-lime-500 to-green-500' },
   { name: 'Active Directory', icon: Shield, level: 92, color: 'from-indigo-500 to-indigo-300' },
@@ -56,9 +56,9 @@ const groups: SkillGroup[] = [
   ]},
   { key: 'observability', title: 'Monitoring & Observability', description: 'Telemetry, analytics & operational insights.', icon: Monitor, items: [
     { name: 'Zabbix', icon: Monitor, level: 72, color: 'from-violet-500 to-purple-500' },
-    { name: 'VMware Aria Operations™', icon: Monitor, level: 90, color: 'from-blue-500 to-indigo-500' },
-    { name: 'VMware Aria Operations™ for Logs', icon: Monitor, level: 83, color: 'from-cyan-500 to-teal-500' },
-    { name: 'VMware Aria Operations™ for Networks', icon: Monitor, level: 76, color: 'from-teal-500 to-cyan-500' },
+    { name: 'VMware Aria Operations™', icon: Monitor, level: 90, color: 'from-blue-500 to-indigo-500', certified: true },
+    { name: 'VMware Aria Operations™ for Logs', icon: Monitor, level: 83, color: 'from-cyan-500 to-teal-500', certified: true },
+    { name: 'VMware Aria Operations™ for Networks', icon: Monitor, level: 76, color: 'from-teal-500 to-cyan-500', certified: true },
   ]},
   { key: 'governance', title: 'Management & Governance', description: 'Process frameworks enabling service maturity.', icon: Building2, items: [
     { name: 'ITIL', icon: Building2, level: 65, color: 'from-slate-500 to-gray-500', certified: true },
