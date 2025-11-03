@@ -19,6 +19,7 @@ import {
   Sun, 
   Moon,
   ExternalLink,
+  Phone,
   MapPin,
   Building2,
   Zap,
@@ -234,9 +235,9 @@ export default function Portfolio() {
                   <Linkedin className="h-5 w-5" />
                 </Button>
               </Link>
-              <Link href="https://0xpacman.com" target="_blank">
+              <Link href="https://wa.me/212708429995" target="_blank">
                 <Button variant="ghost" size="icon" className={`${textSecondary} hover:text-yellow-500`}>
-                  <ExternalLink className="h-5 w-5" />
+                  <Phone className="h-5 w-5" />
                 </Button>
               </Link>
             </div>
