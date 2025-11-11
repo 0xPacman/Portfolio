@@ -18,7 +18,6 @@ import {
   Linkedin, 
   Sun, 
   Moon,
-  ExternalLink,
   Phone,
   MapPin,
   Building2,
@@ -235,8 +234,13 @@ export default function Portfolio() {
                   <Linkedin className="h-5 w-5" />
                 </Button>
               </Link>
-              <Link href="https://wa.me/212708429995" target="_blank">
-                <Button variant="ghost" size="icon" className={`${textSecondary} hover:text-yellow-500`}>
+              <Link href="https://wa.me/212708429995" target="_blank" rel="noopener noreferrer">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className={`${textSecondary} hover:text-yellow-500`}
+                  aria-label="Chat on WhatsApp"
+                >
                   <Phone className="h-5 w-5" />
                 </Button>
               </Link>
