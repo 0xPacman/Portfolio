@@ -11,6 +11,7 @@ import {
   Cloud,
   Shield,
   Server,
+  Brain,
   Users,
   Globe,
   Star,
@@ -29,6 +30,12 @@ import {
   DialogTitle,
   DialogDescription
 } from "@/components/ui/dialog"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+  TooltipProvider
+} from "@/components/ui/tooltip"
 
 interface ProjectsProps {
   isDarkMode: boolean
@@ -60,6 +67,26 @@ interface Project {
 }
 
 const projects: Project[] = [
+  {
+    title: "Brainful",
+    description: "A soothing, single-page mental wellness dashboard with breathing guidance, mood reflection, zen doodling, and focused productivity tools—all running entirely in the browser.",
+    image: "https://images.unsplash.com/photo-1529070538774-1843cb3265df?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    category: "Mental Wellness",
+    tech: ["React", "Tailwind CSS", "Framer Motion", "Lucide Icons", "LocalStorage"],
+    links: {
+      demo: "https://brainful.0xpacman.com",
+      github: null
+    },
+    features: [
+      "Animated 4-7-8 breathing guide",
+      "Emoji-powered mood journaling",
+      "Zen doodling canvas workspace",
+      "Ambient radio with Web Audio"
+    ],
+    icon: Brain,
+    gradient: "from-sky-500 to-teal-500",
+    status: "Live"
+  },
   {
     title: "Paste",
     description: "Simple and secure pastebin service for sharing code snippets and text. Clean interface with syntax highlighting and expiration options for enhanced privacy.",
@@ -241,7 +268,8 @@ export function Projects({ isDarkMode, projectsRef }: ProjectsProps) {
   }, [])
 
   return (
-    <section
+    <TooltipProvider>
+      <section
       ref={projectsRef}
       className="py-20 px-4 relative overflow-hidden"
       itemScope
@@ -374,9 +402,26 @@ export function Projects({ isDarkMode, projectsRef }: ProjectsProps) {
                         </Badge>
                       ))}
                       {project.tech.length > 3 && (
-                        <Badge variant="outline" className="text-xs px-2 py-1">
-                          +{project.tech.length - 3}
-                        </Badge>
+                        <Tooltip delayDuration={100}>
+                          <TooltipTrigger asChild>
+                            <Badge
+                              variant="outline"
+                              className="text-xs px-2 py-1 cursor-default"
+                            >
+                              +{project.tech.length - 3}
+                            </Badge>
+                          </TooltipTrigger>
+                          <TooltipContent className="max-w-xs">
+                            <div className="text-xs font-medium text-foreground mb-1">
+                              Additional Tech
+                            </div>
+                            <ul className="text-xs text-muted-foreground space-y-1">
+                              {project.tech.slice(3).map((extraTech, extraIndex) => (
+                                <li key={extraIndex}>{extraTech}</li>
+                              ))}
+                            </ul>
+                          </TooltipContent>
+                        </Tooltip>
                       )}
                     </div>
                     <div className="mb-6">
@@ -522,6 +567,7 @@ export function Projects({ isDarkMode, projectsRef }: ProjectsProps) {
           </Button>
         </motion.div>
       </div>
-    </section>
+      </section>
+    </TooltipProvider>
   )
 }

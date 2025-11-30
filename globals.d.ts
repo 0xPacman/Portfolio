@@ -61,6 +61,8 @@ declare module 'lucide-react' {
   export const ChevronDown: FC<SVGProps<SVGSVGElement>>
   export const MapPin: FC<SVGProps<SVGSVGElement>>
   export const Phone: FC<SVGProps<SVGSVGElement>>
+  export const MessageCircle: FC<SVGProps<SVGSVGElement>>
+  export const Brain: FC<SVGProps<SVGSVGElement>>
   export const Download: FC<SVGProps<SVGSVGElement>>
   export const Star: FC<SVGProps<SVGSVGElement>>
   export const Zap: FC<SVGProps<SVGSVGElement>>
