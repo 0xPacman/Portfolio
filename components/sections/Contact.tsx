@@ -2,7 +2,7 @@
 
 import React from "react"
 import { Card, CardContent } from "@/components/ui/card"
-import { Github, Linkedin, Mail, Phone, Building2, Rocket, Globe } from "lucide-react"
+import { Github, Linkedin, Mail, Phone, Building2, Rocket } from "lucide-react"
 import Link from "next/link"
 
 interface ContactProps {
@@ -38,7 +38,7 @@ export const Contact: React.FC<ContactProps> = ({ isDarkMode, contactRef }: Cont
       <div className="relative">
         <div className="pointer-events-none absolute inset-0 -z-10 rounded-3xl bg-gradient-to-br from-amber-500/10 via-transparent to-yellow-400/10 blur-2xl" />
         <div className="text-center mb-12 px-2">
-          <h2 className={`text-3xl font-bold ${textPrimary} mb-4 bg-gradient-to-r from-amber-400 to-yellow-600 bg-clip-text text-transparent`}>Let's Connect</h2>
+          <h2 className={`text-3xl font-bold ${textPrimary} mb-4 bg-gradient-to-r from-amber-400 to-yellow-600 bg-clip-text text-transparent`}>Let&apos;s Connect</h2>
           <p className={`${textSecondary} max-w-2xl mx-auto text-sm`}>Open to cloud & infrastructure discussions, low‑key opportunities, collaboration, or simply a personal hello — professional or personal, your message is welcome.</p>
         </div>
         <div className="flex justify-center">

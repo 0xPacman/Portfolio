@@ -11,8 +11,8 @@ interface SkillsProps {
   skillsRef: React.RefObject<HTMLDivElement>
 }
 
-interface SkillItem { name: string; icon: any; level: number; color: string; certified?: boolean }
-interface SkillGroup { key: string; title: string; description: string; icon: any; items: SkillItem[] }
+interface SkillItem { name: string; icon: React.ElementType; level: number; color: string; certified?: boolean }
+interface SkillGroup { key: string; title: string; description: string; icon: React.ElementType; items: SkillItem[] }
 
 const groups: SkillGroup[] = [
   { key: 'programming', title: 'Programming & Scripting', description: 'Core languages & low-level tooling (custom allocators, shells).', icon: Code, items: [
@@ -71,7 +71,7 @@ const cardVariant = { hidden: { opacity: 0, y: 18 }, visible: { opacity: 1, y: 0
 
 export const Skills = ({ isDarkMode, skillsRef }: SkillsProps) => {
   const [open, setOpen] = React.useState<Set<string>>(new Set(groups.map(g => g.key)))
-  const toggle = (k: string) => setOpen((p: Set<string>) => { const n = new Set(p); n.has(k) ? n.delete(k) : n.add(k); return n })
+  const toggle = (k: string) => setOpen((p: Set<string>) => { const n = new Set(p); if (n.has(k)) { n.delete(k) } else { n.add(k) } return n })
 
   // Theming helpers to avoid dull gray in light mode
   const groupContainerBase = isDarkMode

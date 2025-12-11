@@ -1,8 +1,8 @@
 import React from "react";
 
 export function useGsapSkillsAnimation(skillRefs: React.RefObject<HTMLDivElement>[]) {
-  const [gsap, setGsap] = React.useState<any>(null);
-  const [ScrollTrigger, setScrollTrigger] = React.useState<any>(null);
+  const [gsap, setGsap] = React.useState<typeof import('gsap').gsap | null>(null);
+  const [ScrollTrigger, setScrollTrigger] = React.useState<typeof import('gsap/ScrollTrigger').ScrollTrigger | null>(null);
 
   React.useEffect(() => {
     let mounted = true;
@@ -37,7 +37,7 @@ export function useGsapSkillsAnimation(skillRefs: React.RefObject<HTMLDivElement
   React.useEffect(() => {
     if (!gsap || !ScrollTrigger || skillRefs.length === 0) return;
 
-    const animations: any[] = [];
+    const animations: (gsap.core.Tween | (() => void))[] = [];
 
     skillRefs.forEach((skillRef, index) => {
       if (!skillRef.current) return;
@@ -69,7 +69,7 @@ export function useGsapSkillsAnimation(skillRefs: React.RefObject<HTMLDivElement
 
       // Hover effect
       const card = skillRef.current;
-      let hoverAnimation: any;
+      let hoverAnimation: gsap.core.Tween | undefined;
 
       const handleMouseEnter = () => {
         hoverAnimation = gsap.to(card, { 

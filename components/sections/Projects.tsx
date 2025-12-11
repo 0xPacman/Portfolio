@@ -12,7 +12,6 @@ import {
   Shield,
   Server,
   Brain,
-  Users,
   Globe,
   Star,
   Code,

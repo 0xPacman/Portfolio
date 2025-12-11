@@ -122,10 +122,14 @@ export function GsapHeroAnimation() {
         ease: "sine.inOut"
       });
 
+      // Capture refs for cleanup
+      const imgContainer = imgContainerRef.current;
+      const scrambleEl = scrambleRef.current;
+
       return () => {
         window.removeEventListener("mousemove", handleMouse)
         split.revert();
-        gsap.killTweensOf([imgContainerRef.current, scrambleRef.current]);
+        gsap.killTweensOf([imgContainer, scrambleEl]);
       }
     }
   }, [])

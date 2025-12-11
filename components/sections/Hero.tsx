@@ -15,6 +15,7 @@ import {
   Rocket,
 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { GsapHeroAnimation } from "@/components/gsap-hero-animation";
 
 interface HeroProps {
@@ -46,7 +47,7 @@ export const Hero: React.FC<HeroProps> = ({ isDarkMode, scrollToSection }) => {
             <div className="mb-8" ref={imgContainerRef}>
               <div className="relative inline-block">
                 <div ref={bgGlowRef} className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-full blur-lg opacity-50 animate-pulse"></div>
-                <img
+                <Image
                   ref={imgRef}
                   src="https://raw.githubusercontent.com/0xPacman/Portfolio/main/public/media/PDP.jpg"
                   alt="Ahmed Jadani - 0xPacman"
@@ -109,7 +110,7 @@ export const Hero: React.FC<HeroProps> = ({ isDarkMode, scrollToSection }) => {
               className={`text-xl ${textSecondary} mb-8 max-w-4xl mx-auto leading-relaxed`}
             >
               Leading cloud infrastructure at{" "}
-              <span className={textAccent}>Atlas Cloud Services</span>, Morocco's
+              <span className={textAccent}>Atlas Cloud Services</span>, Morocco&apos;s
               premier data center. Specializing in private cloud architecture,
               public cloud solutions, and enterprise-grade infrastructure
               automation.
@@ -151,7 +152,7 @@ export const Hero: React.FC<HeroProps> = ({ isDarkMode, scrollToSection }) => {
                 } border-0 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105`}
               >
                 <Rocket className="mr-2" size={20} />
-                Let's Build Something Amazing
+                Let&apos;s Build Something Amazing
               </Button>
               <Button
                 variant="outline"

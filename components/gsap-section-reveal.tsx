@@ -24,5 +24,5 @@ export function useGsapSectionReveal(refs: React.RefObject<HTMLElement>[], optio
         )
       }
     })
-  }, [refs])
+  }, [refs, options])
 }

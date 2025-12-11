@@ -10,7 +10,7 @@ interface AboutProps {
   aboutRef: React.RefObject<HTMLDivElement>
 }
 
-export const About: React.FC<AboutProps> = ({ isDarkMode, aboutRef }: AboutProps) => {
+export const About: React.FC<AboutProps> = ({ isDarkMode }: AboutProps) => {
   const cardClasses = isDarkMode
     ? "bg-black/40 backdrop-blur-md border-yellow-500/30"
     : "bg-white/60 backdrop-blur-md border-yellow-400/40"
@@ -67,7 +67,7 @@ export const About: React.FC<AboutProps> = ({ isDarkMode, aboutRef }: AboutProps
                 <span itemProp="name">Atlas Cloud Services</span>
                 <meta itemProp="url" content="https://0xpacman.com" />
               </span>,
-              Morocco's leading data center and public cloud provider, I architect and manage enterprise-grade
+              Morocco&apos;s leading data center and public cloud provider, I architect and manage enterprise-grade
               infrastructure serving clients across Morocco.
             </p>
             <p className={`${textSecondary} leading-relaxed`}>

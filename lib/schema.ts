@@ -1,4 +1,4 @@
-import { Person, Organization, CreativeWork, WebSite, BreadcrumbList } from 'schema-dts'
+import { Person, Organization, WebSite, BreadcrumbList } from 'schema-dts'
 
 // Base URL for the website
 const BASE_URL = 'https://0xpacman.github.io/Portfolio'
@@ -88,7 +88,7 @@ export const websiteSchema: WebSite = {
 }
 
 // Creative Works Schema for projects
-export const projectsSchema: any[] = [
+export const projectsSchema: object[] = [
   {
     '@type': 'SoftwareApplication',
     name: 'Paste',
@@ -224,7 +224,7 @@ export const getStructuredData = () => {
 }
 
 // Helper function to generate JSON-LD script tag
-export const generateJSONLD = (schema: any) => {
+export const generateJSONLD = (schema: object) => {
   return {
     __html: JSON.stringify(schema, null, 2)
   }

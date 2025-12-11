@@ -2,8 +2,8 @@ import React from "react"
 
 export function useGsapFloatingShapes(refs: React.RefObject<HTMLDivElement>[]) {
   React.useEffect(() => {
-    let gsap: any = null;
-    let animations: any[] = [];
+    let gsap: typeof import('gsap').gsap | null = null;
+    const animations: gsap.core.Tween[] = [];
 
     const loadAndAnimate = async () => {
       try {

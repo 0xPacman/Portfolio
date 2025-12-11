@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react'
-import dynamic from 'next/dynamic'
 
 // Create a client-side only wrapper for GSAP components
 const ClientOnlyWrapper = ({ children }: { children: React.ReactNode }) => {
