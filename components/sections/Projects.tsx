@@ -132,6 +132,27 @@ const projects: Project[] = [
     status: "Live"
   },
   {
+    title: "AD Manager",
+    description: "Professional Active Directory management desktop app built in native C++ with a modern UI for Windows environments.",
+    image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=900&q=80",
+    category: "Directory Management",
+    tech: ["C++", "Windows", "Active Directory", "Native App"],
+    links: {
+      visit: "https://github.com/0xPacman/ADManager/archive/refs/heads/main.zip",
+      visitLabel: "Download",
+      github: "https://github.com/0xPacman/ADManager"
+    },
+    features: [
+      "User and group administration",
+      "Streamlined desktop workflow",
+      "Secure AD interactions",
+      "Ready-to-use download"
+    ],
+    icon: Server,
+    gradient: "from-indigo-500 to-blue-500",
+    status: "Open Source"
+  },
+  {
     title: "Atlas Cloud Services Infrastructure",
     description: "Lead modernization for Morocco's premier cloud platform as the single point of contact, orchestrating VMware, Dell VxRail, and multi-cloud operations for 100+ enterprises.",
     image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
