@@ -85,7 +85,6 @@ export default function RootLayout({
         <meta name="google-site-verification" content="" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#FFD700" />
-        <meta name="monetag" content="c40c9decc17ac43dc0a786ad0e66eded" />
         
         {/* Preconnect to external domains */}
         <link rel="preconnect" href="https://github.com" />
