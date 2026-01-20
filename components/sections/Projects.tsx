@@ -133,24 +133,23 @@ const projects: Project[] = [
   },
   {
     title: "AD Manager",
-    description: "Professional Active Directory management desktop app built in native C++ with a modern UI for Windows environments.",
+    description: "Professional Active Directory management desktop application built in C++ with a modern, intuitive UI for Windows environments. Simplify user, group, and resource administration with powerful automation tools.",
     image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=900&q=80",
     category: "Directory Management",
-    tech: ["C++", "Windows", "Active Directory", "Native App"],
+    tech: ["C++", "Windows", "Active Directory", "Enterprise"],
     links: {
-      visit: "https://github.com/0xPacman/ADManager/archive/refs/heads/main.zip",
-      visitLabel: "Download",
-      github: "https://github.com/0xPacman/ADManager"
+      visit: "https://ad.0xpacman.com",
+      visitLabel: "Purchase - $49.99"
     },
     features: [
-      "User and group administration",
-      "Streamlined desktop workflow",
-      "Secure AD interactions",
-      "Ready-to-use download"
+      "Advanced user/group management",
+      "AD automation & bulk operations",
+      "Real-time monitoring",
+      "Enterprise-grade security"
     ],
     icon: Server,
     gradient: "from-indigo-500 to-blue-500",
-    status: "Open Source"
+    status: "Commercial"
   },
   {
     title: "Atlas Cloud Services Infrastructure",
