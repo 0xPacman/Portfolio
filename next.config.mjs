@@ -3,7 +3,7 @@ const nextConfig = {
   output: 'export',
   trailingSlash: true,
   skipTrailingSlashRedirect: true,
-  distDir: 'out',
+  distDir: process.env.NODE_ENV === 'production' ? 'out' : '.next',
   typescript: {
     ignoreBuildErrors: true,
   },
