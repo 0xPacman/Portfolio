@@ -2,7 +2,7 @@
 
 import React from "react"
 import { Card, CardContent } from "@/components/ui/card"
-import { Building2, MapPin, Zap, Star, Users, TrendingUp, ChevronRight, Cloud, Shield, Code, Activity, Network, ServerCrash } from "lucide-react"
+import { Building2, MapPin, Zap, Star, Users, TrendingUp } from "lucide-react"
 import Image from "next/image"
 
 interface AboutProps {
@@ -68,15 +68,6 @@ export const About: React.FC<AboutProps> = ({ isDarkMode, aboutRef }: AboutProps
     { value: "100+", label: "Enterprise Clients", sub: "Across Morocco", icon: Users },
     { value: "99.9%", label: "Uptime SLA", sub: "Architected & operated", icon: TrendingUp },
     { value: "20+", label: "Certifications", sub: "Cloud & virtualization", icon: Star },
-  ]
-
-  const focus = [
-    { label: "Private & public cloud architecture", icon: Cloud },
-    { label: "Hybrid designs for regulated orgs", icon: Shield },
-    { label: "Infrastructure as Code & automation", icon: Code },
-    { label: "Observability and SRE practices", icon: Activity },
-    { label: "Network security & segmentation", icon: Network },
-    { label: "Resilience, DR, and continuity", icon: ServerCrash },
   ]
 
   return (
@@ -202,37 +193,6 @@ export const About: React.FC<AboutProps> = ({ isDarkMode, aboutRef }: AboutProps
           )
         })}
       </div>
-
-      {/* ── Focus Areas grid (was unused before) ── */}
-      <Card className={`${shell} backdrop-blur-xl shadow-xl`}>
-        <CardContent className="p-7 lg:p-8">
-          <div className="flex items-center gap-3 mb-5">
-            <div className="h-10 w-10 rounded-lg bg-amber-500/15 border border-amber-400/30 flex items-center justify-center">
-              <Zap className={textAccent} size={18} />
-            </div>
-            <div>
-              <h3 className={`text-xl font-semibold ${textPrimary}`}>Focus Areas</h3>
-              <p className={`text-sm ${textSecondary}`}>Core competencies and areas of expertise.</p>
-            </div>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {focus.map(({ label, icon: FocusIcon }) => (
-              <div
-                key={label}
-                className={`flex items-center gap-3 rounded-xl px-4 py-3 transition-all duration-200 ${
-                  isDarkMode
-                    ? "bg-yellow-500/5 hover:bg-yellow-500/10 border border-yellow-500/10 hover:border-yellow-500/25"
-                    : "bg-yellow-400/10 hover:bg-yellow-400/20 border border-yellow-400/20 hover:border-yellow-400/40"
-                }`}
-              >
-                <FocusIcon className={`${textAccent} flex-shrink-0`} size={16} />
-                <span className={`text-sm font-medium ${textPrimary}`}>{label}</span>
-                <ChevronRight className={`${textSecondary} ml-auto flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity`} size={14} />
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
 
       <div style={{ display: 'none' }}>
         <meta itemProp="sameAs" content="https://github.com/0xPacman" />
