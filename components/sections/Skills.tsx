@@ -50,6 +50,7 @@ const groups: SkillGroup[] = [
     { name: 'Fortinet Firewall', icon: Shield, level: 60, color: 'from-lime-500 to-green-500', details: 'FortiGate policy management, SSL inspection, SD-WAN basics, and FortiAnalyzer log integration.' },
     { name: 'Active Directory', icon: Shield, level: 92, color: 'from-indigo-500 to-indigo-300', details: 'Domain controllers, GPO design, OU structure, AD replication, trusts, LDAP/Kerberos, and bulk user management.' },
     { name: 'DNS Management', icon: Shield, level: 88, color: 'from-cyan-500 to-sky-500', details: 'Internal/external DNS architecture, zone delegation, conditional forwarding, DNSSEC, and split-brain DNS.' },
+    { name: 'Penetration Testing', icon: Shield, level: 60, color: 'from-red-500 to-rose-600', details: 'Vulnerability discovery and exploitation across web apps, APIs, and network services. Active bug hunter on HackerOne — reported and disclosed real-world vulnerabilities. Skills built through hands-on CTF competitions and offensive security labs.' },
   ]},
   { key: 'protection', title: 'Data Protection', description: 'Backup, recovery & continuity tooling.', icon: HardDrive, items: [
     { name: 'Veeam Backup', icon: HardDrive, level: 90, color: 'from-emerald-500 to-teal-500', certified: true, details: 'Backup jobs, replication, SureBackup verification, restore operations, and Veeam ONE monitoring for VMware & Nutanix.' },
@@ -96,9 +97,12 @@ export const Skills = ({ isDarkMode, skillsRef }: SkillsProps) => {
 
   return (
     <div ref={skillsRef} className="space-y-5">
-      <div className="flex flex-col gap-1">
-        <motion.h2 initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-2xl font-semibold tracking-tight bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">Skills</motion.h2>
-        <motion.p initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} className="text-xs text-muted-foreground">Condensed categorized overview.</motion.p>
+      <div className="flex items-center gap-3 mb-1">
+        <div className="h-7 w-0.5 rounded-full bg-gradient-to-b from-amber-400 to-yellow-600" />
+        <div>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className={`font-mono text-[10px] mb-0.5 ${isDarkMode ? 'text-yellow-500/40' : 'text-yellow-600/50'}`}>~/skills</motion.div>
+          <motion.h2 initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className={`text-xl font-bold tracking-tight ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Skills</motion.h2>
+        </div>
       </div>
 
       <div className="space-y-3">

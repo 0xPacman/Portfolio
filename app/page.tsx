@@ -5,24 +5,10 @@ import { About } from "@/components/sections/About"
 import { Skills } from "@/components/sections/Skills"
 import { Projects } from "@/components/sections/Projects"
 import { Contact } from "@/components/sections/Contact"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { 
-  Users, 
-  Code, 
-  Star, 
-  Mail, 
-  Github, 
-  Linkedin, 
-  Sun, 
-  Moon,
-  Phone,
-  MapPin,
-  Building2,
-  Zap,
-  Menu,
-  X
+import {
+  Users, Code, Star, Mail, Github, Linkedin,
+  Sun, Moon, Phone, MapPin, Building2, Menu, X, Terminal
 } from "lucide-react"
 import Link from "next/link"
 
@@ -35,91 +21,58 @@ export default function Portfolio() {
   const skillsRef = React.useRef<HTMLDivElement>(null)
   const projectsRef = React.useRef<HTMLDivElement>(null)
   const contactRef = React.useRef<HTMLDivElement>(null)
-  const shape1 = React.useRef<HTMLDivElement>(null)
-  const shape2 = React.useRef<HTMLDivElement>(null)
-  const shape3 = React.useRef<HTMLDivElement>(null)
 
-  // Effect to update document class when theme changes
   React.useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-    }
+    document.documentElement.classList.toggle("dark", isDarkMode)
   }, [isDarkMode])
 
-  // Close sidebar when clicking outside on mobile
   React.useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+    const handleOutside = (e: MouseEvent) => {
       if (isSidebarOpen && window.innerWidth < 1024) {
-        const sidebar = document.getElementById('sidebar')
-        const toggleButton = document.getElementById('sidebar-toggle')
-        if (sidebar && toggleButton && 
-            !sidebar.contains(event.target as Node) && 
-            !toggleButton.contains(event.target as Node)) {
+        const sb = document.getElementById("sidebar")
+        const btn = document.getElementById("sidebar-toggle")
+        if (sb && btn && !sb.contains(e.target as Node) && !btn.contains(e.target as Node)) {
           setIsSidebarOpen(false)
         }
       }
     }
-
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
+    document.addEventListener("mousedown", handleOutside)
+    return () => document.removeEventListener("mousedown", handleOutside)
   }, [isSidebarOpen])
 
-  const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode)
-  }
-
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen)
-  }
-
   const menuItems = [
-    { id: "about", label: "About", icon: Users },
-    { id: "skills", label: "Skills", icon: Code },
-    { id: "projects", label: "Projects", icon: Star },
-    { id: "contact", label: "Contact", icon: Mail },
+    { id: "about",    label: "About",    icon: Users },
+    { id: "skills",   label: "Skills",   icon: Code  },
+    { id: "projects", label: "Projects", icon: Star  },
+    { id: "contact",  label: "Contact",  icon: Mail  },
   ]
 
-  const bgClasses = isDarkMode
-    ? "bg-gradient-to-br from-black via-gray-900 to-yellow-900/20"
-    : "bg-gradient-to-br from-white via-gray-50 to-yellow-50"
-
-  const sidebarClasses = isDarkMode
-    ? "bg-black/40 backdrop-blur-xl border-yellow-500/20"
-    : "bg-white/60 backdrop-blur-xl border-yellow-400/30"
-
-  const contentClasses = isDarkMode
-    ? "bg-black/20 backdrop-blur-xl border-yellow-500/10"
-    : "bg-white/40 backdrop-blur-xl border-yellow-400/20"
-
-  const textPrimary = "text-foreground"
-  const textSecondary = "text-muted-foreground"
-  const textAccent = "text-yellow-500 dark:text-yellow-400"
+  const socials = [
+    { href: "https://github.com/0xPacman",        icon: Github,  label: "GitHub"    },
+    { href: "https://linkedin.com/in/0xpacman",   icon: Linkedin,label: "LinkedIn"  },
+    { href: "https://wa.me/212708429995",          icon: Phone,   label: "WhatsApp"  },
+  ]
 
   const renderContent = () => {
     switch (activeSection) {
-      case "about":
-        return <About isDarkMode={isDarkMode} aboutRef={aboutRef} />
-      case "skills":
-        return <Skills isDarkMode={isDarkMode} skillsRef={skillsRef} />
-      case "projects":
-        return <Projects isDarkMode={isDarkMode} projectsRef={projectsRef} />
-      case "contact":
-        return <Contact isDarkMode={isDarkMode} contactRef={contactRef} />
-      default:
-        return <About isDarkMode={isDarkMode} aboutRef={aboutRef} />
+      case "about":    return <About    isDarkMode={isDarkMode} aboutRef={aboutRef}       />
+      case "skills":   return <Skills   isDarkMode={isDarkMode} skillsRef={skillsRef}     />
+      case "projects": return <Projects isDarkMode={isDarkMode} projectsRef={projectsRef} />
+      case "contact":  return <Contact  isDarkMode={isDarkMode} contactRef={contactRef}   />
+      default:         return <About    isDarkMode={isDarkMode} aboutRef={aboutRef}       />
     }
   }
 
+  /* ── theme tokens ── */
+  const D = isDarkMode
+
   return (
-    <div 
-      className={`min-h-screen ${bgClasses} relative overflow-hidden transition-all duration-500`}
-      itemScope
-      itemType="https://schema.org/WebPage"
+    <div
+      className={`min-h-screen relative overflow-hidden transition-colors duration-500 ${D ? "bg-[#080808]" : "bg-[#fafaf7]"}`}
+      itemScope itemType="https://schema.org/WebPage"
     >
-      {/* Structured data for the page */}
-      <div itemProp="mainEntity" itemScope itemType="https://schema.org/Person" style={{ display: 'none' }}>
+      {/* SEO structured data */}
+      <div itemProp="mainEntity" itemScope itemType="https://schema.org/Person" style={{ display: "none" }}>
         <meta itemProp="name" content="Ahmed Jadani" />
         <meta itemProp="alternateName" content="Pacman" />
         <meta itemProp="jobTitle" content="Cloud Infrastructure Engineer" />
@@ -132,193 +85,208 @@ export default function Portfolio() {
         </div>
         <div itemProp="worksFor" itemScope itemType="https://schema.org/Organization">
           <meta itemProp="name" content="Atlas Cloud Services" />
-          <meta itemProp="url" content="https://0xpacman.com" />
         </div>
         <meta itemProp="sameAs" content="https://github.com/0xPacman" />
         <meta itemProp="sameAs" content="https://linkedin.com/in/0xpacman" />
       </div>
-      {/* Mobile Sidebar Toggle Button */}
-      <Button
-        id="sidebar-toggle"
-        variant="ghost"
-        size="icon"
-        onClick={toggleSidebar}
-        className={`fixed top-4 left-4 z-50 lg:hidden ${textSecondary} hover:text-yellow-500 transition-colors ${
-          isDarkMode ? 'bg-black/40 backdrop-blur-xl' : 'bg-white/60 backdrop-blur-xl'
-        } border border-yellow-500/20`}
-      >
-        {isSidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-      </Button>
 
-      {/* Mobile Overlay */}
+      {/* Dot-grid background */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: D
+            ? "radial-gradient(circle, rgba(234,179,8,0.045) 1px, transparent 1px)"
+            : "radial-gradient(circle, rgba(180,130,0,0.08) 1px, transparent 1px)",
+          backgroundSize: "28px 28px",
+        }}
+      />
+
+      {/* Ambient blobs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className={`absolute -top-64 -right-64 w-[560px] h-[560px] rounded-full blur-[140px] animate-float-1 ${D ? "bg-yellow-500/5" : "bg-yellow-400/10"}`} />
+        <div className={`absolute -bottom-64 -left-64 w-[560px] h-[560px] rounded-full blur-[140px] animate-float-2 ${D ? "bg-amber-600/4" : "bg-amber-500/8"}`} />
+      </div>
+
+      {/* Mobile hamburger */}
+      <button
+        id="sidebar-toggle"
+        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+        className={`fixed top-4 left-4 z-50 lg:hidden w-9 h-9 flex items-center justify-center rounded-lg border backdrop-blur-xl transition-all
+          ${D ? "bg-black/80 border-yellow-500/20 text-yellow-500/70 hover:text-yellow-400 hover:border-yellow-500/40"
+              : "bg-white/80 border-yellow-500/30 text-yellow-600/70 hover:text-yellow-700 hover:border-yellow-500/60"}`}
+      >
+        {isSidebarOpen ? <X size={15} /> : <Menu size={15} />}
+      </button>
+
+      {/* Mobile overlay */}
       {isSidebarOpen && (
-        <div 
-          className="fixed inset-0 bg-black/50 z-30 lg:hidden transition-opacity duration-300"
+        <div
+          className="fixed inset-0 bg-black/60 z-30 lg:hidden backdrop-blur-sm"
           onClick={() => setIsSidebarOpen(false)}
         />
       )}
 
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div
-          ref={shape1}
-          className={`absolute -top-40 -right-40 w-96 h-96 ${isDarkMode ? "bg-yellow-500/10" : "bg-yellow-400/20"} rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-float-1`}
-        />
-        <div
-          ref={shape2}
-          className={`absolute -bottom-40 -left-40 w-96 h-96 ${isDarkMode ? "bg-yellow-600/10" : "bg-yellow-500/20"} rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-float-2`}
-        />
-        <div
-          ref={shape3}
-          className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 ${isDarkMode ? "bg-yellow-400/5" : "bg-yellow-300/15"} rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-float-3`}
-        />
-        
-        {/* Geometric shapes */}
-        <div className="absolute top-20 right-20 w-4 h-4 bg-yellow-400/60 rotate-45 animate-bounce animation-delay-1000" />
-        <div className="absolute bottom-40 right-40 w-6 h-6 border-2 border-yellow-400/60 rotate-45 animate-spin" />
-        <div className="absolute top-60 left-20 w-3 h-3 bg-yellow-500/60 rounded-full animate-pulse" />
-      </div>
+      {/* Layout */}
+      <div className="flex h-screen">
 
-      {/* Main Layout */}
-      <div className="flex h-screen lg:static">
-        {/* Sidebar */}
-        <div 
+        {/* ═══════════════ SIDEBAR ═══════════════ */}
+        <aside
           id="sidebar"
           className={`
             fixed lg:static inset-y-0 left-0 z-40
-            w-80 ${sidebarClasses} border-r shadow-2xl flex flex-col
+            w-[268px] flex-shrink-0 flex flex-col
+            backdrop-blur-2xl border-r
             transform transition-transform duration-300 ease-in-out
-            ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+            ${isSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
+            ${D ? "bg-black/75 border-yellow-500/12" : "bg-white/80 border-yellow-500/20"}
           `}
         >
-          {/* Header/Profile Section */}
-          <div className="p-8 border-b border-yellow-500/20">
-            <div className="flex items-center justify-between mb-6">
-              <Avatar className="w-16 h-16 ring-2 ring-yellow-500/50">
-                <AvatarImage src="/media/PDP.jpg" alt="Ahmed Jadani" />
-                <AvatarFallback className="bg-yellow-500 text-black font-bold text-xl">AJ</AvatarFallback>
-              </Avatar>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={toggleTheme}
-                className={`${textSecondary} hover:text-yellow-500 transition-colors`}
+          {/* Top shimmer line */}
+          <div className={`absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent ${D ? "via-yellow-500/50" : "via-yellow-400/60"} to-transparent`} />
+
+          {/* ── Profile ── */}
+          <div className="p-5 pb-4">
+            {/* Terminal prompt */}
+            <div className={`font-mono text-[10px] flex items-center gap-1.5 mb-4 ${D ? "text-yellow-500/35" : "text-yellow-600/45"}`}>
+              <Terminal size={9} />
+              <span>root@0xpacman:~$</span>
+              <span className={`inline-block w-[6px] h-[11px] ml-0.5 animate-blink ${D ? "bg-yellow-500/50" : "bg-yellow-600/50"}`} />
+            </div>
+
+            {/* Avatar + theme toggle */}
+            <div className="flex items-start justify-between mb-4">
+              <div className="relative">
+                <div className={`absolute inset-0 blur-2xl scale-150 rounded-full ${D ? "bg-yellow-500/20" : "bg-yellow-400/30"}`} />
+                <Avatar className={`w-[62px] h-[62px] relative ring-2 ring-offset-2 ${D ? "ring-yellow-500/35 ring-offset-black" : "ring-yellow-500/40 ring-offset-white"}`}>
+                  <AvatarImage src="/media/PDP.jpg" alt="Ahmed Jadani" />
+                  <AvatarFallback className="bg-yellow-500 text-black font-bold font-mono text-lg">AJ</AvatarFallback>
+                </Avatar>
+                <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 rounded-full border-2 border-black" />
+              </div>
+
+              <button
+                onClick={() => setIsDarkMode(!D)}
+                className={`w-8 h-8 flex items-center justify-center rounded-lg border transition-all
+                  ${D ? "border-yellow-500/12 text-yellow-500/50 hover:text-yellow-400 hover:border-yellow-500/30 hover:bg-yellow-500/5"
+                      : "border-yellow-500/20 text-yellow-600/60 hover:text-yellow-700 hover:border-yellow-500/40 hover:bg-yellow-50"}`}
               >
-                {isDarkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-              </Button>
+                {D ? <Sun size={13} /> : <Moon size={13} />}
+              </button>
             </div>
-            
-            <div className="space-y-2">
-              <h1 className={`text-2xl font-bold ${textPrimary}`}>Ahmed Jadani</h1>
-              <p className={`${textAccent} font-medium`}>Cloud Infrastructure Engineer</p>
-              <div className={`flex items-center ${textSecondary} text-sm`}>
-                <Building2 className="w-4 h-4 mr-2" />
-                Atlas Cloud Services
+
+            {/* Identity */}
+            <div className="space-y-0.5 mb-3">
+              <h1 className={`text-[17px] font-bold leading-snug ${D ? "text-white" : "text-gray-900"}`}>Ahmed Jadani</h1>
+              <div className="font-mono text-[13px] font-semibold tracking-wide text-yellow-500">0xPacman</div>
+              <p className={`text-[11px] ${D ? "text-gray-400" : "text-gray-500"}`}>Cloud Infrastructure Engineer</p>
+            </div>
+
+            {/* Meta */}
+            <div className={`space-y-1.5 text-[11px] ${D ? "text-gray-600" : "text-gray-400"}`}>
+              <div className="flex items-center gap-2">
+                <Building2 size={10} className="flex-shrink-0" />
+                <span>Atlas Cloud Services</span>
               </div>
-              <div className={`flex items-center ${textSecondary} text-sm`}>
-                <MapPin className="w-4 h-4 mr-2" />
-                Benguerir, Morocco
+              <div className="flex items-center gap-2">
+                <MapPin size={10} className="flex-shrink-0" />
+                <span>Benguerir, Morocco</span>
               </div>
             </div>
 
-            {/* Social Links */}
-            <div className="flex gap-3 mt-6">
-              <Link href="https://github.com/0xPacman" target="_blank">
-                <Button variant="ghost" size="icon" className={`${textSecondary} hover:text-yellow-500`}>
-                  <Github className="h-5 w-5" />
-                </Button>
-              </Link>
-              <Link href="https://linkedin.com/in/0xpacman" target="_blank">
-                <Button variant="ghost" size="icon" className={`${textSecondary} hover:text-yellow-500`}>
-                  <Linkedin className="h-5 w-5" />
-                </Button>
-              </Link>
-              <Link href="https://wa.me/212708429995" target="_blank" rel="noopener noreferrer">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className={`${textSecondary} hover:text-yellow-500`}
-                  aria-label="Chat on WhatsApp"
-                >
-                  <Phone className="h-5 w-5" />
-                </Button>
-              </Link>
+            {/* Social icons */}
+            <div className="flex gap-1.5 mt-3.5">
+              {socials.map(({ href, icon: Icon, label }) => (
+                <Link key={href} href={href} target="_blank" rel="noopener noreferrer" title={label}>
+                  <span className={`w-7 h-7 flex items-center justify-center rounded-md border transition-all
+                    ${D ? "border-yellow-500/10 text-gray-600 hover:border-yellow-500/30 hover:text-yellow-400 hover:bg-yellow-500/5"
+                        : "border-yellow-500/15 text-gray-400 hover:border-yellow-500/40 hover:text-yellow-700 hover:bg-yellow-50"}`}>
+                    <Icon size={12} />
+                  </span>
+                </Link>
+              ))}
             </div>
 
-            {/* Quick Stats */}
-            <div className="grid grid-cols-2 gap-4 mt-6">
-              <div className={`text-center p-3 rounded-lg ${isDarkMode ? "bg-yellow-500/10" : "bg-yellow-400/20"}`}>
-                <div className={`text-lg font-bold ${textAccent}`}>3+</div>
-                <div className={`text-xs ${textSecondary}`}>Years Exp</div>
-              </div>
-              <div className={`text-center p-3 rounded-lg ${isDarkMode ? "bg-yellow-500/10" : "bg-yellow-400/20"}`}>
-                <div className={`text-lg font-bold ${textAccent}`}>20+</div>
-                <div className={`text-xs ${textSecondary}`}>Technologies</div>
-              </div>
+            {/* Stats row */}
+            <div className={`grid grid-cols-2 gap-2 mt-4 pt-4 border-t ${D ? "border-yellow-500/8" : "border-yellow-500/15"}`}>
+              {[{ v: "3+", l: "Years Exp" }, { v: "20+", l: "Technologies" }].map(({ v, l }) => (
+                <div key={l} className={`rounded-lg p-2.5 text-center border ${D ? "bg-yellow-500/4 border-yellow-500/10" : "bg-yellow-50 border-yellow-500/20"}`}>
+                  <div className="text-[15px] font-bold font-mono text-yellow-500">{v}</div>
+                  <div className={`text-[9px] mt-0.5 ${D ? "text-gray-500" : "text-gray-400"}`}>{l}</div>
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* Navigation Menu */}
-          <nav className="flex-1 p-6">
-            <div className="space-y-2">
-              {menuItems.map((item) => {
-                const Icon = item.icon
-                const isActive = activeSection === item.id
+          {/* ── Navigation ── */}
+          <nav className="flex-1 px-4 pb-4 flex flex-col">
+            <div className={`text-[9px] font-mono uppercase tracking-[0.15em] mb-2 px-2 ${D ? "text-gray-700" : "text-gray-400"}`}>
+              Navigate
+            </div>
+            <div className="space-y-0.5">
+              {menuItems.map(({ id, label, icon: Icon }, i) => {
+                const active = activeSection === id
                 return (
                   <button
-                    key={item.id}
+                    key={id}
                     onClick={() => {
-                      setActiveSection(item.id)
-                      // Close sidebar on mobile after selection
-                      if (window.innerWidth < 1024) {
-                        setIsSidebarOpen(false)
-                      }
+                      setActiveSection(id)
+                      if (window.innerWidth < 1024) setIsSidebarOpen(false)
                     }}
-                    className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all duration-300 group ${
-                      isActive
-                        ? `bg-gradient-to-r from-yellow-500 to-yellow-600 text-black shadow-lg shadow-yellow-500/30 transform scale-105`
-                        : `${textSecondary} hover:bg-yellow-500/10 hover:text-yellow-500 hover:scale-105`
+                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-all duration-200 relative group ${
+                      active
+                        ? D
+                          ? "bg-yellow-500/10 text-yellow-400"
+                          : "bg-yellow-500/12 text-yellow-700"
+                        : D
+                          ? "text-gray-500 hover:text-gray-200 hover:bg-white/[0.03]"
+                          : "text-gray-400 hover:text-gray-700 hover:bg-yellow-50/60"
                     }`}
                   >
-                    <Icon className={`w-5 h-5 ${isActive ? "text-black" : "group-hover:text-yellow-500"}`} />
-                    <span className="font-medium">{item.label}</span>
-                    {isActive && (
-                      <div className="ml-auto">
-                        <Zap className="w-4 h-4 text-black" />
-                      </div>
-                    )}
+                    <div className={`absolute left-0 top-1/2 -translate-y-1/2 w-0.5 rounded-r-full transition-all duration-200 ${active ? "h-5 bg-yellow-500" : "h-0"}`} />
+                    <span className={`font-mono text-[10px] w-5 flex-shrink-0 tabular-nums ${active ? "text-yellow-500/60" : D ? "text-gray-700" : "text-gray-300"}`}>
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <Icon size={13} className="flex-shrink-0" />
+                    <span className="text-[13px] font-medium">{label}</span>
                   </button>
                 )
               })}
             </div>
 
-            {/* Additional Info */}
-            <div className="mt-8 pt-6 border-t border-yellow-500/20">
-              <div className={`p-4 rounded-xl ${isDarkMode ? "bg-yellow-500/5" : "bg-yellow-400/10"} border border-yellow-500/20`}>
-                <div className="flex items-center gap-2 mb-2">
-                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                  <span className={`text-sm font-medium ${textPrimary}`}>Available for consulting</span>
+            {/* Available badge */}
+            <div className={`mt-auto pt-4`}>
+              <div className={`p-3 rounded-xl border ${D ? "border-yellow-500/10 bg-yellow-500/3" : "border-yellow-500/20 bg-yellow-50/70"}`}>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75" />
+                    <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-green-500" />
+                  </span>
+                  <span className={`text-[11px] font-medium ${D ? "text-gray-300" : "text-gray-700"}`}>Available for consulting</span>
                 </div>
-                <p className={`text-xs ${textSecondary}`}>
-                  Open to cloud & infrastructure consulting and exciting collaborations
+                <p className={`text-[10px] leading-relaxed ${D ? "text-gray-600" : "text-gray-400"}`}>
+                  Open to cloud & infra consulting, collaborations
                 </p>
               </div>
             </div>
           </nav>
-        </div>
 
-        {/* Main Content Area */}
-        <div className="flex-1 overflow-auto lg:ml-0">
-          <div className="h-full p-4 md:p-8 pt-16 lg:pt-8">
-            <Card className={`h-full ${contentClasses} border shadow-2xl`}>
-              <CardContent className="p-4 md:p-8 h-full overflow-auto">
-                <div className="max-w-5xl mx-auto">
+          {/* Bottom shimmer */}
+          <div className={`absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent ${D ? "via-yellow-500/25" : "via-yellow-400/35"} to-transparent`} />
+        </aside>
+
+        {/* ═══════════════ MAIN CONTENT ═══════════════ */}
+        <main className="flex-1 overflow-auto">
+          <div className="min-h-full p-3 sm:p-5 lg:p-6 pt-16 lg:pt-6">
+            <div className={`min-h-full rounded-2xl border ${D ? "bg-black/25 border-yellow-500/6" : "bg-white/40 border-yellow-500/12"} backdrop-blur-xl`}>
+              <div className="p-4 sm:p-6 lg:p-8">
+                <div className="max-w-4xl mx-auto">
                   {renderContent()}
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
-        </div>
+        </main>
+
       </div>
     </div>
   )

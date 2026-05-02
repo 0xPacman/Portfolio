@@ -36,11 +36,14 @@ export const Contact: React.FC<ContactProps> = ({ isDarkMode, contactRef }: Cont
       <meta itemProp="name" content="Contact Ahmed Jadani" />
       <meta itemProp="description" content="Get in touch with Ahmed Jadani for cloud consulting, infrastructure projects, or professional collaboration opportunities" />
       <div className="relative">
-        <div className="pointer-events-none absolute inset-0 -z-10 rounded-3xl bg-gradient-to-br from-amber-500/10 via-transparent to-yellow-400/10 blur-2xl" />
-        <div className="text-center mb-12 px-2">
-          <h2 className={`text-3xl font-bold ${textPrimary} mb-4 bg-gradient-to-r from-amber-400 to-yellow-600 bg-clip-text text-transparent`}>Let&apos;s Connect</h2>
-          <p className={`${textSecondary} max-w-2xl mx-auto text-sm`}>Open to cloud & infrastructure discussions, low‑key opportunities, collaboration, or simply a personal hello — professional or personal, your message is welcome.</p>
+        <div className="flex items-center gap-3 mb-6">
+          <div className="h-7 w-0.5 rounded-full bg-gradient-to-b from-amber-400 to-yellow-600" />
+          <div>
+            <div className={`font-mono text-[10px] mb-0.5 ${isDarkMode ? 'text-yellow-500/40' : 'text-yellow-600/50'}`}>~/contact</div>
+            <h2 className={`text-xl font-bold tracking-tight ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Let&apos;s Connect</h2>
+          </div>
         </div>
+        <p className={`${textSecondary} text-sm mb-6 max-w-xl`}>Open to cloud & infrastructure discussions, low‑key opportunities, collaboration, or simply a personal hello.</p>
         <div className="flex justify-center">
           <Card className={`${cardClasses} shadow-xl hover:shadow-2xl transition-all duration-300 w-full max-w-4xl`}>
             <CardContent className="p-6 lg:p-8 space-y-8">

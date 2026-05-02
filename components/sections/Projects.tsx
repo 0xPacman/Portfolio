@@ -300,22 +300,18 @@ export function Projects({ isDarkMode, projectsRef }: ProjectsProps) {
         <meta itemProp="description" content="Collection of projects showcasing expertise in cloud infrastructure, security tools, web development, and system administration" />
 
         {/* Header */}
-        <div className="flex flex-col gap-1">
-          <motion.h2
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-2xl font-semibold tracking-tight bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent"
-          >
-            Projects
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: -6 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-xs text-muted-foreground"
-          >
-            {filtered.length} project{filtered.length !== 1 ? 's' : ''} — apps, tools & enterprise infrastructure.
-          </motion.p>
+        <div className="flex items-center gap-3 mb-1">
+          <div className="h-7 w-0.5 rounded-full bg-gradient-to-b from-amber-400 to-yellow-600" />
+          <div>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className={`font-mono text-[10px] mb-0.5 ${isDarkMode ? 'text-yellow-500/40' : 'text-yellow-600/50'}`}>~/projects</motion.div>
+            <motion.h2 initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className={`text-xl font-bold tracking-tight ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+              Projects
+            </motion.h2>
+          </div>
         </div>
+        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-xs text-muted-foreground -mt-3">
+          {filtered.length} project{filtered.length !== 1 ? 's' : ''} — apps, tools & enterprise infrastructure.
+        </motion.p>
 
         {/* Category Filter Pills */}
         <div className="flex flex-wrap gap-2">

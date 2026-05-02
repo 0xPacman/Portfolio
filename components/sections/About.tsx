@@ -10,137 +10,154 @@ interface AboutProps {
   aboutRef: React.RefObject<HTMLDivElement>
 }
 
-/* ── Animated counter hook ── */
 function useCountUp(target: string, duration = 1600) {
   const [display, setDisplay] = React.useState("0")
   const ref = React.useRef<HTMLDivElement>(null)
-
   React.useEffect(() => {
     const el = ref.current
     if (!el) return
-
     const numeric = parseFloat(target.replace(/[^0-9.]/g, ""))
     const suffix = target.replace(/[0-9.]/g, "")
     if (isNaN(numeric)) { setDisplay(target); return }
-
     let started = false
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !started) {
-          started = true
-          const start = performance.now()
-          const step = (now: number) => {
-            const progress = Math.min((now - start) / duration, 1)
-            const eased = 1 - Math.pow(1 - progress, 3)  // ease-out cubic
-            const current = numeric * eased
-            setDisplay(
-              (Number.isInteger(numeric) ? Math.floor(current) : current.toFixed(1)) + suffix
-            )
-            if (progress < 1) requestAnimationFrame(step)
-          }
-          requestAnimationFrame(step)
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !started) {
+        started = true
+        const start = performance.now()
+        const step = (now: number) => {
+          const p = Math.min((now - start) / duration, 1)
+          const eased = 1 - Math.pow(1 - p, 3)
+          const cur = numeric * eased
+          setDisplay((Number.isInteger(numeric) ? Math.floor(cur) : cur.toFixed(1)) + suffix)
+          if (p < 1) requestAnimationFrame(step)
         }
-      },
-      { threshold: 0.3 }
-    )
+        requestAnimationFrame(step)
+      }
+    }, { threshold: 0.3 })
     observer.observe(el)
     return () => observer.disconnect()
   }, [target, duration])
-
   return { ref, display }
 }
 
-export const About: React.FC<AboutProps> = ({ isDarkMode, aboutRef }: AboutProps) => {
-  const textPrimary = "text-foreground"
-  const textSecondary = "text-muted-foreground"
-  const textAccent = "text-amber-500 dark:text-amber-400"
+interface StatDef { value: string; label: string; sub: string; icon: React.ElementType }
 
-  const shell = isDarkMode
-    ? "bg-black/50 border border-yellow-500/25 shadow-yellow-500/10"
-    : "bg-white/70 border border-yellow-500/35 shadow-yellow-500/20"
+function StatCard({ value, label, sub, icon: Icon, isDarkMode }: StatDef & { isDarkMode: boolean }) {
+  const counter = useCountUp(value)
+  const D = isDarkMode
+  return (
+    <Card className={`backdrop-blur-xl shadow-lg transition-all duration-300 hover:-translate-y-1 border ${
+      D ? "bg-black/40 border-yellow-500/12 hover:border-yellow-500/25 hover:shadow-yellow-500/10"
+        : "bg-white/70 border-yellow-500/20 hover:border-yellow-500/40 hover:shadow-yellow-500/15"
+    }`}>
+      <CardContent className="p-5" ref={counter.ref}>
+        <div className="flex items-start justify-between mb-3">
+          <div className={`text-3xl font-bold tabular-nums font-mono ${D ? "text-white" : "text-gray-900"}`}>
+            {counter.display}
+          </div>
+          <div className={`h-9 w-9 rounded-lg flex items-center justify-center border ${
+            D ? "bg-amber-500/10 border-amber-400/15" : "bg-amber-500/10 border-amber-400/25"
+          }`}>
+            <Icon className="text-amber-500" size={16} />
+          </div>
+        </div>
+        <div className={`text-sm font-semibold ${D ? "text-gray-200" : "text-gray-700"}`}>{label}</div>
+        <div className={`text-[11px] mt-0.5 ${D ? "text-gray-600" : "text-gray-400"}`}>{sub}</div>
+      </CardContent>
+    </Card>
+  )
+}
 
-  const gradientStroke = isDarkMode
-    ? "from-yellow-500/20 via-amber-400/10 to-orange-300/10"
-    : "from-yellow-400/30 via-amber-300/20 to-orange-200/30"
+const stats: StatDef[] = [
+  { value: "3+",    label: "Years Professional", sub: "+5 years overall IT",         icon: Star      },
+  { value: "100+",  label: "Enterprise Clients",  sub: "Across Morocco",              icon: Users     },
+  { value: "99.9%", label: "Uptime SLA",           sub: "Architected & operated",     icon: TrendingUp},
+  { value: "20+",   label: "Certifications",       sub: "Cloud & virtualization",     icon: Star      },
+]
 
-  const stats = [
-    { value: "3+", label: "Years Professional", sub: "+5 years overall IT", icon: Star },
-    { value: "100+", label: "Enterprise Clients", sub: "Across Morocco", icon: Users },
-    { value: "99.9%", label: "Uptime SLA", sub: "Architected & operated", icon: TrendingUp },
-    { value: "20+", label: "Certifications", sub: "Cloud & virtualization", icon: Star },
-  ]
+export const About: React.FC<AboutProps> = ({ isDarkMode, aboutRef }) => {
+  const D = isDarkMode
+
+  const shell = D
+    ? "bg-black/40 border-yellow-500/12"
+    : "bg-white/70 border-yellow-500/20"
 
   return (
-    <section
-      ref={aboutRef}
-      className="space-y-6"
-      itemScope
-      itemType="https://schema.org/Person"
-    >
-      {/* ── Section title ── */}
-      <div className="flex items-center gap-3 mb-2">
-        <div className="h-8 w-1 rounded-full bg-gradient-to-b from-amber-400 to-yellow-600" />
-        <h2 className={`text-2xl font-bold tracking-tight ${textPrimary}`}>About Me</h2>
+    <section ref={aboutRef} className="space-y-5" itemScope itemType="https://schema.org/Person">
+
+      {/* Section header */}
+      <div className="flex items-center gap-3 mb-1">
+        <div className="h-7 w-0.5 rounded-full bg-gradient-to-b from-amber-400 to-yellow-600" />
+        <div>
+          <div className={`font-mono text-[10px] mb-0.5 ${D ? "text-yellow-500/40" : "text-yellow-600/50"}`}>~/about</div>
+          <h2 className={`text-xl font-bold tracking-tight ${D ? "text-white" : "text-gray-900"}`}>About Me</h2>
+        </div>
       </div>
 
-      {/* ── Hero card ── */}
-      <Card className={`${shell} backdrop-blur-xl shadow-2xl overflow-hidden group`}>
-        <div className={`absolute inset-0 pointer-events-none bg-gradient-to-br ${gradientStroke} opacity-60 group-hover:opacity-100 transition-opacity duration-700`} />
-        <CardContent className="relative p-8 lg:p-10">
-          <div className="grid gap-10 lg:grid-cols-12 items-center">
-            <div className="lg:col-span-7 space-y-5">
-              <div className="inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold bg-amber-500/15 border border-amber-400/30 text-amber-600 dark:text-amber-200">
-                <div className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
-                </div>
+      {/* Hero card */}
+      <Card className={`border ${shell} backdrop-blur-xl shadow-xl overflow-hidden`}>
+        <CardContent className="p-6 lg:p-8">
+          <div className="grid gap-8 lg:grid-cols-12 items-center">
+            <div className="lg:col-span-7 space-y-4">
+              {/* Status badge */}
+              <div className={`inline-flex items-center rounded-full px-3 py-1 text-[11px] font-semibold border ${
+                D ? "bg-amber-500/10 border-amber-400/20 text-amber-300"
+                  : "bg-amber-500/10 border-amber-400/30 text-amber-700"
+              }`}>
                 Cloud Infrastructure Engineer @ Atlas Cloud Services
               </div>
-              <h2 className={`text-3xl lg:text-4xl font-bold leading-tight ${textPrimary}`} itemProp="name">
-                Ahmed Jadani
-              </h2>
-              <meta itemProp="alternateName" content="Pacman" />
-              <p className={`text-lg lg:text-xl leading-relaxed ${textSecondary}`} itemProp="description">
+
+              {/* Name */}
+              <div>
+                <h2 className={`text-3xl lg:text-4xl font-bold leading-tight ${D ? "text-white" : "text-gray-900"}`} itemProp="name">
+                  Ahmed Jadani
+                </h2>
+                <meta itemProp="alternateName" content="Pacman" />
+                <div className="font-mono text-base font-semibold text-yellow-500 mt-0.5">0xPacman</div>
+              </div>
+
+              <p className={`text-[15px] leading-relaxed ${D ? "text-gray-400" : "text-gray-500"}`} itemProp="description">
                 Passionate about building scalable, secure cloud foundations and leading digital transformation through pragmatic automation and resilient architectures.
               </p>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                <div className={`flex items-center gap-3 ${textSecondary}`} itemProp="address" itemScope itemType="https://schema.org/PostalAddress">
-                  <div className="h-9 w-9 rounded-lg flex items-center justify-center bg-amber-500/15 border border-amber-400/30">
-                    <MapPin className={textAccent} size={16} />
+
+              <div className="grid sm:grid-cols-2 gap-3">
+                {[
+                  { icon: MapPin, label: "Based in", value: "Benguerir, Morocco" },
+                  { icon: Zap,    label: "Availability", value: "Consulting & collaboration" },
+                ].map(({ icon: Icon, label, value }) => (
+                  <div key={label} className={`flex items-center gap-3 text-[12px] ${D ? "text-gray-400" : "text-gray-500"}`}>
+                    <div className={`h-8 w-8 rounded-lg flex items-center justify-center flex-shrink-0 border ${
+                      D ? "bg-amber-500/10 border-amber-400/15" : "bg-amber-500/10 border-amber-400/25"
+                    }`}>
+                      <Icon className="text-amber-500" size={13} />
+                    </div>
+                    <div>
+                      <div className={`font-semibold text-[11px] ${D ? "text-gray-300" : "text-gray-600"}`}>{label}</div>
+                      <div>{value}</div>
+                    </div>
                   </div>
-                  <div>
-                    <div className="font-semibold text-foreground">Based in</div>
-                    <span itemProp="addressLocality">Benguerir</span>, <span itemProp="addressCountry">Morocco</span>
-                  </div>
-                </div>
-                <div className={`flex items-center gap-3 ${textSecondary}`}>
-                  <div className="h-9 w-9 rounded-lg flex items-center justify-center bg-amber-500/15 border border-amber-400/30">
-                    <Zap className={textAccent} size={16} />
-                  </div>
-                  <div>
-                    <div className="font-semibold text-foreground">Availability</div>
-                    Consulting, collaboration & opportunities
-                  </div>
-                </div>
+                ))}
               </div>
               <meta itemProp="url" content="https://0xpacman.github.io/Portfolio" />
             </div>
 
+            {/* Photo */}
             <div className="lg:col-span-5 flex justify-center">
-              <div className="relative group/img">
-                <div className="absolute inset-0 blur-3xl bg-amber-500/30 rounded-full transition-transform duration-700 group-hover/img:scale-110" />
-                <div className="relative w-52 h-52 md:w-60 md:h-60 rounded-2xl border-4 border-amber-400/40 shadow-2xl overflow-hidden transition-transform duration-500 group-hover/img:scale-[1.03] group-hover/img:shadow-amber-500/40">
+              <div className="relative">
+                <div className={`absolute inset-0 blur-3xl rounded-full scale-110 ${D ? "bg-amber-500/20" : "bg-amber-400/30"}`} />
+                <div className={`relative w-48 h-48 md:w-56 md:h-56 rounded-2xl overflow-hidden border-2 shadow-2xl transition-transform duration-500 hover:scale-[1.02] ${
+                  D ? "border-amber-400/30 shadow-amber-500/10" : "border-amber-400/40 shadow-amber-500/15"
+                }`}>
                   <Image
                     src="/media/PDP.jpg"
                     alt="Ahmed Jadani"
                     fill
-                    sizes="(max-width: 768px) 208px, 240px"
+                    sizes="(max-width: 768px) 192px, 224px"
                     className="object-cover"
                     itemProp="image"
                   />
                 </div>
-                {/* Floating tag */}
-                <div className="absolute -bottom-3 -right-3 rounded-lg bg-gradient-to-r from-yellow-500 to-amber-600 px-3 py-1.5 text-xs font-bold text-black shadow-lg">
+                <div className="absolute -bottom-2.5 -right-2.5 rounded-lg bg-gradient-to-r from-yellow-500 to-amber-600 px-2.5 py-1 text-[11px] font-bold text-black shadow-lg">
                   0xPacman
                 </div>
               </div>
@@ -149,61 +166,46 @@ export const About: React.FC<AboutProps> = ({ isDarkMode, aboutRef }: AboutProps
         </CardContent>
       </Card>
 
-      {/* ── Journey card ── */}
-      <Card className={`${shell} backdrop-blur-xl shadow-xl`}> 
-        <CardContent className="p-7 lg:p-8 space-y-4">
+      {/* Journey card */}
+      <Card className={`border ${shell} backdrop-blur-xl shadow-lg`}>
+        <CardContent className="p-6 space-y-3">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-lg bg-amber-500/15 border border-amber-400/30 flex items-center justify-center">
-              <Building2 className={textAccent} size={18} />
+            <div className={`h-9 w-9 rounded-lg flex items-center justify-center border ${
+              D ? "bg-amber-500/10 border-amber-400/15" : "bg-amber-500/10 border-amber-400/25"
+            }`}>
+              <Building2 className="text-amber-500" size={16} />
             </div>
             <div>
-              <h3 className={`text-xl font-semibold ${textPrimary}`}>Atlas Cloud Services Journey</h3>
-              <p className={`text-sm ${textSecondary}`}>Architecting enterprise-grade platforms for Morocco&apos;s leading data center and public cloud provider.</p>
+              <h3 className={`text-base font-semibold ${D ? "text-white" : "text-gray-900"}`}>Atlas Cloud Services Journey</h3>
+              <p className={`text-[11px] ${D ? "text-gray-500" : "text-gray-400"}`}>Morocco's leading data center & public cloud provider</p>
             </div>
           </div>
-          <p className={`${textSecondary} leading-relaxed`}>
-            As a Cloud Infrastructure Engineer at <span className={textAccent} itemProp="worksFor" itemScope itemType="https://schema.org/Organization">
+          <p className={`text-[13px] leading-relaxed ${D ? "text-gray-400" : "text-gray-500"}`}>
+            As a Cloud Infrastructure Engineer at{" "}
+            <span className="text-amber-500 font-medium" itemProp="worksFor" itemScope itemType="https://schema.org/Organization">
               <span itemProp="name">Atlas Cloud Services</span>
-              <meta itemProp="url" content="https://0xpacman.com" />
             </span>, I design and operate resilient cloud stacks serving nationwide enterprise workloads.
           </p>
-          <p className={`${textSecondary} leading-relaxed`}>
+          <p className={`text-[13px] leading-relaxed ${D ? "text-gray-400" : "text-gray-500"}`}>
             My focus spans private cloud architecture, public cloud solutions, and hybrid designs that balance governance, performance, and cost efficiency.
           </p>
         </CardContent>
       </Card>
 
-      {/* ── Stats with animated counters ── */}
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        {stats.map(({ value, label, sub, icon: Icon }) => {
-          const counter = useCountUp(value)
-          return (
-            <Card key={label} className={`${shell} backdrop-blur-xl shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-amber-500/30 hover:border-amber-400/50`}>
-              <CardContent className="p-5 space-y-1" ref={counter.ref}>
-                <div className="flex items-center justify-between">
-                  <div className={`text-3xl font-bold tabular-nums ${textPrimary}`}>{counter.display}</div>
-                  <div className="h-10 w-10 rounded-lg bg-amber-500/15 border border-amber-400/30 flex items-center justify-center">
-                    <Icon className={textAccent} size={18} />
-                  </div>
-                </div>
-                <div className={`text-sm font-medium ${textPrimary}`}>{label}</div>
-                <div className={`text-xs ${textSecondary}`}>{sub}</div>
-              </CardContent>
-            </Card>
-          )
-        })}
+      {/* Stats grid */}
+      <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+        {stats.map(s => (
+          <StatCard key={s.label} {...s} isDarkMode={isDarkMode} />
+        ))}
       </div>
 
-      <div style={{ display: 'none' }}>
+      <div style={{ display: "none" }}>
         <meta itemProp="sameAs" content="https://github.com/0xPacman" />
         <meta itemProp="sameAs" content="https://linkedin.com/in/0xpacman" />
         <meta itemProp="knowsAbout" content="Cloud Infrastructure" />
         <meta itemProp="knowsAbout" content="VMware" />
-        <meta itemProp="knowsAbout" content="OpenStack" />
         <meta itemProp="knowsAbout" content="Network Security" />
-        <meta itemProp="knowsAbout" content="System Administration" />
-        <meta itemProp="knowsAbout" content="DevOps" />
-        <meta itemProp="knowsAbout" content="Web Development" />
+        <meta itemProp="knowsAbout" content="Penetration Testing" />
       </div>
     </section>
   )
