@@ -19,7 +19,8 @@ import {
   Mail,
   Layers,
   ChevronDown,
-  Lock
+  Lock,
+  PenTool
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
@@ -102,6 +103,21 @@ const projects: Project[] = [
     icon: Code,
     gradient: "from-teal-500 to-cyan-500",
     status: "Live"
+  },
+  {
+    title: "Draw",
+    description: "Collaborative online whiteboard forked from Excalidraw, developed as an open-source project for sharing ideas, sketching diagrams, and building together.",
+    image: "https://images.unsplash.com/photo-1453928582365-b6ad33cbcf64?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    category: "Web",
+    tech: ["Excalidraw", "Collaboration", "Whiteboard", "Open Source"],
+    links: {
+      demo: "https://draw.0xpacman.com/",
+      github: "https://github.com/0xPacman/excalidraw"
+    },
+    features: ["Forked from Excalidraw", "Collaborative Drawing", "Open Source Development", "Visual Brainstorming"],
+    icon: PenTool,
+    gradient: "from-cyan-500 to-blue-500",
+    status: "Open Source"
   },
   {
     title: "ColorGuesser",
