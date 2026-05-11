@@ -19,7 +19,8 @@ import {
   Mail,
   Layers,
   ChevronDown,
-  Lock
+  Lock,
+  PenTool
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
@@ -114,7 +115,7 @@ const projects: Project[] = [
       github: "https://github.com/0xPacman/excalidraw"
     },
     features: ["Forked from Excalidraw", "Collaborative Drawing", "Open Source Development", "Visual Brainstorming"],
-    icon: Code,
+    icon: PenTool,
     gradient: "from-cyan-500 to-blue-500",
     status: "Open Source"
   },
