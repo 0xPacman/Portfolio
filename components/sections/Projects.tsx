@@ -104,6 +104,21 @@ const projects: Project[] = [
     status: "Live"
   },
   {
+    title: "Draw",
+    description: "Collaborative online whiteboard forked from Excalidraw, developed as an open-source project for sharing ideas, sketching diagrams, and building together.",
+    image: "https://images.unsplash.com/photo-1453928582365-b6ad33cbcf64?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    category: "Web",
+    tech: ["Excalidraw", "Collaboration", "Whiteboard", "Open Source"],
+    links: {
+      demo: "https://draw.0xpacman.com/",
+      github: "https://github.com/0xPacman/excalidraw"
+    },
+    features: ["Forked from Excalidraw", "Collaborative Drawing", "Open Source Development", "Visual Brainstorming"],
+    icon: Code,
+    gradient: "from-cyan-500 to-blue-500",
+    status: "Open Source"
+  },
+  {
     title: "ColorGuesser",
     description: "Interactive color guessing game that challenges players to identify colors. Features scoring system, and sleek modern interface.",
     image: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",

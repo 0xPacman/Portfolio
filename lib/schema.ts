@@ -105,6 +105,20 @@ export const projectsSchema: object[] = [
   },
   {
     '@type': 'SoftwareApplication',
+    name: 'Draw',
+    description: 'Collaborative online whiteboard forked from Excalidraw, developed as an open-source project for sharing ideas, sketching diagrams, and building together.',
+    url: 'https://draw.0xpacman.com/',
+    codeRepository: 'https://github.com/0xPacman/excalidraw',
+    author: {
+      '@type': 'Person',
+      '@id': `${BASE_URL}/#person`
+    },
+    applicationCategory: 'Whiteboard',
+    operatingSystem: 'Web Browser',
+    keywords: ['Excalidraw', 'Collaboration', 'Whiteboard', 'Open Source']
+  },
+  {
+    '@type': 'SoftwareApplication',
     name: 'ColorGuesser',
     description: 'Interactive color guessing game that challenges players to identify colors. Features scoring system, and sleek modern interface.',
     url: 'https://colorguesser.0xpacman.com',
