@@ -10,7 +10,12 @@ const config: Config = {
   ],
   theme: {
   	extend: {
+  		fontFamily: {
+  			mono: ['var(--font-mono)', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+  			sans: ['var(--font-sans)', 'ui-sans-serif', 'system-ui', 'sans-serif']
+  		},
   		colors: {
+  			'term-green': 'hsl(var(--term-green))',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

@@ -1,211 +1,132 @@
 'use client'
 
 import React from "react"
-import { Card, CardContent } from "@/components/ui/card"
-import { Building2, MapPin, Zap, Star, Users, TrendingUp } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
+import { Github, Linkedin, Phone, MapPin, Building2, Activity } from "lucide-react"
+import { SectionPrompt } from "@/components/shell/SectionPrompt"
+import { useCountUp } from "@/hooks/use-count-up"
 
-interface AboutProps {
-  isDarkMode: boolean
-  aboutRef: React.RefObject<HTMLDivElement>
-}
+interface StatDef { value: string; label: string; sub: string }
 
-function useCountUp(target: string, duration = 1600) {
-  const [display, setDisplay] = React.useState("0")
-  const ref = React.useRef<HTMLDivElement>(null)
-  React.useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const numeric = parseFloat(target.replace(/[^0-9.]/g, ""))
-    const suffix = target.replace(/[0-9.]/g, "")
-    if (isNaN(numeric)) { setDisplay(target); return }
-    let started = false
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting && !started) {
-        started = true
-        const start = performance.now()
-        const step = (now: number) => {
-          const p = Math.min((now - start) / duration, 1)
-          const eased = 1 - Math.pow(1 - p, 3)
-          const cur = numeric * eased
-          setDisplay((Number.isInteger(numeric) ? Math.floor(cur) : cur.toFixed(1)) + suffix)
-          if (p < 1) requestAnimationFrame(step)
-        }
-        requestAnimationFrame(step)
-      }
-    }, { threshold: 0.3 })
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [target, duration])
-  return { ref, display }
-}
+const stats: StatDef[] = [
+  { value: "3+", label: "years pro", sub: "+5y overall IT" },
+  { value: "100+", label: "enterprise clients", sub: "across Morocco" },
+  { value: "99.9%", label: "uptime SLA", sub: "architected & run" },
+  { value: "20+", label: "certifications", sub: "cloud & virt" },
+]
 
-interface StatDef { value: string; label: string; sub: string; icon: React.ElementType }
+const socials = [
+  { href: "https://github.com/0xPacman", icon: Github, label: "GitHub" },
+  { href: "https://linkedin.com/in/0xpacman", icon: Linkedin, label: "LinkedIn" },
+  { href: "https://wa.me/212708429995", icon: Phone, label: "WhatsApp" },
+]
 
-function StatCard({ value, label, sub, icon: Icon, isDarkMode }: StatDef & { isDarkMode: boolean }) {
-  const counter = useCountUp(value)
-  const D = isDarkMode
+function StatCell({ value, label, sub }: StatDef) {
+  const display = useCountUp(value)
   return (
-    <Card className={`backdrop-blur-xl shadow-lg transition-all duration-300 hover:-translate-y-1 border ${
-      D ? "bg-black/40 border-yellow-500/12 hover:border-yellow-500/25 hover:shadow-yellow-500/10"
-        : "bg-white/70 border-yellow-500/20 hover:border-yellow-500/40 hover:shadow-yellow-500/15"
-    }`}>
-      <CardContent className="p-5" ref={counter.ref}>
-        <div className="flex items-start justify-between mb-3">
-          <div className={`text-3xl font-bold tabular-nums font-mono ${D ? "text-white" : "text-gray-900"}`}>
-            {counter.display}
-          </div>
-          <div className={`h-9 w-9 rounded-lg flex items-center justify-center border ${
-            D ? "bg-amber-500/10 border-amber-400/15" : "bg-amber-500/10 border-amber-400/25"
-          }`}>
-            <Icon className="text-amber-500" size={16} />
-          </div>
-        </div>
-        <div className={`text-sm font-semibold ${D ? "text-gray-200" : "text-gray-700"}`}>{label}</div>
-        <div className={`text-[11px] mt-0.5 ${D ? "text-gray-600" : "text-gray-400"}`}>{sub}</div>
-      </CardContent>
-    </Card>
+    <div className="flex-1 min-w-[7rem] px-4 py-3">
+      <div className="text-2xl font-bold font-mono tabular-nums text-primary">{display}</div>
+      <div className="text-[12px] text-foreground mt-0.5">{label}</div>
+      <div className="text-[10px] text-muted-foreground font-mono">{sub}</div>
+    </div>
   )
 }
 
-const stats: StatDef[] = [
-  { value: "3+",    label: "Years Professional", sub: "+5 years overall IT",         icon: Star      },
-  { value: "100+",  label: "Enterprise Clients",  sub: "Across Morocco",              icon: Users     },
-  { value: "99.9%", label: "Uptime SLA",           sub: "Architected & operated",     icon: TrendingUp},
-  { value: "20+",   label: "Certifications",       sub: "Cloud & virtualization",     icon: Star      },
-]
-
-export const About: React.FC<AboutProps> = ({ isDarkMode, aboutRef }) => {
-  const D = isDarkMode
-
-  const shell = D
-    ? "bg-black/40 border-yellow-500/12"
-    : "bg-white/70 border-yellow-500/20"
-
+export function About() {
   return (
-    <section ref={aboutRef} className="space-y-5" itemScope itemType="https://schema.org/Person">
+    <section className="space-y-6" itemScope itemType="https://schema.org/Person">
+      <SectionPrompt command="cat about.md" />
 
-      {/* Section header */}
-      <div className="flex items-center gap-3 mb-1">
-        <div className="h-7 w-0.5 rounded-full bg-gradient-to-b from-amber-400 to-yellow-600" />
-        <div>
-          <div className={`font-mono text-[10px] mb-0.5 ${D ? "text-yellow-500/40" : "text-yellow-600/50"}`}>~/about</div>
-          <h2 className={`text-xl font-bold tracking-tight ${D ? "text-white" : "text-gray-900"}`}>About Me</h2>
+      {/* Identity */}
+      <div className="flex flex-col sm:flex-row gap-6 items-start">
+        <div className="relative w-32 h-32 sm:w-36 sm:h-36 flex-shrink-0 border border-primary/25 overflow-hidden">
+          <Image
+            src="/media/PDP.jpg"
+            alt="Ahmed Jadani"
+            fill
+            sizes="144px"
+            className="object-cover"
+            itemProp="image"
+            priority
+          />
+          <span className="absolute bottom-0 left-0 right-0 bg-black/80 text-primary text-[10px] font-mono text-center py-0.5 border-t border-primary/25">
+            0xPacman
+          </span>
+        </div>
+
+        <div className="space-y-2 min-w-0">
+          <h1 className="text-3xl sm:text-4xl font-bold font-sans tracking-tight" itemProp="name">
+            Ahmed Jadani
+          </h1>
+          <meta itemProp="alternateName" content="0xPacman" />
+          <div className="font-mono text-sm text-primary" itemProp="jobTitle">
+            Cloud Infrastructure Engineer
+          </div>
+          <div className="flex flex-wrap gap-x-5 gap-y-1.5 text-[12px] text-muted-foreground font-mono pt-1">
+            <span className="flex items-center gap-1.5">
+              <Building2 size={12} className="text-primary/70" /> Atlas Cloud Services
+            </span>
+            <span className="flex items-center gap-1.5">
+              <MapPin size={12} className="text-primary/70" /> Benguerir, Morocco
+            </span>
+          </div>
+          <div className="flex gap-2 pt-2">
+            {socials.map(({ href, icon: Icon, label }) => (
+              <Link
+                key={href}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={label}
+                className="w-8 h-8 flex items-center justify-center border border-primary/20 text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors"
+              >
+                <Icon size={14} />
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Hero card */}
-      <Card className={`border ${shell} backdrop-blur-xl shadow-xl overflow-hidden`}>
-        <CardContent className="p-6 lg:p-8">
-          <div className="grid gap-8 lg:grid-cols-12 items-center">
-            <div className="lg:col-span-7 space-y-4">
-              {/* Status badge */}
-              <div className={`inline-flex items-center rounded-full px-3 py-1 text-[11px] font-semibold border ${
-                D ? "bg-amber-500/10 border-amber-400/20 text-amber-300"
-                  : "bg-amber-500/10 border-amber-400/30 text-amber-700"
-              }`}>
-                Cloud Infrastructure Engineer @ Atlas Cloud Services
-              </div>
+      {/* whoami prose */}
+      <div className="space-y-3 font-sans text-[15px] leading-relaxed text-foreground/80 max-w-2xl" itemProp="description">
+        <p>
+          I design and operate resilient cloud stacks at{" "}
+          <span className="text-primary font-medium" itemProp="worksFor" itemScope itemType="https://schema.org/Organization">
+            <span itemProp="name">Atlas Cloud Services</span>
+          </span>
+          , Morocco&apos;s leading data center, private cloud architecture, VMware &amp; VxRail, OpenStack, and
+          enterprise automation serving 100+ nationwide workloads.
+        </p>
+        <p>
+          I care about pragmatic automation and{" "}
+          <span className="text-primary font-medium">reliability engineering</span>, turning manual, repetitive
+          processes into repeatable systems, and building the observability and backup discipline that keeps
+          infrastructure running at scale.
+        </p>
+      </div>
 
-              {/* Name */}
-              <div>
-                <h2 className={`text-3xl lg:text-4xl font-bold leading-tight ${D ? "text-white" : "text-gray-900"}`} itemProp="name">
-                  Ahmed Jadani
-                </h2>
-                <meta itemProp="alternateName" content="Pacman" />
-                <div className="font-mono text-base font-semibold text-yellow-500 mt-0.5">0xPacman</div>
-              </div>
-
-              <p className={`text-[15px] leading-relaxed ${D ? "text-gray-400" : "text-gray-500"}`} itemProp="description">
-                Passionate about building scalable, secure cloud foundations and leading digital transformation through pragmatic automation and resilient architectures.
-              </p>
-
-              <div className="grid sm:grid-cols-2 gap-3">
-                {[
-                  { icon: MapPin, label: "Based in", value: "Benguerir, Morocco" },
-                  { icon: Zap,    label: "Availability", value: "Consulting & collaboration" },
-                ].map(({ icon: Icon, label, value }) => (
-                  <div key={label} className={`flex items-center gap-3 text-[12px] ${D ? "text-gray-400" : "text-gray-500"}`}>
-                    <div className={`h-8 w-8 rounded-lg flex items-center justify-center flex-shrink-0 border ${
-                      D ? "bg-amber-500/10 border-amber-400/15" : "bg-amber-500/10 border-amber-400/25"
-                    }`}>
-                      <Icon className="text-amber-500" size={13} />
-                    </div>
-                    <div>
-                      <div className={`font-semibold text-[11px] ${D ? "text-gray-300" : "text-gray-600"}`}>{label}</div>
-                      <div>{value}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <meta itemProp="url" content="https://0xpacman.github.io/Portfolio" />
-            </div>
-
-            {/* Photo */}
-            <div className="lg:col-span-5 flex justify-center">
-              <div className="relative">
-                <div className={`absolute inset-0 blur-3xl rounded-full scale-110 ${D ? "bg-amber-500/20" : "bg-amber-400/30"}`} />
-                <div className={`relative w-48 h-48 md:w-56 md:h-56 rounded-2xl overflow-hidden border-2 shadow-2xl transition-transform duration-500 hover:scale-[1.02] ${
-                  D ? "border-amber-400/30 shadow-amber-500/10" : "border-amber-400/40 shadow-amber-500/15"
-                }`}>
-                  <Image
-                    src="/media/PDP.jpg"
-                    alt="Ahmed Jadani"
-                    fill
-                    sizes="(max-width: 768px) 192px, 224px"
-                    className="object-cover"
-                    itemProp="image"
-                  />
-                </div>
-                <div className="absolute -bottom-2.5 -right-2.5 rounded-lg bg-gradient-to-r from-yellow-500 to-amber-600 px-2.5 py-1 text-[11px] font-bold text-black shadow-lg">
-                  0xPacman
-                </div>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Journey card */}
-      <Card className={`border ${shell} backdrop-blur-xl shadow-lg`}>
-        <CardContent className="p-6 space-y-3">
-          <div className="flex items-center gap-3">
-            <div className={`h-9 w-9 rounded-lg flex items-center justify-center border ${
-              D ? "bg-amber-500/10 border-amber-400/15" : "bg-amber-500/10 border-amber-400/25"
-            }`}>
-              <Building2 className="text-amber-500" size={16} />
-            </div>
-            <div>
-              <h3 className={`text-base font-semibold ${D ? "text-white" : "text-gray-900"}`}>Atlas Cloud Services Journey</h3>
-              <p className={`text-[11px] ${D ? "text-gray-500" : "text-gray-400"}`}>Morocco's leading data center & public cloud provider</p>
-            </div>
-          </div>
-          <p className={`text-[13px] leading-relaxed ${D ? "text-gray-400" : "text-gray-500"}`}>
-            As a Cloud Infrastructure Engineer at{" "}
-            <span className="text-amber-500 font-medium" itemProp="worksFor" itemScope itemType="https://schema.org/Organization">
-              <span itemProp="name">Atlas Cloud Services</span>
-            </span>, I design and operate resilient cloud stacks serving nationwide enterprise workloads.
-          </p>
-          <p className={`text-[13px] leading-relaxed ${D ? "text-gray-400" : "text-gray-500"}`}>
-            My focus spans private cloud architecture, public cloud solutions, and hybrid designs that balance governance, performance, and cost efficiency.
-          </p>
-        </CardContent>
-      </Card>
-
-      {/* Stats grid */}
-      <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-        {stats.map(s => (
-          <StatCard key={s.label} {...s} isDarkMode={isDarkMode} />
-        ))}
+      {/* system monitor strip */}
+      <div className="border border-primary/15 bg-black/40">
+        <div className="flex items-center gap-2 px-4 py-1.5 border-b border-primary/10 text-[11px] font-mono text-muted-foreground">
+          <Activity size={11} className="text-primary/60" aria-hidden="true" />
+          <span>~/stats, system monitor</span>
+        </div>
+        <div className="flex flex-wrap divide-x divide-primary/10">
+          {stats.map((s) => (
+            <StatCell key={s.label} {...s} />
+          ))}
+        </div>
       </div>
 
       <div style={{ display: "none" }}>
+        <meta itemProp="url" content="https://0xpacman.com" />
         <meta itemProp="sameAs" content="https://github.com/0xPacman" />
         <meta itemProp="sameAs" content="https://linkedin.com/in/0xpacman" />
         <meta itemProp="knowsAbout" content="Cloud Infrastructure" />
         <meta itemProp="knowsAbout" content="VMware" />
-        <meta itemProp="knowsAbout" content="Network Security" />
-        <meta itemProp="knowsAbout" content="Penetration Testing" />
+        <meta itemProp="knowsAbout" content="OpenStack" />
+        <meta itemProp="knowsAbout" content="DevOps" />
       </div>
     </section>
   )

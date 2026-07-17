@@ -1,143 +1,96 @@
 'use client'
 
 import React from "react"
-import { Card, CardContent } from "@/components/ui/card"
-import { Github, Linkedin, Mail, Phone, Building2, Rocket } from "lucide-react"
 import Link from "next/link"
+import { Github, Linkedin, Mail, Phone, Building2, Copy, Check } from "lucide-react"
+import { SectionPrompt } from "@/components/shell/SectionPrompt"
 
-interface ContactProps {
-  isDarkMode: boolean
-  contactRef: React.RefObject<HTMLDivElement>
+interface Channel {
+  key: string
+  label: string
+  value: string
+  href?: string
+  copy?: string
+  icon: React.ElementType
+  itemProp?: string
+  contactType?: string
 }
 
-export const Contact: React.FC<ContactProps> = ({ isDarkMode, contactRef }: ContactProps) => {
-  const cardClasses = isDarkMode
-    ? "bg-black/40 backdrop-blur-md border-yellow-500/30"
-    : "bg-white/60 backdrop-blur-md border-yellow-400/40"
-  const textPrimary = "text-foreground"
-  const textSecondary = "text-muted-foreground"
-  const textAccent = "text-amber-500 dark:text-amber-400"
+const channels: Channel[] = [
+  { key: "work", label: "work", value: "ahmed.jadani@0xpacman.com", href: "mailto:ahmed.jadani@0xpacman.com", copy: "ahmed.jadani@0xpacman.com", icon: Mail, itemProp: "email", contactType: "work" },
+  { key: "personal", label: "personal", value: "ahmed4star@gmail.com", href: "mailto:ahmed4star@gmail.com", copy: "ahmed4star@gmail.com", icon: Mail, itemProp: "email", contactType: "personal" },
+  { key: "phone", label: "phone", value: "+212 708 429 995", href: "tel:+212708429995", copy: "+212708429995", icon: Phone, itemProp: "telephone", contactType: "telephone" },
+  { key: "github", label: "github", value: "github.com/0xPacman", href: "https://github.com/0xPacman", icon: Github },
+  { key: "linkedin", label: "linkedin", value: "linkedin.com/in/0xpacman", href: "https://linkedin.com/in/0xpacman", icon: Linkedin },
+  { key: "org", label: "org", value: "Atlas Cloud Services · Benguerir, Morocco", icon: Building2 },
+]
 
+export function Contact() {
   const [copied, setCopied] = React.useState<string | null>(null)
   const copy = (val: string) => {
     navigator?.clipboard?.writeText(val).then(() => {
       setCopied(val)
-      setTimeout(() => setCopied(null), 1800)
+      setTimeout(() => setCopied(null), 1600)
     }).catch(() => {})
   }
 
   return (
-    <div 
-      ref={contactRef}
-      className="space-y-8 max-w-5xl mx-auto"
-      itemScope
-      itemType="https://schema.org/ContactPage"
-    >
+    <section className="space-y-5" itemScope itemType="https://schema.org/ContactPage">
       <meta itemProp="name" content="Contact Ahmed Jadani" />
-      <meta itemProp="description" content="Get in touch with Ahmed Jadani for cloud consulting, infrastructure projects, or professional collaboration opportunities" />
-      <div className="relative">
-        <div className="flex items-center gap-3 mb-6">
-          <div className="h-7 w-0.5 rounded-full bg-gradient-to-b from-amber-400 to-yellow-600" />
-          <div>
-            <div className={`font-mono text-[10px] mb-0.5 ${isDarkMode ? 'text-yellow-500/40' : 'text-yellow-600/50'}`}>~/contact</div>
-            <h2 className={`text-xl font-bold tracking-tight ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Let&apos;s Connect</h2>
-          </div>
+      <SectionPrompt command="ssh root@0xpacman.com">
+        Open to cloud &amp; infrastructure consulting, security collaboration, or simply a hello.
+      </SectionPrompt>
+
+      {/* MOTD banner */}
+      <div className="border border-primary/15 bg-black/40 p-4 font-mono text-[12px] space-y-1">
+        <div className="text-term-green">Last login: today from 0xpacman.com</div>
+        <div className="text-muted-foreground">
+          <span className="text-primary">*</span> Available for consulting &amp; collaboration
         </div>
-        <p className={`${textSecondary} text-sm mb-6 max-w-xl`}>Open to cloud & infrastructure discussions, low‑key opportunities, collaboration, or simply a personal hello.</p>
-        <div className="flex justify-center">
-          <Card className={`${cardClasses} shadow-xl hover:shadow-2xl transition-all duration-300 w-full max-w-4xl`}>
-            <CardContent className="p-6 lg:p-8 space-y-8">
-              <div>
-                <h3 className={`text-xl font-semibold ${textPrimary} mb-2 flex items-center gap-2`}>
-                  <Rocket className={` ${textAccent}`} size={22} />
-                  Build Something Impactful
-                </h3>
-                <p className={`${textSecondary} text-sm leading-relaxed max-w-2xl`}>Focused on resilient architectures, efficient virtualization and pragmatic automation. Feel free to reach out for guidance, collaboration, discreet opportunity conversations, or informal networking.</p>
-              </div>
-              <div className="grid sm:grid-cols-2 gap-4">
-                {/* Professional Email */}
-                <div className={`group flex items-start gap-4 p-4 rounded-lg relative overflow-hidden ${isDarkMode ? 'bg-yellow-500/10' : 'bg-yellow-400/20'} transition-all duration-300`}
-                  itemProp="contactPoint" itemScope itemType="https://schema.org/ContactPoint">
-                  <meta itemProp="contactType" content="work" />
-                  <div className="p-2 rounded-md bg-gradient-to-br from-amber-500 to-yellow-500 text-black">
-                    <Mail size={18} />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className={`${textPrimary} font-medium text-sm truncate`} itemProp="email">ahmed.jadani@atlascs.ma</span>
-                      <span className="text-[10px] uppercase tracking-wide px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-600 dark:text-amber-300 border border-amber-500/30">Professional</span>
-                      {copied === 'ahmed.jadani@atlascs.ma' && <span className="flex items-center gap-1 text-[10px] text-green-500">✓ Copied</span>}
-                    </div>
-                    <div className={`${textSecondary} text-[11px]`}>Primary work correspondence</div>
-                  </div>
-                  <button aria-label="Copy work email" onClick={() => copy('ahmed.jadani@atlascs.ma')} className="ml-auto p-1.5 rounded hover:bg-black/10 dark:hover:bg-white/10 transition text-amber-500">
-                    {copied === 'ahmed.jadani@atlascs.ma' ? <span className="text-green-500 text-xs font-semibold">✓</span> : <Mail size={14}/>}
-                  </button>
-                </div>
-                {/* Personal Email */}
-                <div className={`group flex items-start gap-4 p-4 rounded-lg relative overflow-hidden ${isDarkMode ? 'bg-yellow-500/10' : 'bg-yellow-400/20'} transition-all duration-300`}
-                  itemProp="contactPoint" itemScope itemType="https://schema.org/ContactPoint">
-                  <meta itemProp="contactType" content="personal" />
-                  <div className="p-2 rounded-md bg-gradient-to-br from-amber-500 to-yellow-500 text-black">
-                    <Mail size={18} />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className={`${textPrimary} font-medium text-sm truncate`} itemProp="email">ahmed4star@gmail.com</span>
-                      <span className="text-[10px] uppercase tracking-wide px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-600 dark:text-amber-300 border border-amber-500/30">Personal</span>
-                      {copied === 'ahmed4star@gmail.com' && <span className="flex items-center gap-1 text-[10px] text-green-500">✓ Copied</span>}
-                    </div>
-                    <div className={`${textSecondary} text-[11px]`}>Direct personal contact</div>
-                  </div>
-                  <button aria-label="Copy personal email" onClick={() => copy('ahmed4star@gmail.com')} className="ml-auto p-1.5 rounded hover:bg-black/10 dark:hover:bg-white/10 transition text-amber-500">
-                    {copied === 'ahmed4star@gmail.com' ? <span className="text-green-500 text-xs font-semibold">✓</span> : <Mail size={14}/>}
-                  </button>
-                </div>
-                {/* Phone */}
-                <div className={`group flex items-start gap-4 p-4 rounded-lg ${isDarkMode ? 'bg-yellow-500/10' : 'bg-yellow-400/20'} transition-all duration-300`}
-                  itemProp="contactPoint" itemScope itemType="https://schema.org/ContactPoint">
-                  <meta itemProp="contactType" content="telephone" />
-                  <div className="p-2 rounded-md bg-gradient-to-br from-amber-500 to-yellow-500 text-black">
-                    <Phone size={18} />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className={`${textPrimary} font-medium text-sm`} itemProp="telephone">+212 708 429 995</span>
-                      {copied === '+212 708 429 995' && <span className="flex items-center gap-1 text-[10px] text-green-500">✓ Copied</span>}
-                    </div>
-                    <div className={`${textSecondary} text-[11px]`}>GMT+1 • 09:00 – 18:00</div>
-                  </div>
-                  <button aria-label="Copy phone" onClick={() => copy('+212 708 429 995')} className="ml-auto p-1.5 rounded hover:bg-black/10 dark:hover:bg-white/10 transition text-amber-500">
-                    {copied === '+212 708 429 995' ? <span className="text-green-500 text-xs font-semibold">✓</span> : <Phone size={14}/>}
-                  </button>
-                </div>
-                {/* Company */}
-                <div className={`group flex items-start gap-4 p-4 rounded-lg ${isDarkMode ? 'bg-yellow-500/10' : 'bg-yellow-400/20'} transition-all duration-300`}
-                  itemProp="address" itemScope itemType="https://schema.org/PostalAddress">
-                  <div className="p-2 rounded-md bg-gradient-to-br from-amber-500 to-yellow-500 text-black">
-                    <Building2 size={18} />
-                  </div>
-                  <div className="flex-1">
-                    <div className={`${textPrimary} font-medium text-sm`} itemProp="name">Atlas Cloud Services</div>
-                    <div className={`${textSecondary} text-[11px]`}>
-                      <span itemProp="addressLocality">Benguerir</span>, <span itemProp="addressCountry">Morocco</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-wrap gap-3 pt-2">
-                <Link href="https://github.com/0xPacman" className="group inline-flex items-center gap-2 px-3 py-2 rounded-md text-xs font-medium border border-amber-500/30 hover:border-amber-500/60 transition bg-amber-500/10 hover:bg-amber-500/20">
-                  <Github size={14} className="text-amber-500" /> GitHub
-                </Link>
-                <Link href="https://linkedin.com/in/0xpacman" className="group inline-flex items-center gap-2 px-3 py-2 rounded-md text-xs font-medium border border-amber-500/30 hover:border-amber-500/60 transition bg-amber-500/10 hover:bg-amber-500/20">
-                  <Linkedin size={14} className="text-amber-500" /> LinkedIn
-                </Link>
-                
-              </div>
-            </CardContent>
-          </Card>
+        <div className="text-muted-foreground">
+          <span className="text-primary">*</span> Timezone: GMT+1 (Africa/Casablanca) · 09:00–18:00
         </div>
       </div>
-    </div>
+
+      {/* Channels as key-value rows */}
+      <div className="border border-primary/15 divide-y divide-primary/10 bg-black/30 font-mono">
+        {channels.map((ch) => {
+          const Icon = ch.icon
+          const isExternal = ch.href?.startsWith("http")
+          const contentProps = ch.itemProp
+            ? { itemProp: "contactPoint", itemScope: true, itemType: "https://schema.org/ContactPoint" as const }
+            : {}
+          return (
+            <div key={ch.key} className="flex items-center gap-3 px-4 py-2.5" {...contentProps}>
+              {ch.contactType && <meta itemProp="contactType" content={ch.contactType} />}
+              <Icon size={14} className="text-primary/70 flex-shrink-0" />
+              <span className="text-[11px] text-muted-foreground w-16 flex-shrink-0">{ch.label}</span>
+              {ch.href ? (
+                <Link
+                  href={ch.href}
+                  target={isExternal ? "_blank" : undefined}
+                  rel={isExternal ? "noopener noreferrer" : undefined}
+                  className="text-[13px] text-foreground hover:text-primary transition-colors truncate"
+                  {...(ch.itemProp ? { itemProp: ch.itemProp } : {})}
+                >
+                  {ch.value}
+                </Link>
+              ) : (
+                <span className="text-[13px] text-foreground truncate">{ch.value}</span>
+              )}
+              {ch.copy && (
+                <button
+                  onClick={() => copy(ch.copy!)}
+                  aria-label={`Copy ${ch.label}`}
+                  className="ml-auto flex-shrink-0 text-muted-foreground hover:text-primary transition-colors"
+                >
+                  {copied === ch.copy ? <Check size={13} className="text-term-green" /> : <Copy size={13} />}
+                </button>
+              )}
+            </div>
+          )
+        })}
+      </div>
+    </section>
   )
 }

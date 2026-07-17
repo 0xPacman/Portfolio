@@ -1,7 +1,7 @@
 import { Person, Organization, WebSite, BreadcrumbList } from 'schema-dts'
 
 // Base URL for the website
-const BASE_URL = 'https://0xpacman.github.io/Portfolio'
+const BASE_URL = 'https://0xpacman.com'
 
 // Person Schema for Ahmed Jadani
 export const personSchema: Person = {
@@ -35,13 +35,12 @@ export const personSchema: Person = {
     'System Administration',
     'DevOps',
     'Web Development',
-    'JavaScript',
+    'Python',
     'TypeScript',
-    'Next.js',
     'Docker',
     'Kubernetes'
   ],
-  description: 'Cloud Infrastructure Engineer specializing in enterprise-grade infrastructure, VMware technologies, and scalable cloud solutions. Passionate about automation, security, and digital transformation.',
+  description: 'Cloud Infrastructure Engineer at Atlas Cloud Services specializing in enterprise-grade infrastructure, VMware technologies, OpenStack, and pragmatic automation.',
   alumniOf: {
     '@type': 'Organization',
     name: 'Various Educational Institutions'
@@ -175,7 +174,7 @@ export const projectsSchema: object[] = [
   {
     '@type': 'WebSite',
     name: 'Portfolio Website',
-    description: 'Modern, responsive portfolio built with Next.js 15, TypeScript, and Framer Motion. Features glassmorphism design, smooth animations, and dark/light theme support.',
+    description: 'Terminal-aesthetic portfolio built with Next.js 15, TypeScript, and Framer Motion. Frontier terminal design with a tmux-style interface.',
     url: BASE_URL,
     codeRepository: 'https://github.com/0xPacman/Portfolio',
     author: {
@@ -195,30 +194,6 @@ export const breadcrumbSchema: BreadcrumbList = {
       position: 1,
       name: 'Home',
       item: BASE_URL
-    },
-    {
-      '@type': 'ListItem',
-      position: 2,
-      name: 'About',
-      item: `${BASE_URL}/#about`
-    },
-    {
-      '@type': 'ListItem',
-      position: 3,
-      name: 'Skills',
-      item: `${BASE_URL}/#skills`
-    },
-    {
-      '@type': 'ListItem',
-      position: 4,
-      name: 'Projects',
-      item: `${BASE_URL}/#projects`
-    },
-    {
-      '@type': 'ListItem',
-      position: 5,
-      name: 'Contact',
-      item: `${BASE_URL}/#contact`
     }
   ]
 }

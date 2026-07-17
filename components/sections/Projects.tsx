@@ -1,48 +1,10 @@
 'use client'
 
 import React from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import {
-  ExternalLink,
-  Github,
-  Cloud,
-  Shield,
-  Server,
-  Brain,
-  Globe,
-  Code,
-  Zap,
-  Monitor,
-  Mail,
-  Layers,
-  ChevronDown,
-  Lock,
-  PenTool
-} from "lucide-react"
-import Image from "next/image"
 import Link from "next/link"
-import {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription
-} from "@/components/ui/dialog"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-  TooltipProvider
-} from "@/components/ui/tooltip"
-
-interface ProjectsProps {
-  isDarkMode: boolean
-  projectsRef: React.RefObject<HTMLDivElement>
-}
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion"
+import { ExternalLink, Github, Mail, ChevronRight, Lock } from "lucide-react"
+import { SectionPrompt } from "@/components/shell/SectionPrompt"
 
 interface ProjectLink {
   demo?: string | null
@@ -50,526 +12,263 @@ interface ProjectLink {
   github?: string | null
   visitLabel?: string
   contactEmail?: string | null
-  contactLabel?: string
 }
-
-type IconType = typeof Cloud
 
 interface Project {
   title: string
+  slug: string
   description: string
-  image: string
   category: string
   tech: string[]
   links: ProjectLink
   features: string[]
-  icon: IconType
-  gradient: string
   status: string
 }
 
 const projects: Project[] = [
   {
-    title: "Brainful",
-    description: "A soothing, single-page mental wellness dashboard with breathing guidance, mood reflection, zen doodling, and focused productivity tools—all running entirely in the browser.",
-    image: "https://images.unsplash.com/photo-1529070538774-1843cb3265df?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    category: "Web",
-    tech: ["React", "Tailwind CSS", "Framer Motion", "Lucide Icons", "LocalStorage"],
-    links: {
-      demo: "https://brainful.0xpacman.com",
-      github: null
-    },
-    features: [
-      "Animated 4-7-8 breathing guide",
-      "Emoji-powered mood journaling",
-      "Zen doodling canvas workspace",
-      "Ambient radio with Web Audio"
-    ],
-    icon: Brain,
-    gradient: "from-sky-500 to-teal-500",
-    status: "Live"
+    title: "Brainful", slug: "brainful", category: "Web", status: "live",
+    description: "A soothing single-page mental wellness dashboard with breathing guidance, mood reflection, zen doodling, and focus tools, all running entirely in the browser.",
+    tech: ["React", "Tailwind", "Framer Motion", "Web Audio"],
+    links: { demo: "https://brainful.0xpacman.com", github: null },
+    features: ["4-7-8 breathing guide", "Mood journaling", "Zen doodling canvas", "Ambient radio"],
   },
   {
-    title: "Paste",
-    description: "Simple and secure pastebin service for sharing code snippets and text. Clean interface with syntax highlighting and expiration options for enhanced privacy.",
-    image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    category: "Web",
-    tech: ["Web", "Pastebin", "Privacy", "Code Sharing"],
-    links: {
-      demo: "https://paste.0xpacman.com",
-      github: "https://github.com/0xPacman/Paste"
-    },
-    features: ["Syntax Highlighting", "Privacy Focused", "Clean UI", "Secure Sharing"],
-    icon: Code,
-    gradient: "from-teal-500 to-cyan-500",
-    status: "Live"
+    title: "Paste", slug: "paste", category: "Web", status: "live",
+    description: "Simple and secure pastebin for sharing code snippets and text. Clean interface with syntax highlighting and expiration options for privacy.",
+    tech: ["Web", "Pastebin", "Privacy"],
+    links: { demo: "https://paste.0xpacman.com", github: "https://github.com/0xPacman/Paste" },
+    features: ["Syntax highlighting", "Privacy focused", "Secure sharing"],
   },
   {
-    title: "Draw",
-    description: "Collaborative online whiteboard forked from Excalidraw, developed as an open-source project for sharing ideas, sketching diagrams, and building together.",
-    image: "https://images.unsplash.com/photo-1453928582365-b6ad33cbcf64?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    category: "Web",
+    title: "ColorGuesser", slug: "colorguesser", category: "Web", status: "live",
+    description: "Interactive color guessing game that challenges players to identify colors. Multiplayer scoring and a sleek modern interface.",
+    tech: ["JavaScript", "CSS3", "Game Logic"],
+    links: { demo: "https://colorguesser.0xpacman.com", github: "https://github.com/0xPacman/ColorGuesser" },
+    features: ["Multiplayer", "Score tracking", "Color theory"],
+  },
+  {
+    title: "Draw", slug: "draw", category: "Web", status: "open-source",
+    description: "Collaborative online whiteboard forked from Excalidraw, an open-source project for sharing ideas, sketching diagrams, and building together.",
     tech: ["Excalidraw", "Collaboration", "Whiteboard", "Open Source"],
-    links: {
-      demo: "https://draw.0xpacman.com/",
-      github: "https://github.com/0xPacman/excalidraw"
-    },
-    features: ["Forked from Excalidraw", "Collaborative Drawing", "Open Source Development", "Visual Brainstorming"],
-    icon: PenTool,
-    gradient: "from-cyan-500 to-blue-500",
-    status: "Open Source"
+    links: { demo: "https://draw.0xpacman.com/", github: "https://github.com/0xPacman/excalidraw" },
+    features: ["Forked from Excalidraw", "Collaborative drawing", "Open source", "Visual brainstorming"],
   },
   {
-    title: "ColorGuesser",
-    description: "Interactive color guessing game that challenges players to identify colors. Features scoring system, and sleek modern interface.",
-    image: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    category: "Web",
-    tech: ["JavaScript", "CSS3", "Game Logic", "Interactive UI"],
-    links: {
-      demo: "https://colorguesser.0xpacman.com",
-      github: "https://github.com/0xPacman/ColorGuesser"
-    },
-    features: ["Multiple players", "Score Tracking", "Color Theory", "Responsive Design"],
-    icon: Zap,
-    gradient: "from-pink-500 to-rose-500",
-    status: "Live"
+    title: "PasswordGEN", slug: "passwordgen", category: "Tools", status: "live",
+    description: "Password generator with both a web interface and CLI tool for maximum security and strong entropy.",
+    tech: ["Bash", "Web", "CLI", "Crypto"],
+    links: { demo: "https://password.0xpacman.com", github: "https://github.com/0xPacman/PasswordGEN" },
+    features: ["Strong entropy", "Multi-platform", "Open source"],
   },
   {
-    title: "PasswordGEN",
-    description: "Simple password generator. Features both web interface and CLI tool for maximum security.",
-    image: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    category: "Tools",
-    tech: ["Bash", "Web", "CLI", "Cryptography"],
-    links: {
-      demo: "https://password.0xpacman.com",
-      github: "https://github.com/0xPacman/PasswordGEN"
-    },
-    features: ["Strong Entropy", "Multi-platform", "Open Source", "Security Focused"],
-    icon: Shield,
-    gradient: "from-green-500 to-emerald-500",
-    status: "Live"
+    title: "AD Manager", slug: "ad-manager", category: "Enterprise", status: "commercial",
+    description: "Professional Active Directory management desktop app built in C++ with a modern UI for Windows environments. User, group, and resource administration with automation.",
+    tech: ["C++", "Windows", "Active Directory"],
+    links: { visit: "https://ad.0xpacman.com", visitLabel: "Purchase, $39.99" },
+    features: ["Bulk user/group ops", "AD automation", "Real-time monitoring", "Enterprise security"],
   },
   {
-    title: "AD Manager",
-    description: "Professional Active Directory management desktop application built in C++ with a modern, intuitive UI for Windows environments. Simplify user, group, and resource administration with powerful automation tools.",
-    image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=900&q=80",
-    category: "Enterprise",
-    tech: ["C++", "Windows", "Active Directory", "Enterprise"],
-    links: {
-      visit: "https://ad.0xpacman.com",
-      visitLabel: "Purchase - $39.99"
-    },
-    features: [
-      "Advanced user/group management",
-      "AD automation & bulk operations",
-      "Real-time monitoring",
-      "Enterprise-grade security"
-    ],
-    icon: Server,
-    gradient: "from-indigo-500 to-blue-500",
-    status: "Commercial"
-  },
-  {
-    title: "Atlas Cloud Services Infrastructure",
-    description: "Lead modernization for Morocco's premier cloud platform as the single point of contact, orchestrating VMware, Dell VxRail, and multi-cloud operations for 100+ enterprises.",
-    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    category: "Enterprise",
+    title: "Atlas Cloud Infrastructure", slug: "atlas-infra", category: "Enterprise", status: "production",
+    description: "Lead modernization for Morocco's premier cloud platform as single point of contact, orchestrating VMware, Dell VxRail, and multi-cloud operations for 100+ enterprises.",
     tech: ["VMware", "Dell VxRail", "NSX", "vSphere"],
-    links: {
-      visit: null,
-      github: null,
-      contactEmail: "ahmed.jadani@atlascs.ma",
-      contactLabel: "Email Me"
-    },
-    features: ["Modernization Lead", "Single Point of Contact", "Multi-cloud Strategy", "99.9% Uptime"],
-    icon: Cloud,
-    gradient: "from-blue-500 to-cyan-500",
-    status: "Production"
+    links: { contactEmail: "ahmed.jadani@0xpacman.com" },
+    features: ["Modernization lead", "Single point of contact", "Multi-cloud strategy", "99.9% uptime"],
   },
   {
-    title: "ServerInfoReport",
-    description: "Comprehensive server monitoring shell script providing detailed system information including CPU usage, memory stats, storage analysis, and network configuration with cross-platform support.",
-    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    category: "Tools",
-    tech: ["Shell", "Bash", "Monitoring", "DevOps"],
-    links: {
-      demo: null,
-      github: "https://github.com/0xPacman/ServerInfoReport"
-    },
-    features: ["Real-time Monitoring", "Cross-platform", "Colorized Output", "System Analysis"],
-    icon: Monitor,
-    gradient: "from-purple-500 to-violet-500",
-    status: "Open Source"
+    title: "ServerInfoReport", slug: "serverinforeport", category: "Tools", status: "open-source",
+    description: "Comprehensive server monitoring shell script, CPU, memory, storage analysis, and network configuration with cross-platform support and colorized output.",
+    tech: ["Shell", "Bash", "Monitoring"],
+    links: { github: "https://github.com/0xPacman/ServerInfoReport" },
+    features: ["Real-time monitoring", "Cross-platform", "System analysis"],
   },
   {
-    title: "GatewayPage",
-    description: "Modern web dashboard serving as personalized homepage with real-time weather, Hacker News feed, Reddit browser, and persistent note-taking with dark/light theme support.",
-    image: "https://images.unsplash.com/photo-1621109246687-10ae613f2d8e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    category: "Web",
+    title: "GatewayPage", slug: "gatewaypage", category: "Web", status: "live",
+    description: "Modern web dashboard as a personalized homepage, real-time weather, Hacker News feed, Reddit browser, and persistent notes with theme support.",
     tech: ["HTML5", "CSS3", "JavaScript", "APIs"],
-    links: {
-      demo: "https://0xpacman.github.io/GatewayPage/",
-      github: "https://github.com/0xPacman/GatewayPage"
-    },
-    features: ["Real-time Data", "Theme Toggle", "API Integration", "Local Storage"],
-    icon: Globe,
-    gradient: "from-indigo-500 to-purple-500",
-    status: "Live"
+    links: { demo: "https://0xpacman.github.io/GatewayPage/", github: "https://github.com/0xPacman/GatewayPage" },
+    features: ["Real-time data", "Theme toggle", "API integration"],
   },
   {
-    title: "OpenStack Cloud Platform",
-    description: "Deployed, configured, and automated enterprise OpenStack cloud platform with multi-node architecture, providing IaaS services with automated provisioning and monitoring.",
-    image: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    category: "Enterprise",
-    tech: ["OpenStack", "Python", "Ansible", "Automation"],
-    links: {
-      demo: null,
-      github: null
-    },
-    features: ["Multi-node", "Automated Provisioning", "IaaS Services", "Monitoring"],
-    icon: Server,
-    gradient: "from-orange-500 to-red-500",
-    status: "Enterprise"
+    title: "OpenStack Cloud Platform", slug: "openstack", category: "Enterprise", status: "enterprise",
+    description: "Deployed, configured, and automated an enterprise OpenStack cloud with multi-node architecture, IaaS with automated provisioning and monitoring.",
+    tech: ["OpenStack", "Python", "Ansible"],
+    links: {},
+    features: ["Multi-node", "Automated provisioning", "IaaS services"],
   },
   {
-    title: "Network Security Stack",
-    description: "Implemented comprehensive network security using VMware NSX, including micro-segmentation, DFW policies, and automated threat response for enterprise environments.",
-    image: "https://plus.unsplash.com/premium_photo-1683836722479-411e30b8b6e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    category: "Enterprise",
-    tech: ["VMware NSX", "Security", "Micro-segmentation", "Automation"],
-    links: {
-      demo: null,
-      github: null
-    },
-    features: ["Zero Trust", "Micro-segmentation", "Automated Response", "Compliance"],
-    icon: Shield,
-    gradient: "from-red-500 to-pink-500",
-    status: "Enterprise"
+    title: "Network Security Stack", slug: "netsec", category: "Enterprise", status: "enterprise",
+    description: "Comprehensive network security with VMware NSX, micro-segmentation, distributed firewall policies, and automated threat response for enterprise environments.",
+    tech: ["VMware NSX", "Zero Trust", "Micro-segmentation"],
+    links: {},
+    features: ["Zero trust", "Micro-segmentation", "Automated response"],
   },
   {
-    title: "Portfolio Website",
-    description: "Modern, responsive portfolio built with Next.js 15, TypeScript, and Framer Motion. Features glassmorphism design, smooth animations, and dark/light theme support.",
-    image: "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    category: "Web",
+    title: "Portfolio", slug: "portfolio", category: "Web", status: "live",
+    description: "This site, a terminal-aesthetic portfolio built with Next.js 15, TypeScript, and Framer Motion. Frontier terminal design with a tmux-style interface.",
     tech: ["Next.js", "TypeScript", "Framer Motion", "Tailwind"],
-    links: {
-      demo: "https://0xpacman.github.io/Portfolio",
-      github: "https://github.com/0xPacman/Portfolio"
-    },
-    features: ["Responsive", "Dark Mode", "Animations", "Modern UI"],
-    icon: Code,
-    gradient: "from-yellow-500 to-orange-500",
-    status: "Live"
-  }
+    links: { demo: "https://0xpacman.com", github: "https://github.com/0xPacman/Portfolio" },
+    features: ["tmux interface", "Boot sequence", "Dark terminal", "Static export"],
+  },
 ]
 
 const categories = ["All", "Web", "Enterprise", "Tools"] as const
 type Category = (typeof categories)[number]
 
-const statusColors: Record<string, string> = {
-  Live: 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30',
-  Production: 'bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/30',
-  Enterprise: 'bg-violet-500/15 text-violet-600 dark:text-violet-400 border-violet-500/30',
-  Commercial: 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/30',
-  'Open Source': 'bg-teal-500/15 text-teal-600 dark:text-teal-400 border-teal-500/30',
+const statusStyle: Record<string, string> = {
+  live: "text-term-green",
+  production: "text-primary",
+  enterprise: "text-primary/80",
+  commercial: "text-primary",
+  "open-source": "text-term-green",
 }
 
-export function Projects({ isDarkMode, projectsRef }: ProjectsProps) {
-  const [copiedEmail, setCopiedEmail] = React.useState<string | null>(null)
+export function Projects() {
+  const reduced = useReducedMotion()
   const [activeCategory, setActiveCategory] = React.useState<Category>("All")
-  const [expandedProject, setExpandedProject] = React.useState<number | null>(null)
+  const [expanded, setExpanded] = React.useState<string | null>(null)
+  const [copied, setCopied] = React.useState<string | null>(null)
 
-  const handleCopyEmail = React.useCallback((email: string) => {
-    if (navigator?.clipboard) {
-      navigator.clipboard.writeText(email)
-        .then(() => {
-          setCopiedEmail(email)
-          setTimeout(() => setCopiedEmail(null), 1600)
-        })
-        .catch(() => {})
-    }
-  }, [])
+  const copy = (email: string) => {
+    navigator?.clipboard?.writeText(email).then(() => {
+      setCopied(email)
+      setTimeout(() => setCopied(null), 1600)
+    }).catch(() => {})
+  }
 
-  const filtered = activeCategory === "All" ? projects : projects.filter(p => p.category === activeCategory)
-
-  const cardBg = isDarkMode
-    ? 'border-yellow-500/10 bg-black/30 hover:border-yellow-500/25'
-    : 'border-yellow-500/20 bg-white/70 backdrop-blur-sm hover:border-yellow-500/40'
-
-  const pillBase = isDarkMode
-    ? 'border-yellow-500/15 bg-transparent text-muted-foreground hover:bg-yellow-500/10 hover:text-yellow-400'
-    : 'border-yellow-500/20 bg-transparent text-muted-foreground hover:bg-amber-50 hover:text-amber-700'
-
-  const pillActive = isDarkMode
-    ? 'border-yellow-500/40 bg-yellow-500/10 text-yellow-400'
-    : 'border-yellow-500/50 bg-amber-50 text-amber-700'
+  const filtered = activeCategory === "All" ? projects : projects.filter((p) => p.category === activeCategory)
 
   return (
-    <TooltipProvider>
-      <div
-        ref={projectsRef}
-        className="space-y-5"
-        itemScope
-        itemType="https://schema.org/ItemList"
-      >
-        <meta itemProp="name" content="Ahmed Jadani's Projects" />
-        <meta itemProp="description" content="Collection of projects showcasing expertise in cloud infrastructure, security tools, web development, and system administration" />
+    <section className="space-y-5" itemScope itemType="https://schema.org/ItemList">
+      <meta itemProp="name" content="Ahmed Jadani's Projects" />
+      <SectionPrompt command="ls -la ~/projects">
+        Apps, security tools, and enterprise infrastructure.
+      </SectionPrompt>
 
-        {/* Header */}
-        <div className="flex items-center gap-3 mb-1">
-          <div className="h-7 w-0.5 rounded-full bg-gradient-to-b from-amber-400 to-yellow-600" />
-          <div>
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className={`font-mono text-[10px] mb-0.5 ${isDarkMode ? 'text-yellow-500/40' : 'text-yellow-600/50'}`}>~/projects</motion.div>
-            <motion.h2 initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className={`text-xl font-bold tracking-tight ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-              Projects
-            </motion.h2>
-          </div>
-        </div>
-        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-xs text-muted-foreground -mt-3">
-          {filtered.length} project{filtered.length !== 1 ? 's' : ''} — apps, tools & enterprise infrastructure.
-        </motion.p>
-
-        {/* Category Filter Pills */}
-        <div className="flex flex-wrap gap-2">
-          {categories.map(cat => (
-            <button
-              key={cat}
-              onClick={() => { setActiveCategory(cat); setExpandedProject(null) }}
-              className={`text-xs font-medium px-3 py-1.5 rounded-full border transition-all duration-200 ${activeCategory === cat ? pillActive : pillBase}`}
-            >
-              {cat === 'All' && <Layers className="inline w-3 h-3 mr-1 -mt-px" />}
-              {cat}
-            </button>
-          ))}
-        </div>
-
-        {/* Projects List */}
-        <div className="space-y-3">
-          <AnimatePresence mode="popLayout">
-            {filtered.map((project, index) => {
-              const Icon = project.icon
-              const visitHref = project.links.visit
-              const visitIsExternal = Boolean(visitHref && /^https?:/i.test(visitHref))
-              const contactEmail = project.links.contactEmail
-              const isExpanded = expandedProject === index
-              const hasLinks = project.links.demo || project.links.github || visitHref || contactEmail
-
-              return (
-                <motion.div
-                  key={project.title}
-                  layout
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: .3, delay: index * .04 }}
-                  itemProp="itemListElement"
-                  itemScope
-                  itemType="https://schema.org/SoftwareApplication"
-                >
-                  <meta itemProp="name" content={project.title} />
-                  <meta itemProp="description" content={project.description} />
-                  <meta itemProp="applicationCategory" content={project.category} />
-                  <meta itemProp="operatingSystem" content="Web Browser" />
-                  {project.links.demo && <meta itemProp="url" content={project.links.demo} />}
-                  {project.links.github && <meta itemProp="codeRepository" content={project.links.github} />}
-                  <div itemProp="author" itemScope itemType="https://schema.org/Person" style={{ display: 'none' }}>
-                    <meta itemProp="name" content="Ahmed Jadani" />
-                    <meta itemProp="url" content="https://0xpacman.github.io/Portfolio" />
-                  </div>
-
-                  <div className={`rounded-xl border overflow-hidden transition-all duration-300 ${cardBg}`}>
-                    {/* Clickable header row */}
-                    <button
-                      onClick={() => setExpandedProject(isExpanded ? null : index)}
-                      className={`w-full text-left px-4 py-3 flex items-center gap-3 transition-colors ${isDarkMode ? 'hover:bg-yellow-500/5' : 'hover:bg-amber-50/50'}`}
-                    >
-                      {/* Project icon */}
-                      <div className={`flex-shrink-0 p-2 rounded-lg bg-gradient-to-br ${project.gradient} shadow-sm`}>
-                        <Icon className="text-white" size={16} />
-                      </div>
-
-                      {/* Title + category */}
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <h3 className="text-sm font-medium text-foreground truncate">{project.title}</h3>
-                          <span className={`text-[9px] font-semibold px-1.5 py-0.5 rounded border ${statusColors[project.status] ?? 'bg-gray-500/15 text-gray-500 border-gray-500/30'}`}>
-                            {project.status}
-                          </span>
-                        </div>
-                        <p className="text-[11px] text-muted-foreground truncate mt-0.5">{project.category}</p>
-                      </div>
-
-                      {/* Tech count + chevron */}
-                      <Badge variant="outline" className="h-5 px-1.5 text-[9px] border-yellow-500/25 text-yellow-500 bg-yellow-500/5 flex-shrink-0">
-                        {project.tech.length} tech
-                      </Badge>
-                      <motion.div
-                        animate={{ rotate: isExpanded ? 180 : 0 }}
-                        transition={{ duration: .2 }}
-                        className="flex-shrink-0 text-muted-foreground"
-                      >
-                        <ChevronDown size={14} />
-                      </motion.div>
-                    </button>
-
-                    {/* Expanded detail */}
-                    <AnimatePresence initial={false}>
-                      {isExpanded && (
-                        <motion.div
-                          key="detail"
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: 'auto', opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: .25 }}
-                          className="overflow-hidden"
-                        >
-                          <div className={`px-4 pb-4 pt-1 border-t ${isDarkMode ? 'border-yellow-500/10' : 'border-yellow-500/15'}`}>
-                            {/* Image + description row */}
-                            <div className="flex gap-3 mt-3">
-                              <div className="relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
-                                <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-60 z-10`} />
-                                <Image
-                                  src={project.image}
-                                  alt={project.title}
-                                  fill
-                                  className="object-cover"
-                                />
-                              </div>
-                              <p className={`text-xs leading-relaxed flex-1 ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                                {project.description}
-                              </p>
-                            </div>
-
-                            {/* Tech stack */}
-                            <div className="flex flex-wrap gap-1.5 mt-3">
-                              {project.tech.map((t, i) => (
-                                <span
-                                  key={i}
-                                  className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${isDarkMode ? 'bg-gray-700/60 text-gray-300' : 'bg-gray-100 text-gray-600'}`}
-                                >
-                                  {t}
-                                </span>
-                              ))}
-                            </div>
-
-                            {/* Features */}
-                            <div className="grid grid-cols-2 gap-x-3 gap-y-1 mt-3">
-                              {project.features.map((f, i) => (
-                                <div key={i} className="flex items-center gap-1.5 text-[11px]">
-                                  <div className={`w-1 h-1 rounded-full flex-shrink-0 bg-gradient-to-r ${project.gradient}`} />
-                                  <span className={isDarkMode ? 'text-gray-400' : 'text-gray-500'}>{f}</span>
-                                </div>
-                              ))}
-                            </div>
-
-                            {/* Action buttons */}
-                            {hasLinks && (
-                              <div className="flex flex-wrap gap-2 mt-4">
-                                {project.links.demo && (
-                                  <Button asChild size="sm" className="h-7 text-xs bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white border-0">
-                                    <Link href={project.links.demo} target="_blank">
-                                      <ExternalLink className="w-3 h-3 mr-1.5" />
-                                      Live Demo
-                                    </Link>
-                                  </Button>
-                                )}
-
-                                {contactEmail && (
-                                  <Dialog>
-                                    <DialogTrigger asChild>
-                                      <Button size="sm" className="h-7 text-xs bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white border-0">
-                                        <Mail className="w-3 h-3 mr-1.5" />
-                                        {project.links.contactLabel ?? 'Email Me'}
-                                      </Button>
-                                    </DialogTrigger>
-                                    <DialogContent className="max-w-sm">
-                                      <DialogHeader>
-                                        <DialogTitle>Email Ahmed Jadani</DialogTitle>
-                                        <DialogDescription>
-                                          Reach out directly for Atlas Cloud Services engagements or enterprise cloud consulting.
-                                        </DialogDescription>
-                                      </DialogHeader>
-                                      <div className="flex items-start gap-3 rounded-md border border-border/60 bg-muted/30 p-3">
-                                        <div className="flex h-10 w-10 items-center justify-center rounded-md bg-gradient-to-br from-amber-500 to-yellow-500 text-black">
-                                          <Mail className="w-4 h-4" />
-                                        </div>
-                                        <div className="flex-1">
-                                          <p className="text-sm font-medium text-foreground">{contactEmail}</p>
-                                          <p className="text-xs text-muted-foreground mt-1">
-                                            This is the dedicated professional channel for Atlas Cloud Services inquiries.
-                                          </p>
-                                        </div>
-                                      </div>
-                                      <div className="flex flex-wrap gap-3 pt-2">
-                                        <Button asChild size="sm" className="bg-gradient-to-r from-amber-500 to-yellow-500 text-black hover:from-amber-500/90 hover:to-yellow-500/90">
-                                          <a href={`mailto:${contactEmail}`}>Compose Email</a>
-                                        </Button>
-                                        <Button
-                                          type="button"
-                                          size="sm"
-                                          variant="outline"
-                                          onClick={() => handleCopyEmail(contactEmail)}
-                                          className="border-amber-500/50 text-amber-600 hover:bg-amber-500/10"
-                                        >
-                                          {copiedEmail === contactEmail ? 'Copied!' : 'Copy Email'}
-                                        </Button>
-                                      </div>
-                                    </DialogContent>
-                                  </Dialog>
-                                )}
-
-                                {visitHref && (
-                                  <Button asChild size="sm" variant="outline" className={`h-7 text-xs ${isDarkMode ? 'border-yellow-500/30 text-yellow-400 hover:bg-yellow-500/10' : 'border-yellow-500/40 text-amber-700 hover:bg-amber-50'}`}>
-                                    <Link
-                                      href={visitHref}
-                                      target={visitIsExternal ? "_blank" : undefined}
-                                      rel={visitIsExternal ? "noopener noreferrer" : undefined}
-                                    >
-                                      {project.status === 'Commercial' ? <Lock className="w-3 h-3 mr-1.5" /> : <ExternalLink className="w-3 h-3 mr-1.5" />}
-                                      {project.links.visitLabel ?? "Visit"}
-                                    </Link>
-                                  </Button>
-                                )}
-
-                                {project.links.github && (
-                                  <Button asChild size="sm" variant="outline" className={`h-7 text-xs ${isDarkMode ? 'border-yellow-500/30 text-yellow-400 hover:bg-yellow-500/10' : 'border-yellow-500/40 text-amber-700 hover:bg-amber-50'}`}>
-                                    <Link href={project.links.github} target="_blank">
-                                      <Github className="w-3 h-3 mr-1.5" />
-                                      Source
-                                    </Link>
-                                  </Button>
-                                )}
-                              </div>
-                            )}
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                </motion.div>
-              )
-            })}
-          </AnimatePresence>
-        </div>
-
-        {/* GitHub CTA */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: .3 }}
-          className="pt-2"
-        >
-          <Link
-            href="https://github.com/0xPacman"
-            target="_blank"
-            className={`flex items-center justify-center gap-2 text-xs font-medium py-2.5 rounded-lg border transition-all ${isDarkMode ? 'border-yellow-500/15 text-muted-foreground hover:border-yellow-500/30 hover:text-yellow-400 hover:bg-yellow-500/5' : 'border-yellow-500/20 text-muted-foreground hover:border-yellow-500/40 hover:text-amber-700 hover:bg-amber-50'}`}
+      {/* category filter */}
+      <div className="flex flex-wrap gap-2 font-mono text-[12px]">
+        {categories.map((cat) => (
+          <button
+            key={cat}
+            onClick={() => { setActiveCategory(cat); setExpanded(null) }}
+            className={`px-2.5 py-1 border transition-colors ${
+              activeCategory === cat
+                ? "border-primary/50 bg-primary/10 text-primary"
+                : "border-primary/15 text-muted-foreground hover:text-foreground hover:border-primary/30"
+            }`}
           >
-            <Github size={14} />
-            View more on GitHub
-            <ExternalLink size={10} />
-          </Link>
-        </motion.div>
+            {cat === "All" ? "--all" : cat.toLowerCase()}
+          </button>
+        ))}
+        <span className="px-2 py-1 text-muted-foreground/60">
+          {filtered.length} {filtered.length === 1 ? "entry" : "entries"}
+        </span>
       </div>
-    </TooltipProvider>
+
+      {/* directory listing */}
+      <div className="border border-primary/15 divide-y divide-primary/10 bg-black/30">
+        {filtered.map((project) => {
+          const isOpen = expanded === project.slug
+          const hasLinks = project.links.demo || project.links.github || project.links.visit || project.links.contactEmail
+          return (
+            <div
+              key={project.slug}
+              itemProp="itemListElement"
+              itemScope
+              itemType="https://schema.org/SoftwareApplication"
+              className={`transition-colors ${isOpen ? "bg-primary/[0.03]" : ""}`}
+              style={{ borderLeft: isOpen ? "2px solid hsl(var(--primary))" : "2px solid transparent" }}
+            >
+              <meta itemProp="name" content={project.title} />
+              <meta itemProp="description" content={project.description} />
+              {project.links.demo && <meta itemProp="url" content={project.links.demo} />}
+              {project.links.github && <meta itemProp="codeRepository" content={project.links.github} />}
+
+              <button
+                onClick={() => setExpanded(isOpen ? null : project.slug)}
+                aria-expanded={isOpen}
+                className="w-full flex items-center gap-3 px-4 py-2.5 text-left hover:bg-primary/[0.03] transition-colors font-mono"
+              >
+                <ChevronRight size={12} className={`text-primary/60 flex-shrink-0 transition-transform ${isOpen ? "rotate-90" : ""}`} />
+                <span className={`text-[11px] w-24 flex-shrink-0 ${statusStyle[project.status] ?? "text-muted-foreground"}`}>
+                  [{project.status}]
+                </span>
+                <span className="text-[13px] text-foreground truncate flex-1">{project.title}</span>
+                <span className="hidden sm:inline text-[11px] text-muted-foreground/70">{project.category.toLowerCase()}/</span>
+              </button>
+
+              <AnimatePresence initial={false}>
+                {isOpen && (
+                  <motion.div
+                    initial={reduced ? false : { height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={reduced ? undefined : { height: 0, opacity: 0 }}
+                    transition={{ duration: 0.22 }}
+                    className="overflow-hidden"
+                  >
+                    <div className="px-4 pb-4 pt-1 pl-9 space-y-3">
+                      <p className="text-[13px] font-sans leading-relaxed text-foreground/75 max-w-2xl">
+                        {project.description}
+                      </p>
+
+                      <div className="font-mono text-[11px] text-muted-foreground">
+                        <span className="text-primary/60"># stack: </span>
+                        {project.tech.join(" · ")}
+                      </div>
+
+                      <ul className="grid sm:grid-cols-2 gap-x-4 gap-y-1">
+                        {project.features.map((f) => (
+                          <li key={f} className="text-[12px] font-mono text-muted-foreground flex items-center gap-2">
+                            <span className="text-term-green">+</span> {f}
+                          </li>
+                        ))}
+                      </ul>
+
+                      {hasLinks && (
+                        <div className="flex flex-wrap gap-2 pt-1 font-mono text-[12px]">
+                          {project.links.demo && (
+                            <Link href={project.links.demo} target="_blank" rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1.5 px-2.5 py-1 border border-primary/40 text-primary hover:bg-primary/10 transition-colors">
+                              <ExternalLink size={12} /> live
+                            </Link>
+                          )}
+                          {project.links.visit && (
+                            <Link href={project.links.visit} target="_blank" rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1.5 px-2.5 py-1 border border-primary/40 text-primary hover:bg-primary/10 transition-colors">
+                              <Lock size={12} /> {project.links.visitLabel ?? "visit"}
+                            </Link>
+                          )}
+                          {project.links.github && (
+                            <Link href={project.links.github} target="_blank" rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1.5 px-2.5 py-1 border border-primary/20 text-muted-foreground hover:text-foreground hover:border-primary/40 transition-colors">
+                              <Github size={12} /> source
+                            </Link>
+                          )}
+                          {project.links.contactEmail && (
+                            <button onClick={() => copy(project.links.contactEmail!)}
+                              className="inline-flex items-center gap-1.5 px-2.5 py-1 border border-primary/20 text-muted-foreground hover:text-foreground hover:border-primary/40 transition-colors">
+                              <Mail size={12} /> {copied === project.links.contactEmail ? "copied ✓" : "email"}
+                            </button>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          )
+        })}
+      </div>
+
+      <Link
+        href="https://github.com/0xPacman"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center justify-center gap-2 text-[12px] font-mono py-2.5 border border-primary/15 text-muted-foreground hover:text-primary hover:border-primary/30 transition-colors"
+      >
+        <Github size={13} /> git clone --all @0xPacman <ExternalLink size={10} />
+      </Link>
+    </section>
   )
 }
