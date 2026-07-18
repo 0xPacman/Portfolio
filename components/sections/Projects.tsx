@@ -34,6 +34,13 @@ const projects: Project[] = [
     features: ["4-7-8 breathing guide", "Mood journaling", "Zen doodling canvas", "Ambient radio"],
   },
   {
+    title: "sudo ku", slug: "sudo-ku", category: "Web", status: "open-source",
+    description: "Terminal-styled animated Sudoku in pure vanilla JS, zero build, zero dependencies. Phosphor amber on black with CRT scanlines, a unique-solution puzzle generator, and spring-eased motion throughout.",
+    tech: ["Vanilla JS", "CSS Animation", "Canvas", "Zero Build"],
+    links: { github: "https://github.com/0xPacman/Sudoku" },
+    features: ["Unique-solution generator", "4 difficulties", "Pencil notes & hints", "CRT terminal design"],
+  },
+  {
     title: "Paste", slug: "paste", category: "Web", status: "live",
     description: "Simple and secure pastebin for sharing code snippets and text. Clean interface with syntax highlighting and expiration options for privacy.",
     tech: ["Web", "Pastebin", "Privacy"],

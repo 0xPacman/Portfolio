@@ -90,6 +90,19 @@ export const websiteSchema: WebSite = {
 export const projectsSchema: object[] = [
   {
     '@type': 'SoftwareApplication',
+    name: 'sudo ku',
+    description: 'Terminal-styled animated Sudoku in pure vanilla JS with a unique-solution puzzle generator, phosphor-amber CRT design, and fluid motion. Zero build, zero dependencies.',
+    codeRepository: 'https://github.com/0xPacman/Sudoku',
+    author: {
+      '@type': 'Person',
+      '@id': `${BASE_URL}/#person`
+    },
+    applicationCategory: 'Game',
+    operatingSystem: 'Web Browser',
+    keywords: ['Sudoku', 'Game', 'Vanilla JS', 'Terminal', 'Animation']
+  },
+  {
+    '@type': 'SoftwareApplication',
     name: 'Paste',
     description: 'Simple and secure pastebin service for sharing code snippets and text. Clean interface with syntax highlighting and expiration options for enhanced privacy.',
     url: 'https://paste.0xpacman.com',
