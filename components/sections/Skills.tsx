@@ -102,7 +102,7 @@ export function Skills() {
           const GIcon = group.icon
           const opened = open.has(group.key)
           return (
-            <div key={group.key} className="border border-primary/15 bg-black/30">
+            <div key={group.key} className="border border-primary/15 bg-card">
               <button
                 onClick={() => toggleGroup(group.key)}
                 aria-expanded={opened}

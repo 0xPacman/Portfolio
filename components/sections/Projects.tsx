@@ -166,7 +166,7 @@ export function Projects() {
       </div>
 
       {/* directory listing */}
-      <div className="border border-primary/15 divide-y divide-primary/10 bg-black/30">
+      <div className="border border-primary/15 divide-y divide-primary/10 bg-card">
         {filtered.map((project) => {
           const isOpen = expanded === project.slug
           const hasLinks = project.links.demo || project.links.github || project.links.visit || project.links.contactEmail

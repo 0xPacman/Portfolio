@@ -107,7 +107,7 @@ export function About() {
       </div>
 
       {/* system monitor strip */}
-      <div className="border border-primary/15 bg-black/40">
+      <div className="border border-primary/15 bg-card">
         <div className="flex items-center gap-2 px-4 py-1.5 border-b border-primary/10 text-[11px] font-mono text-muted-foreground">
           <Activity size={11} className="text-primary/60" aria-hidden="true" />
           <span>~/stats, system monitor</span>

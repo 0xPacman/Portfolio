@@ -87,7 +87,7 @@ export function TerminalShell() {
         <div
           role="tablist"
           aria-label="Portfolio sections"
-          className="flex items-stretch border-b border-primary/15 bg-black overflow-x-auto flex-shrink-0 h-9"
+          className="flex items-stretch border-b border-primary/15 bg-background overflow-x-auto flex-shrink-0 h-9"
         >
           <span className="hidden sm:flex items-center px-3 text-[11px] text-primary/50 border-r border-primary/10 flex-shrink-0 select-none">
             tmux

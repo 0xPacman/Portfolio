@@ -42,7 +42,7 @@ export function Contact() {
       </SectionPrompt>
 
       {/* MOTD banner */}
-      <div className="border border-primary/15 bg-black/40 p-4 font-mono text-[12px] space-y-1">
+      <div className="border border-primary/15 bg-card p-4 font-mono text-[12px] space-y-1">
         <div className="text-term-green">Last login: today from 0xpacman.com</div>
         <div className="text-muted-foreground">
           <span className="text-primary">*</span> Available for consulting &amp; collaboration
@@ -53,7 +53,7 @@ export function Contact() {
       </div>
 
       {/* Channels as key-value rows */}
-      <div className="border border-primary/15 divide-y divide-primary/10 bg-black/30 font-mono">
+      <div className="border border-primary/15 divide-y divide-primary/10 bg-card font-mono">
         {channels.map((ch) => {
           const Icon = ch.icon
           const isExternal = ch.href?.startsWith("http")

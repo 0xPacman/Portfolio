@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import { Sun, Moon } from 'lucide-react'
 
 function formatUptime(seconds: number) {
   const m = Math.floor(seconds / 60)
@@ -11,8 +12,11 @@ function formatUptime(seconds: number) {
 export function StatusBar() {
   const [now, setNow] = React.useState<string | null>(null)
   const [uptime, setUptime] = React.useState(0)
+  const [isDark, setIsDark] = React.useState(true)
 
   React.useEffect(() => {
+    setIsDark(document.documentElement.classList.contains('dark'))
+
     const fmt = new Intl.DateTimeFormat('en-GB', {
       timeZone: 'Africa/Casablanca',
       hour: '2-digit',
@@ -30,11 +34,21 @@ export function StatusBar() {
     return () => clearInterval(id)
   }, [])
 
+  const toggleTheme = () => {
+    const el = document.documentElement
+    const next = !el.classList.contains('dark')
+    el.classList.toggle('dark', next)
+    try { localStorage.setItem('theme', next ? 'dark' : 'light') } catch {}
+    const meta = document.querySelector('meta[name="theme-color"]')
+    if (meta) meta.setAttribute('content', next ? '#0A0A0A' : '#F6F1E7')
+    setIsDark(next)
+  }
+
   return (
     <div
       role="status"
       aria-live="off"
-      className="flex items-center justify-between gap-3 border-t border-primary/15 bg-black px-3 h-7 font-mono text-[11px] select-none flex-shrink-0"
+      className="flex items-center justify-between gap-3 border-t border-primary/15 bg-background px-3 h-7 font-mono text-[11px] select-none flex-shrink-0"
     >
       <div className="flex items-center gap-2 min-w-0">
         <span className="bg-primary text-primary-foreground px-1.5 font-bold">[main]</span>
@@ -55,6 +69,15 @@ export function StatusBar() {
           <span className="w-1.5 h-1.5 rounded-full bg-term-green animate-blink" aria-hidden="true" />
           available
         </span>
+        <span aria-hidden="true">|</span>
+        <button
+          onClick={toggleTheme}
+          aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
+          title="Toggle theme"
+          className="flex items-center -my-1 py-1 hover:text-primary transition-colors"
+        >
+          {isDark ? <Sun size={12} /> : <Moon size={12} />}
+        </button>
       </div>
     </div>
   )
