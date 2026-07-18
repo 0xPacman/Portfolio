@@ -92,6 +92,7 @@ export const projectsSchema: object[] = [
     '@type': 'SoftwareApplication',
     name: 'sudo ku',
     description: 'Terminal-styled animated Sudoku in pure vanilla JS with a unique-solution puzzle generator, phosphor-amber CRT design, and fluid motion. Zero build, zero dependencies.',
+    url: 'https://sudoku.0xpacman.com',
     codeRepository: 'https://github.com/0xPacman/Sudoku',
     author: {
       '@type': 'Person',
