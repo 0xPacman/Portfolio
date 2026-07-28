@@ -72,7 +72,7 @@ const projects: Project[] = [
     title: "AD Manager", slug: "ad-manager", category: "Enterprise", status: "commercial",
     description: "Professional Active Directory management desktop app built in C++ with a modern UI for Windows environments. User, group, and resource administration with automation.",
     tech: ["C++", "Windows", "Active Directory"],
-    links: { visit: "https://ad.0xpacman.com", visitLabel: "Purchase, $39.99" },
+    links: { visit: "https://ad.0xpacman.com", visitLabel: "Purchase, $29.99" },
     features: ["Bulk user/group ops", "AD automation", "Real-time monitoring", "Enterprise security"],
   },
   {
