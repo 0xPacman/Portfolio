@@ -19,7 +19,7 @@ export const personSchema: Person = {
   },
   address: {
     '@type': 'PostalAddress',
-    addressLocality: 'Benguerir',
+    addressLocality: 'Casablanca',
     addressCountry: 'Morocco'
   },
   sameAs: [

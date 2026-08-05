@@ -12,7 +12,7 @@ export default function Portfolio() {
         <meta itemProp="url" content="https://0xpacman.com" />
         <meta itemProp="image" content="https://0xpacman.com/media/PDP.jpg" />
         <div itemProp="address" itemScope itemType="https://schema.org/PostalAddress">
-          <meta itemProp="addressLocality" content="Benguerir" />
+          <meta itemProp="addressLocality" content="Casablanca" />
           <meta itemProp="addressCountry" content="Morocco" />
         </div>
         <div itemProp="worksFor" itemScope itemType="https://schema.org/Organization">

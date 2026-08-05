@@ -60,7 +60,7 @@ export function StatusBar() {
         </span>
         <span className="hidden md:inline" aria-hidden="true">|</span>
         {now && (
-          <span title="Local time, Benguerir, Morocco">
+          <span title="Local time, Casablanca, Morocco">
             MA {now}
           </span>
         )}

@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     'OpenStack',
     'Atlas Cloud Services',
     'Morocco',
-    'Benguerir',
+    'Casablanca',
     'Portfolio',
     'DevOps',
     'System Administration',

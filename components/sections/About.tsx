@@ -68,7 +68,7 @@ export function About() {
               <Building2 size={12} className="text-primary/70" /> Atlas Cloud Services
             </span>
             <span className="flex items-center gap-1.5">
-              <MapPin size={12} className="text-primary/70" /> Benguerir, Morocco
+              <MapPin size={12} className="text-primary/70" /> Casablanca, Morocco
             </span>
           </div>
           <div className="flex gap-2 pt-2">
