@@ -11,7 +11,7 @@ interface StatDef { value: string; label: string; sub: string }
 
 const stats: StatDef[] = [
   { value: "3+", label: "years pro", sub: "+5y overall IT" },
-  { value: "100+", label: "enterprise clients", sub: "across Morocco" },
+  { value: "100+", label: "enterprise workloads", sub: "designed & operated" },
   { value: "99.9%", label: "uptime SLA", sub: "architected & run" },
   { value: "20+", label: "certifications", sub: "cloud & virt" },
 ]
@@ -91,16 +91,22 @@ export function About() {
       {/* whoami prose */}
       <div className="space-y-3 font-sans text-[15px] leading-relaxed text-foreground/80 max-w-2xl" itemProp="description">
         <p>
-          I design and operate{" "}
-          <span className="text-primary font-medium">resilient cloud stacks</span>, private cloud architecture,
-          VMware &amp; VxRail, OpenStack, and enterprise automation. Years of running data center and
-          production platforms for 100+ enterprise workloads across Morocco.
+          I&apos;m a{" "}
+          <span className="text-primary font-medium">cloud infrastructure engineer</span>. I build and run the
+          systems other people&apos;s work quietly depends on, private cloud architecture, VMware and VxRail,
+          OpenStack, and the automation that keeps all of it coherent.
         </p>
         <p>
-          I care about pragmatic automation and{" "}
-          <span className="text-primary font-medium">reliability engineering</span>, turning manual, repetitive
-          processes into repeatable systems, and building the observability and backup discipline that keeps
-          infrastructure running at scale.
+          Most of my experience is on enterprise platforms, where downtime is expensive and a fix has to be
+          right the first time. That shaped how I work. I care about{" "}
+          <span className="text-primary font-medium">reliability engineering</span> and pragmatic automation,
+          turning manual, repetitive processes into repeatable systems, and building the observability and
+          backup discipline that keeps infrastructure standing at scale.
+        </p>
+        <p>
+          Away from the data center I write code for the fun of it, poke at security tooling, and ship small
+          web projects, most of which end up in <span className="font-mono text-primary/80">~/projects</span>.
+          Always open to an interesting problem.
         </p>
       </div>
 
