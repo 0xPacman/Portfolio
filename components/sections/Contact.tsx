@@ -2,7 +2,7 @@
 
 import React from "react"
 import Link from "next/link"
-import { Github, Linkedin, Mail, Phone, Building2, Copy, Check } from "lucide-react"
+import { Github, Linkedin, Mail, Phone, MapPin, Copy, Check } from "lucide-react"
 import { SectionPrompt } from "@/components/shell/SectionPrompt"
 
 interface Channel {
@@ -22,7 +22,7 @@ const channels: Channel[] = [
   { key: "phone", label: "phone", value: "+212 708 429 995", href: "tel:+212708429995", copy: "+212708429995", icon: Phone, itemProp: "telephone", contactType: "telephone" },
   { key: "github", label: "github", value: "github.com/0xPacman", href: "https://github.com/0xPacman", icon: Github },
   { key: "linkedin", label: "linkedin", value: "linkedin.com/in/0xpacman", href: "https://linkedin.com/in/0xpacman", icon: Linkedin },
-  { key: "org", label: "org", value: "Atlas Cloud Services · Casablanca, Morocco", icon: Building2 },
+  { key: "location", label: "location", value: "Casablanca, Morocco · GMT+1", icon: MapPin },
 ]
 
 export function Contact() {

@@ -9,12 +9,11 @@ A modern, responsive portfolio website showcasing cloud infrastructure expertise
 
 ## 🚀 Live Demo 
 
-- **Portfolio**: [https://0xpacman.github.io/Portfolio](https://0xpacman.github.io/Portfolio)
-- **Atlas Cloud Services**: [https://atlascs.ma](https://atlascs.ma)
+- **Portfolio**: [https://0xpacman.com](https://0xpacman.com)
 
 ## 👨‍💻 About
 
-Cloud Infrastructure Engineer at **Atlas Cloud Services**, Morocco's premier data center and public cloud provider. Specializing in:
+**Cloud Infrastructure Engineer** based in Casablanca, Morocco. Open to collaboration and consultation. Specializing in:
 
 - 🏗️ Private & Public Cloud Architecture
 - 🔧 Enterprise Infrastructure Automation
@@ -104,9 +103,8 @@ Update the personal information in `app/page.tsx`:
 const personalInfo = {
   name: "Ahmed Jadani",
   title: "Cloud Infrastructure Engineer",
-  company: "Atlas Cloud Services",
-  location: "Morocco",
-  email: "ahmed.jadani@atlascs.ma",
+  location: "Casablanca, Morocco",
+  email: "ahmed.jadani@0xpacman.com",
   phone: "+212 708 429 995"
 }
 ```
@@ -142,10 +140,9 @@ pnpm build
 
 ## 📱 Contact
 
-- **Email**: [ahmed.jadani@atlascs.ma](mailto:ahmed.jadani@atlascs.ma)
+- **Email**: [ahmed.jadani@0xpacman.com](mailto:ahmed.jadani@0xpacman.com)
 - **LinkedIn**: [linkedin.com/in/0xpacman](https://linkedin.com/in/0xpacman)
 - **GitHub**: [github.com/0xPacman](https://github.com/0xPacman)
-- **Company**: [Atlas Cloud Services](https://atlascs.ma)
 
 ## 📄 License
 
@@ -158,4 +155,4 @@ Contributions, issues, and feature requests are welcome! Feel free to check the 
 ---
 
 **Built with ❤️ by Ahmed Jadani (@0xPacman)**  
-*Cloud Infrastructure Engineer @ Atlas Cloud Services*
+*Cloud Infrastructure Engineer — open to collaboration & consultation*

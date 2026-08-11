@@ -22,7 +22,7 @@ const groups: SkillGroup[] = [
     { name: 'Azure', level: 90, details: 'Azure VMs, VNETs, App Services, AKS, and Azure AD. Hybrid identity and governance policies for enterprise tenants.' },
     { name: 'Google Cloud', level: 85, details: 'GCE, GKE, Cloud Run, IAM, and VPC networking. Experience with BigQuery and Cloud Functions for event-driven workloads.' },
     { name: 'OpenStack', level: 88, details: 'Multi-node deployment & day-2 operations: Nova, Neutron, Cinder, Glance, Keystone. Automated provisioning with Heat templates.' },
-    { name: 'Dell VxRail', level: 98, certified: true, details: 'Full lifecycle management, deployment, upgrades, expansion, troubleshooting. Single point of contact for VxRail at Atlas Cloud Services.' },
+    { name: 'Dell VxRail', level: 98, certified: true, details: 'Full lifecycle management, deployment, upgrades, expansion, troubleshooting. Single point of contact for VxRail across a national-scale cloud estate.' },
     { name: 'VMware vSphere', level: 95, certified: true, details: 'vCenter, ESXi, vSAN, DRS/HA/FT, vMotion. Designed and operated clusters serving 100+ enterprise workloads.' },
     { name: 'Nutanix HCI (AOS/AHV)', level: 89, certified: true, details: 'Prism Central/Element, AHV hypervisor, cluster expansion, data protection policies, and capacity planning.' },
     { name: 'Proxmox', level: 50, details: 'KVM/LXC virtualization, cluster setup, ZFS storage management, and backup scheduling.' },

@@ -20,14 +20,14 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://0xpacman.com'),
   title: 'Ahmed Jadani | Cloud Infrastructure Engineer',
   description:
-    'Portfolio of Ahmed Jadani (0xPacman), Cloud Infrastructure Engineer at Atlas Cloud Services. VMware, OpenStack, private cloud architecture, and enterprise infrastructure automation.',
+    'Portfolio of Ahmed Jadani (0xPacman), Cloud Infrastructure Engineer. VMware, OpenStack, private cloud architecture, and enterprise infrastructure automation. Open to collaboration and consultation.',
   keywords: [
     'Ahmed Jadani',
     '0xPacman',
     'Cloud Infrastructure Engineer',
     'VMware',
     'OpenStack',
-    'Atlas Cloud Services',
+    'Cloud Consulting',
     'Morocco',
     'Casablanca',
     'Portfolio',
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Ahmed Jadani | Cloud Infrastructure Engineer',
     description:
-      'Cloud Infrastructure Engineer at Atlas Cloud Services, private cloud architecture, VMware, OpenStack, and enterprise automation.',
+      'Cloud Infrastructure Engineer, private cloud architecture, VMware, OpenStack, and enterprise automation. Open to collaboration and consultation.',
     url: 'https://0xpacman.com',
     siteName: 'Ahmed Jadani Portfolio',
     images: [
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Ahmed Jadani | Cloud Infrastructure Engineer',
     description:
-      'Cloud Infrastructure Engineer at Atlas Cloud Services, private cloud architecture, VMware, OpenStack, and enterprise automation.',
+      'Cloud Infrastructure Engineer, private cloud architecture, VMware, OpenStack, and enterprise automation. Open to collaboration and consultation.',
     images: ['/media/PDP.jpg'],
   },
   robots: {

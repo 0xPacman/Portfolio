@@ -7,7 +7,7 @@ const BOOT_LINES = [
   '0xPACMAN BIOS v3.0, init',
   'cpu0: Ahmed Jadani [cloud/security] detected',
   'probing /dev/cloud ............ ok',
-  'mounting /atlas (vsphere,vxrail,openstack) ... ok',
+  'mounting /infra (vsphere,vxrail,openstack) ... ok',
   'loading security modules: nuclei subfinder burp ... ok',
   'starting tmux session [main] ... ok',
   'login: pacman',

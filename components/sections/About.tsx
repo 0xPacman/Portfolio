@@ -3,7 +3,7 @@
 import React from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { Github, Linkedin, Phone, MapPin, Building2, Activity } from "lucide-react"
+import { Github, Linkedin, Phone, MapPin, Activity } from "lucide-react"
 import { SectionPrompt } from "@/components/shell/SectionPrompt"
 import { useCountUp } from "@/hooks/use-count-up"
 
@@ -65,10 +65,10 @@ export function About() {
           </div>
           <div className="flex flex-wrap gap-x-5 gap-y-1.5 text-[12px] text-muted-foreground font-mono pt-1">
             <span className="flex items-center gap-1.5">
-              <Building2 size={12} className="text-primary/70" /> Atlas Cloud Services
+              <MapPin size={12} className="text-primary/70" /> Casablanca, Morocco
             </span>
             <span className="flex items-center gap-1.5">
-              <MapPin size={12} className="text-primary/70" /> Casablanca, Morocco
+              <Activity size={12} className="text-primary/70" /> Open to collaboration &amp; consultation
             </span>
           </div>
           <div className="flex gap-2 pt-2">
@@ -91,12 +91,10 @@ export function About() {
       {/* whoami prose */}
       <div className="space-y-3 font-sans text-[15px] leading-relaxed text-foreground/80 max-w-2xl" itemProp="description">
         <p>
-          I design and operate resilient cloud stacks at{" "}
-          <span className="text-primary font-medium" itemProp="worksFor" itemScope itemType="https://schema.org/Organization">
-            <span itemProp="name">Atlas Cloud Services</span>
-          </span>
-          , Morocco&apos;s leading data center, private cloud architecture, VMware &amp; VxRail, OpenStack, and
-          enterprise automation serving 100+ nationwide workloads.
+          I design and operate{" "}
+          <span className="text-primary font-medium">resilient cloud stacks</span>, private cloud architecture,
+          VMware &amp; VxRail, OpenStack, and enterprise automation. Years of running data center and
+          production platforms for 100+ enterprise workloads across Morocco.
         </p>
         <p>
           I care about pragmatic automation and{" "}

@@ -76,10 +76,10 @@ const projects: Project[] = [
     features: ["Bulk user/group ops", "AD automation", "Real-time monitoring", "Enterprise security"],
   },
   {
-    title: "Atlas Cloud Infrastructure", slug: "atlas-infra", category: "Enterprise", status: "production",
-    description: "Lead modernization for Morocco's premier cloud platform as single point of contact, orchestrating VMware, Dell VxRail, and multi-cloud operations for 100+ enterprises.",
+    title: "Enterprise Cloud Platform", slug: "enterprise-cloud", category: "Enterprise", status: "archived",
+    description: "Led infrastructure modernization for a national-scale cloud platform, orchestrating VMware, Dell VxRail, and multi-cloud operations for 100+ enterprises. Engagement closed.",
     tech: ["VMware", "Dell VxRail", "NSX", "vSphere"],
-    links: { contactEmail: "ahmed.jadani@0xpacman.com" },
+    links: {},
     features: ["Modernization lead", "Single point of contact", "Multi-cloud strategy", "99.9% uptime"],
   },
   {
@@ -128,6 +128,7 @@ const statusStyle: Record<string, string> = {
   enterprise: "text-primary/80",
   commercial: "text-primary",
   "open-source": "text-term-green",
+  archived: "text-muted-foreground/70",
 }
 
 export function Projects() {

@@ -1,4 +1,4 @@
-import { Person, Organization, WebSite, BreadcrumbList } from 'schema-dts'
+import { Person, WebSite, BreadcrumbList } from 'schema-dts'
 
 // Base URL for the website
 const BASE_URL = 'https://0xpacman.com'
@@ -12,11 +12,7 @@ export const personSchema: Person = {
   url: BASE_URL,
   image: `${BASE_URL}/media/PDP.jpg`,
   jobTitle: 'Cloud Infrastructure Engineer',
-  worksFor: {
-    '@type': 'Organization',
-    name: 'Atlas Cloud Services',
-    url: 'https://0xpacman.com'
-  },
+  email: 'ahmed.jadani@0xpacman.com',
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Casablanca',
@@ -40,27 +36,10 @@ export const personSchema: Person = {
     'Docker',
     'Kubernetes'
   ],
-  description: 'Cloud Infrastructure Engineer at Atlas Cloud Services specializing in enterprise-grade infrastructure, VMware technologies, OpenStack, and pragmatic automation.',
+  description: 'Cloud Infrastructure Engineer specializing in enterprise-grade infrastructure, VMware technologies, OpenStack, and pragmatic automation. Open to collaboration and consultation.',
   alumniOf: {
     '@type': 'Organization',
     name: 'Various Educational Institutions'
-  }
-}
-
-// Organization Schema for Atlas Cloud Services
-export const organizationSchema: Organization = {
-  '@type': 'Organization',
-  '@id': 'https://atlascs.ma/#organization',
-  name: 'Atlas Cloud Services',
-  url: 'https://atlascs.ma',
-  description: "Morocco's leading data center and public cloud provider",
-  address: {
-    '@type': 'PostalAddress',
-    addressCountry: 'Morocco'
-  },
-  employee: {
-    '@type': 'Person',
-    '@id': `${BASE_URL}/#person`
   }
 }
 
@@ -218,7 +197,6 @@ export const getStructuredData = () => {
     '@context': 'https://schema.org',
     '@graph': [
       personSchema,
-      organizationSchema,
       websiteSchema,
       breadcrumbSchema,
       ...projectsSchema
