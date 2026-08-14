@@ -7,6 +7,7 @@ import { BootSequence } from './BootSequence'
 import { About } from '@/components/sections/About'
 import { Skills } from '@/components/sections/Skills'
 import { Projects } from '@/components/sections/Projects'
+import { Blog } from '@/components/sections/Blog'
 import { Contact } from '@/components/sections/Contact'
 
 interface WindowDef {
@@ -20,6 +21,7 @@ const WINDOWS: WindowDef[] = [
   { id: 'about', label: 'about', path: '~', render: () => <About /> },
   { id: 'skills', label: 'skills', path: '~/skills', render: () => <Skills /> },
   { id: 'projects', label: 'projects', path: '~/projects', render: () => <Projects /> },
+  { id: 'blog', label: 'blog', path: '~/blog', render: () => <Blog /> },
   { id: 'contact', label: 'contact', path: '~/contact', render: () => <Contact /> },
 ]
 
@@ -46,7 +48,7 @@ export function TerminalShell() {
     if (typeof window !== 'undefined') history.replaceState(null, '', `#${id}`)
   }, [])
 
-  // Numeric hotkeys 1–5 (skip when typing)
+  // Numeric hotkeys 1–5 (about, skills, projects, blog, contact)
   React.useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.metaKey || e.ctrlKey || e.altKey) return
