@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 270" font-family="'JetBrains Mono', ui-monospace, monospace">
+  <rect width="920" height="270" fill="#050505"/>
+
+  <!-- arrows between phases -->
+  <g stroke="hsl(40,96%,52%)" stroke-opacity="0.6" stroke-width="1.5" fill="none">
+    <line x1="296" y1="140" x2="322" y2="140"/>
+    <polyline points="316,134 322,140 316,146"/>
+    <line x1="602" y1="140" x2="628" y2="140"/>
+    <polyline points="622,134 628,140 622,146"/>
+  </g>
+
+  <!-- Phase 1: HLD -->
+  <rect x="20" y="35" width="276" height="200" fill="none" stroke="hsl(40,96%,52%)" stroke-opacity="0.5"/>
+  <text x="158" y="63" text-anchor="middle" font-size="13" fill="hsl(40,96%,52%)">PHASE 1 — HLD</text>
+  <text x="158" y="84" text-anchor="middle" font-size="11" fill="hsl(40,5%,55%)">High-Level Design</text>
+  <line x1="36" y1="98" x2="280" y2="98" stroke="hsl(40,40%,16%)" stroke-width="1"/>
+  <g font-size="12" fill="hsl(40,12%,88%)">
+    <text x="44" y="124">› Tenant topology</text>
+    <text x="44" y="150">› Storage pools (Ceph)</text>
+    <text x="44" y="176">› Controller HA model</text>
+    <text x="44" y="202">› AZ &amp; failure domains</text>
+  </g>
+
+  <!-- Phase 2: LLD -->
+  <rect x="326" y="35" width="276" height="200" fill="none" stroke="hsl(40,96%,52%)" stroke-opacity="0.5"/>
+  <text x="464" y="63" text-anchor="middle" font-size="13" fill="hsl(40,96%,52%)">PHASE 2 — LLD</text>
+  <text x="464" y="84" text-anchor="middle" font-size="11" fill="hsl(40,5%,55%)">Low-Level Design</text>
+  <line x1="342" y1="98" x2="586" y2="98" stroke="hsl(40,40%,16%)" stroke-width="1"/>
+  <g font-size="12" fill="hsl(40,12%,88%)">
+    <text x="350" y="124">› VLAN IDs &amp; subnets</text>
+    <text x="350" y="150">› LACP bonding modes</text>
+    <text x="350" y="176">› NIC mapping (OVS/OVN)</text>
+    <text x="350" y="202">› MTU sizing end-to-end</text>
+  </g>
+
+  <!-- Phase 3: Deploy -->
+  <rect x="632" y="35" width="276" height="200" fill="hsl(150,65%,45%)" fill-opacity="0.05" stroke="hsl(150,65%,45%)" stroke-opacity="0.55"/>
+  <text x="770" y="63" text-anchor="middle" font-size="13" fill="hsl(150,65%,45%)">PHASE 3 — DEPLOY</text>
+  <text x="770" y="84" text-anchor="middle" font-size="11" fill="hsl(40,5%,55%)">Deploy &amp; iterate</text>
+  <line x1="648" y1="98" x2="892" y2="98" stroke="hsl(40,40%,16%)" stroke-width="1"/>
+  <g font-size="12" fill="hsl(40,12%,88%)">
+    <text x="656" y="124">› MTU adjustments</text>
+    <text x="656" y="150">› CPU pinning</text>
+    <text x="656" y="176">› Dynamic overrides</text>
+    <text x="656" y="202">› Root-cause &amp; adapt</text>
+  </g>
+</svg>

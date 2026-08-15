@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" font-family="'JetBrains Mono', ui-monospace, monospace">
+  <rect width="760" height="380" fill="#050505"/>
+
+  <!-- connectors -->
+  <g stroke="hsl(40,40%,16%)" stroke-width="1">
+    <line x1="380" y1="68" x2="380" y2="84"/>
+    <line x1="149" y1="136" x2="149" y2="152"/>
+    <line x1="380" y1="136" x2="380" y2="152"/>
+    <line x1="611" y1="136" x2="611" y2="152"/>
+    <line x1="149" y1="216" x2="149" y2="232"/>
+    <line x1="380" y1="216" x2="380" y2="232"/>
+    <line x1="611" y1="216" x2="611" y2="232"/>
+    <line x1="380" y1="296" x2="380" y2="312"/>
+  </g>
+
+  <!-- Horizon -->
+  <rect x="40" y="16" width="680" height="52" fill="none" stroke="hsl(40,96%,52%)" stroke-opacity="0.5"/>
+  <text x="380" y="46" text-anchor="middle" font-size="15" fill="hsl(40,96%,52%)">Horizon (Dashboard) / CLI</text>
+
+  <!-- Keystone -->
+  <rect x="40" y="84" width="680" height="52" fill="none" stroke="hsl(40,96%,52%)" stroke-opacity="0.5"/>
+  <text x="380" y="108" text-anchor="middle" font-size="15" fill="hsl(40,96%,52%)">Keystone</text>
+  <text x="380" y="126" text-anchor="middle" font-size="11" fill="hsl(40,5%,55%)">Identity &amp; Auth</text>
+
+  <!-- Services row 1 -->
+  <rect x="40" y="152" width="218" height="64" fill="none" stroke="hsl(40,96%,52%)" stroke-opacity="0.35"/>
+  <text x="149" y="179" text-anchor="middle" font-size="14" fill="hsl(40,12%,88%)">Nova</text>
+  <text x="149" y="198" text-anchor="middle" font-size="11" fill="hsl(40,5%,55%)">Compute</text>
+
+  <rect x="271" y="152" width="218" height="64" fill="none" stroke="hsl(40,96%,52%)" stroke-opacity="0.35"/>
+  <text x="380" y="179" text-anchor="middle" font-size="14" fill="hsl(40,12%,88%)">Neutron</text>
+  <text x="380" y="198" text-anchor="middle" font-size="11" fill="hsl(40,5%,55%)">Networking</text>
+
+  <rect x="502" y="152" width="218" height="64" fill="none" stroke="hsl(40,96%,52%)" stroke-opacity="0.35"/>
+  <text x="611" y="179" text-anchor="middle" font-size="14" fill="hsl(40,12%,88%)">Cinder</text>
+  <text x="611" y="198" text-anchor="middle" font-size="11" fill="hsl(40,5%,55%)">Block Storage</text>
+
+  <!-- Services row 2 -->
+  <rect x="40" y="232" width="218" height="64" fill="none" stroke="hsl(40,96%,52%)" stroke-opacity="0.35"/>
+  <text x="149" y="259" text-anchor="middle" font-size="14" fill="hsl(40,12%,88%)">Glance</text>
+  <text x="149" y="278" text-anchor="middle" font-size="11" fill="hsl(40,5%,55%)">Images</text>
+
+  <rect x="271" y="232" width="218" height="64" fill="none" stroke="hsl(40,96%,52%)" stroke-opacity="0.35"/>
+  <text x="380" y="259" text-anchor="middle" font-size="14" fill="hsl(40,12%,88%)">Octavia</text>
+  <text x="380" y="278" text-anchor="middle" font-size="11" fill="hsl(40,5%,55%)">Load Balancing</text>
+
+  <rect x="502" y="232" width="218" height="64" fill="none" stroke="hsl(40,96%,52%)" stroke-opacity="0.35"/>
+  <text x="611" y="259" text-anchor="middle" font-size="14" fill="hsl(40,12%,88%)">Swift</text>
+  <text x="611" y="278" text-anchor="middle" font-size="11" fill="hsl(40,5%,55%)">Object Store</text>
+
+  <!-- Hardware -->
+  <rect x="40" y="312" width="680" height="52" fill="hsl(40,96%,52%)" fill-opacity="0.06" stroke="hsl(40,96%,52%)" stroke-opacity="0.5"/>
+  <text x="380" y="336" text-anchor="middle" font-size="14" fill="hsl(40,12%,88%)">Physical Hardware</text>
+  <text x="380" y="354" text-anchor="middle" font-size="11" fill="hsl(40,5%,55%)">Compute · Storage · Switches</text>
+</svg>

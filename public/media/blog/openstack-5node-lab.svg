@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" font-family="'JetBrains Mono', ui-monospace, monospace">
+  <rect width="760" height="400" fill="#050505"/>
+
+  <!-- tree lines -->
+  <g stroke="hsl(40,40%,16%)" stroke-width="1" fill="none">
+    <line x1="380" y1="80" x2="380" y2="108"/>
+    <line x1="130" y1="108" x2="630" y2="108"/>
+    <line x1="130" y1="108" x2="130" y2="130"/>
+    <line x1="380" y1="108" x2="380" y2="130"/>
+    <line x1="630" y1="108" x2="630" y2="130"/>
+    <line x1="380" y1="222" x2="380" y2="258"/>
+    <line x1="205" y1="258" x2="555" y2="258"/>
+    <line x1="205" y1="258" x2="205" y2="278"/>
+    <line x1="555" y1="258" x2="555" y2="278"/>
+  </g>
+
+  <!-- deployment node -->
+  <rect x="230" y="16" width="300" height="64" fill="hsl(40,96%,52%)" fill-opacity="0.06" stroke="hsl(40,96%,52%)" stroke-opacity="0.55"/>
+  <text x="380" y="44" text-anchor="middle" font-size="14" fill="hsl(40,96%,52%)">Deployment Node</text>
+  <text x="380" y="64" text-anchor="middle" font-size="11" fill="hsl(40,5%,55%)">Ansible control machine</text>
+
+  <!-- controllers -->
+  <g>
+    <rect x="30" y="130" width="200" height="92" fill="none" stroke="hsl(40,96%,52%)" stroke-opacity="0.4"/>
+    <text x="130" y="155" text-anchor="middle" font-size="13" fill="hsl(40,12%,88%)">Controller 1</text>
+    <text x="130" y="177" text-anchor="middle" font-size="10.5" fill="hsl(40,5%,55%)">LXC: Nova · OVN</text>
+    <text x="130" y="195" text-anchor="middle" font-size="10.5" fill="hsl(40,5%,55%)">Keystone · Galera</text>
+
+    <rect x="280" y="130" width="200" height="92" fill="none" stroke="hsl(40,96%,52%)" stroke-opacity="0.4"/>
+    <text x="380" y="155" text-anchor="middle" font-size="13" fill="hsl(40,12%,88%)">Controller 2</text>
+    <text x="380" y="177" text-anchor="middle" font-size="10.5" fill="hsl(40,5%,55%)">LXC: Nova · OVN</text>
+    <text x="380" y="195" text-anchor="middle" font-size="10.5" fill="hsl(40,5%,55%)">Keystone · Galera</text>
+
+    <rect x="530" y="130" width="200" height="92" fill="none" stroke="hsl(40,96%,52%)" stroke-opacity="0.4"/>
+    <text x="630" y="155" text-anchor="middle" font-size="13" fill="hsl(40,12%,88%)">Controller 3</text>
+    <text x="630" y="177" text-anchor="middle" font-size="10.5" fill="hsl(40,5%,55%)">LXC: Nova · OVN</text>
+    <text x="630" y="195" text-anchor="middle" font-size="10.5" fill="hsl(40,5%,55%)">Keystone · Galera</text>
+  </g>
+
+  <!-- computes -->
+  <g>
+    <rect x="90" y="278" width="230" height="72" fill="hsl(150,65%,45%)" fill-opacity="0.05" stroke="hsl(150,65%,45%)" stroke-opacity="0.5"/>
+    <text x="205" y="306" text-anchor="middle" font-size="13" fill="hsl(40,12%,88%)">Compute 1</text>
+    <text x="205" y="328" text-anchor="middle" font-size="10.5" fill="hsl(40,5%,55%)">KVM / QEMU</text>
+
+    <rect x="440" y="278" width="230" height="72" fill="hsl(150,65%,45%)" fill-opacity="0.05" stroke="hsl(150,65%,45%)" stroke-opacity="0.5"/>
+    <text x="555" y="306" text-anchor="middle" font-size="13" fill="hsl(40,12%,88%)">Compute 2</text>
+    <text x="555" y="328" text-anchor="middle" font-size="10.5" fill="hsl(40,5%,55%)">KVM / QEMU</text>
+  </g>
+
+  <!-- caption -->
+  <text x="380" y="382" text-anchor="middle" font-size="11" fill="hsl(40,5%,55%)">openstack-ansible · 3 controllers · 2 computes · bare metal</text>
+</svg>

@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 440" font-family="'JetBrains Mono', ui-monospace, monospace">
+  <rect width="920" height="440" fill="#050505"/>
+
+  <!-- connectors -->
+  <g stroke="hsl(40,40%,16%)" stroke-width="1" fill="none">
+    <line x1="460" y1="68" x2="460" y2="92"/>
+    <line x1="230" y1="92" x2="690" y2="92"/>
+    <line x1="230" y1="92" x2="230" y2="112"/>
+    <line x1="690" y1="92" x2="690" y2="112"/>
+    <line x1="230" y1="332" x2="230" y2="366"/>
+    <line x1="690" y1="332" x2="690" y2="366"/>
+  </g>
+
+  <!-- question -->
+  <rect x="290" y="12" width="340" height="56" fill="hsl(40,96%,52%)" fill-opacity="0.08" stroke="hsl(40,96%,52%)" stroke-opacity="0.6"/>
+  <text x="460" y="46" text-anchor="middle" font-size="15" fill="hsl(40,96%,52%)">Is OpenStack right for you?</text>
+
+  <!-- left: scale & mindset -->
+  <rect x="20" y="112" width="420" height="220" fill="none" stroke="hsl(40,96%,52%)" stroke-opacity="0.45"/>
+  <text x="230" y="142" text-anchor="middle" font-size="13" fill="hsl(40,96%,52%)">SCALE &amp; AUTOMATION MINDSET</text>
+  <line x1="36" y1="158" x2="424" y2="158" stroke="hsl(40,40%,16%)" stroke-width="1"/>
+  <g font-size="12.5" fill="hsl(40,12%,88%)">
+    <text x="44" y="188">› 50+ physical nodes</text>
+    <text x="44" y="216">› Ansible / Python / IaC-first culture</text>
+    <text x="44" y="244">› Cloud-native, horizontal workloads</text>
+    <text x="44" y="272">› Strong Linux &amp; networking team</text>
+    <text x="44" y="300">› VMs + bare metal (Ironic)</text>
+  </g>
+
+  <!-- right: legacy focus -->
+  <rect x="480" y="112" width="420" height="220" fill="none" stroke="hsl(40,5%,55%)" stroke-opacity="0.45"/>
+  <text x="690" y="142" text-anchor="middle" font-size="13" fill="hsl(40,5%,55%)">LEGACY-FOCUSED</text>
+  <line x1="496" y1="158" x2="884" y2="158" stroke="hsl(40,40%,16%)" stroke-width="1"/>
+  <g font-size="12.5" fill="hsl(40,12%,88%)">
+    <text x="504" y="188">› Small cluster (&lt;10 nodes)</text>
+    <text x="504" y="216">› Single-admin GUI workflow</text>
+    <text x="504" y="244">› Monolithic legacy Windows VMs</text>
+    <text x="504" y="272">› No API / automation culture</text>
+    <text x="504" y="300">› Just need simple VM management</text>
+  </g>
+
+  <!-- verdicts -->
+  <rect x="20" y="366" width="420" height="56" fill="hsl(150,65%,45%)" fill-opacity="0.08" stroke="hsl(150,65%,45%)" stroke-opacity="0.6"/>
+  <text x="230" y="400" text-anchor="middle" font-size="14" fill="hsl(150,65%,45%)">YES — move to OpenStack</text>
+
+  <rect x="480" y="366" width="420" height="56" fill="hsl(0,72%,51%)" fill-opacity="0.06" stroke="hsl(0,72%,51%)" stroke-opacity="0.55"/>
+  <text x="690" y="400" text-anchor="middle" font-size="14" fill="hsl(0,72%,60%)">NO — Proxmox VE / Nutanix / XCP-ng</text>
+</svg>
