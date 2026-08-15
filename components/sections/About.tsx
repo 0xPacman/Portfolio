@@ -3,7 +3,8 @@
 import React from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { Github, Linkedin, Phone, MapPin, Activity } from "lucide-react"
+import { Phone, MapPin, Activity } from "lucide-react"
+import { GithubIcon, LinkedinIcon } from "@/components/ui/brand-icons"
 import { SectionPrompt } from "@/components/shell/SectionPrompt"
 import { useCountUp } from "@/hooks/use-count-up"
 
@@ -17,8 +18,8 @@ const stats: StatDef[] = [
 ]
 
 const socials = [
-  { href: "https://github.com/0xPacman", icon: Github, label: "GitHub" },
-  { href: "https://linkedin.com/in/0xpacman", icon: Linkedin, label: "LinkedIn" },
+  { href: "https://github.com/0xPacman", icon: GithubIcon, label: "GitHub" },
+  { href: "https://linkedin.com/in/0xpacman", icon: LinkedinIcon, label: "LinkedIn" },
   { href: "https://wa.me/212708429995", icon: Phone, label: "WhatsApp" },
 ]
 

@@ -3,7 +3,8 @@
 import React from "react"
 import Link from "next/link"
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion"
-import { ExternalLink, Github, Mail, ChevronRight, Lock } from "lucide-react"
+import { ExternalLink, Mail, ChevronRight, Lock } from "lucide-react"
+import { GithubIcon } from "@/components/ui/brand-icons"
 import { SectionPrompt } from "@/components/shell/SectionPrompt"
 
 interface ProjectLink {
@@ -249,7 +250,7 @@ export function Projects() {
                           {project.links.github && (
                             <Link href={project.links.github} target="_blank" rel="noopener noreferrer"
                               className="inline-flex items-center gap-1.5 px-2.5 py-1 border border-primary/20 text-muted-foreground hover:text-foreground hover:border-primary/40 transition-colors">
-                              <Github size={12} /> source
+                              <GithubIcon size={12} /> source
                             </Link>
                           )}
                           {project.links.contactEmail && (
@@ -275,7 +276,7 @@ export function Projects() {
         rel="noopener noreferrer"
         className="flex items-center justify-center gap-2 text-[12px] font-mono py-2.5 border border-primary/15 text-muted-foreground hover:text-primary hover:border-primary/30 transition-colors"
       >
-        <Github size={13} /> git clone --all @0xPacman <ExternalLink size={10} />
+        <GithubIcon size={13} /> git clone --all @0xPacman <ExternalLink size={10} />
       </Link>
     </section>
   )
