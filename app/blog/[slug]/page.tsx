@@ -23,6 +23,12 @@ export async function generateMetadata({
   const post = getPost(slug)
   if (!post) return {}
   const { meta } = post
+  const ogImage = {
+    url: `/blog/${slug}/opengraph-image`,
+    width: 1200,
+    height: 630,
+    alt: meta.title,
+  }
   return {
     title: `${meta.title} | Ahmed Jadani`,
     description: meta.description,
@@ -41,20 +47,13 @@ export async function generateMetadata({
       modifiedTime: meta.date,
       authors: [BASE],
       tags: meta.tags,
-      images: [
-        {
-          url: '/media/PDP.jpg',
-          width: 800,
-          height: 600,
-          alt: meta.title,
-        },
-      ],
+      images: [ogImage],
     },
     twitter: {
       card: 'summary_large_image',
       title: meta.title,
       description: meta.description,
-      images: ['/media/PDP.jpg'],
+      images: [ogImage.url],
     },
   }
 }
@@ -187,6 +186,21 @@ export default async function BlogPost({
           itemProp="articleBody"
           dangerouslySetInnerHTML={{ __html: html }}
         />
+
+        {/* author note */}
+        <div className="mt-12 border border-primary/15 bg-card/30 px-4 py-3 font-mono text-[12px] leading-relaxed">
+          <div className="flex flex-wrap items-center gap-1.5">
+            <span className="text-term-green">root@0xpacman</span>
+            <span className="text-muted-foreground">:</span>
+            <span className="text-primary/70">~/blog</span>
+            <span className="text-muted-foreground">$</span>
+            <span className="text-foreground">cat note.txt</span>
+          </div>
+          <p className="mt-2 text-muted-foreground">
+            This article reflects personal experience and opinion. AI assisted with grammar the
+            way a linter assists with code. The thinking is mine; so are any mistakes.
+          </p>
+        </div>
 
         {/* footer nav */}
         <div className="mt-12 pt-6 border-t border-primary/15">
