@@ -13,27 +13,34 @@ export function TocNav({ items }: TocNavProps) {
   const [open, setOpen] = React.useState(false)
 
   React.useEffect(() => {
+    // Content scrolls inside the shell container, not the window
+    const container = document.querySelector<HTMLElement>('[data-shell-scroll]')
     const headings = items
       .map((i) => document.getElementById(i.id))
       .filter((el): el is HTMLElement => el !== null)
-    if (headings.length === 0) return
+    if (!container || headings.length === 0) return
 
     let raf = 0
+    const update = () => {
+      const containerTop = container.getBoundingClientRect().top
+      const pos = container.scrollTop + 140
+      let current = headings[0].id
+      for (const h of headings) {
+        const top = h.getBoundingClientRect().top - containerTop + container.scrollTop
+        if (top <= pos) current = h.id
+      }
+      setActive(current)
+    }
     const onScroll = () => {
       cancelAnimationFrame(raf)
-      raf = requestAnimationFrame(() => {
-        const pos = window.scrollY + 140
-        let current = headings[0].id
-        for (const h of headings) {
-          if (h.offsetTop <= pos) current = h.id
-        }
-        setActive(current)
-      })
+      raf = requestAnimationFrame(update)
     }
-    onScroll()
-    window.addEventListener('scroll', onScroll, { passive: true })
+    update()
+    container.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
     return () => {
-      window.removeEventListener('scroll', onScroll)
+      container.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
       cancelAnimationFrame(raf)
     }
   }, [items])

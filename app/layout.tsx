@@ -18,7 +18,10 @@ const spaceGrotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://0xpacman.com'),
-  title: 'Ahmed Jadani | Cloud Infrastructure Engineer',
+  title: {
+    default: 'Ahmed Jadani | Cloud Infrastructure Engineer',
+    template: '%s | Ahmed Jadani',
+  },
   description:
     'Portfolio of Ahmed Jadani (0xPacman), Cloud Infrastructure Engineer. VMware, OpenStack, private cloud architecture, and enterprise infrastructure automation. Open to collaboration and consultation.',
   keywords: [

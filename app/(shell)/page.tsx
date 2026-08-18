@@ -1,10 +1,10 @@
-import { TerminalShell } from "@/components/shell/TerminalShell"
+import { About } from '@/components/sections/About'
 
-export default function Portfolio() {
+export default function HomePage() {
   return (
     <div itemScope itemType="https://schema.org/WebPage">
       {/* SEO structured microdata */}
-      <div itemProp="mainEntity" itemScope itemType="https://schema.org/Person" style={{ display: "none" }}>
+      <div itemProp="mainEntity" itemScope itemType="https://schema.org/Person" style={{ display: 'none' }}>
         <meta itemProp="name" content="Ahmed Jadani" />
         <meta itemProp="alternateName" content="0xPacman" />
         <meta itemProp="jobTitle" content="Cloud Infrastructure Engineer" />
@@ -20,7 +20,9 @@ export default function Portfolio() {
         <meta itemProp="sameAs" content="https://linkedin.com/in/0xpacman" />
       </div>
 
-      <TerminalShell />
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-8">
+        <About />
+      </div>
     </div>
   )
 }

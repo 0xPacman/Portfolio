@@ -22,6 +22,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       }
     })
 
+  const sections = ['skills', 'projects', 'blog', 'contact'].map((s) => ({
+    url: `https://0xpacman.com/${s}/`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly' as const,
+    priority: 0.9,
+  }))
+
   return [
     {
       url: 'https://0xpacman.com',
@@ -29,6 +36,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly',
       priority: 1,
     },
+    ...sections,
     ...posts,
   ]
 }

@@ -1,9 +1,6 @@
 import { ImageResponse } from 'next/og'
 import { getAllPosts, getPost } from '@/lib/blog'
 
-export const alt = 'Article cover'
-export const size = { width: 1200, height: 630 }
-export const contentType = 'image/png'
 export const dynamic = 'force-static'
 export const dynamicParams = false
 
@@ -17,7 +14,6 @@ let fontCache: { regular: ArrayBuffer; bold: ArrayBuffer } | null = null
 const FONT_UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36'
 
 async function fetchFont(weight: 400 | 700): Promise<ArrayBuffer> {
-  // This UA makes Google Fonts serve static TTF files (Satori-compatible)
   const css = await fetch(
     `https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@${weight}`,
     { headers: { 'User-Agent': FONT_UA } }
@@ -35,11 +31,12 @@ async function loadFonts() {
   return fontCache
 }
 
-export default async function OgImage({
-  params,
-}: {
-  params: Promise<{ slug: string }>
-}) {
+const SIZE = { width: 1200, height: 630 }
+
+export async function GET(
+  _request: Request,
+  { params }: { params: Promise<{ slug: string }> }
+) {
   const { slug } = await params
   const post = getPost(slug)
   if (!post) return new Response('Not found', { status: 404 })
@@ -133,7 +130,7 @@ export default async function OgImage({
       </div>
     ),
     {
-      ...size,
+      ...SIZE,
       fonts: [
         { name: 'JetBrains Mono', data: fonts.regular, weight: 400, style: 'normal' },
         { name: 'JetBrains Mono', data: fonts.bold, weight: 700, style: 'normal' },

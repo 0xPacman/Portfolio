@@ -24,13 +24,13 @@ export async function generateMetadata({
   if (!post) return {}
   const { meta } = post
   const ogImage = {
-    url: `/blog/${slug}/opengraph-image`,
+    url: `/blog/${slug}/og.png`,
     width: 1200,
     height: 630,
     alt: meta.title,
   }
   return {
-    title: `${meta.title} | Ahmed Jadani`,
+    title: meta.title,
     description: meta.description,
     keywords: [...meta.tags, 'Ahmed Jadani', '0xPacman', 'Cloud Infrastructure'],
     authors: [{ name: 'Ahmed Jadani', url: BASE }],
@@ -84,7 +84,7 @@ export default async function BlogPost({
     timeRequired: `PT${readingTime}M`,
     keywords: meta.tags.join(', '),
     articleSection: meta.tags[0] ?? 'Infrastructure',
-    image: `${BASE}/media/PDP.jpg`,
+    image: `${BASE}/blog/${slug}/og.png`,
     mainEntityOfPage: {
       '@type': 'WebPage',
       '@id': `${BASE}/blog/${slug}/`,
@@ -109,30 +109,28 @@ export default async function BlogPost({
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: BASE },
-      { '@type': 'ListItem', position: 2, name: 'Blog', item: `${BASE}/#blog` },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: `${BASE}/blog/` },
       { '@type': 'ListItem', position: 3, name: meta.title, item: `${BASE}/blog/${slug}/` },
     ],
   }
 
   return (
-    <div className="min-h-screen bg-background relative">
+    <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={generateJSONLD([articleSchema, breadcrumbSchema])}
       />
-      <div className="absolute inset-0 dotgrid" aria-hidden="true" />
-      <div className="absolute inset-0 scanlines opacity-40" aria-hidden="true" />
 
       <TocNav items={toc} />
 
       <article
-        className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 py-8 lg:py-12"
+        className="max-w-3xl mx-auto px-4 sm:px-6 py-8 lg:py-12"
         itemScope
         itemType="https://schema.org/BlogPosting"
       >
         {/* back nav */}
         <Link
-          href="/#blog"
+          href="/blog/"
           className="inline-flex items-center gap-1.5 text-[12px] font-mono text-muted-foreground hover:text-primary transition-colors"
         >
           <ArrowLeft size={12} aria-hidden="true" />
@@ -205,7 +203,7 @@ export default async function BlogPost({
         {/* footer nav */}
         <div className="mt-12 pt-6 border-t border-primary/15">
           <Link
-            href="/#blog"
+            href="/blog/"
             className="inline-flex items-center gap-1.5 text-[12px] font-mono text-muted-foreground hover:text-primary transition-colors"
           >
             <ArrowLeft size={12} aria-hidden="true" />
@@ -213,6 +211,6 @@ export default async function BlogPost({
           </Link>
         </div>
       </article>
-    </div>
+    </>
   )
 }
