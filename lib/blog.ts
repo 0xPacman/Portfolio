@@ -38,10 +38,22 @@ function extractToc(content: string): TocItem[] {
     })
 }
 
+function decodeEntities(s: string): string {
+  return s
+    .replace(/&amp;/g, '&')
+    .replace(/&#39;/g, "'")
+    .replace(/&#x27;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&#(\d+);/g, (_, n: string) => String.fromCharCode(parseInt(n, 10)))
+    .replace(/&#x([0-9a-fA-F]+);/g, (_, h: string) => String.fromCharCode(parseInt(h, 16)))
+}
+
 /** Add id anchors to rendered H2s so the TOC can target them. */
 function addHeadingIds(html: string): string {
   return html.replace(/<h2>(.*?)<\/h2>/g, (_, inner: string) => {
-    const text = inner.replace(/<[^>]+>/g, '')
+    const text = decodeEntities(inner.replace(/<[^>]+>/g, ''))
     return `<h2 id="${slugify(text)}">${inner}</h2>`
   })
 }

@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 336" font-family="'JetBrains Mono', ui-monospace, monospace">
+  <rect width="760" height="336" fill="#050505"/>
+
+  <!-- tree lines -->
+  <g stroke="hsl(40,40%,16%)" stroke-width="1" fill="none">
+    <line x1="380" y1="72" x2="380" y2="104"/>
+    <line x1="149" y1="104" x2="611" y2="104"/>
+    <line x1="149" y1="104" x2="149" y2="128"/>
+    <line x1="380" y1="104" x2="380" y2="128"/>
+    <line x1="611" y1="104" x2="611" y2="128"/>
+    <line x1="149" y1="192" x2="149" y2="252"/>
+    <line x1="380" y1="192" x2="380" y2="252"/>
+    <line x1="611" y1="192" x2="611" y2="252"/>
+  </g>
+
+  <!-- root of trust -->
+  <rect x="230" y="16" width="300" height="56" fill="hsl(0,72%,51%)" fill-opacity="0.07" stroke="hsl(0,72%,51%)" stroke-opacity="0.6"/>
+  <text x="380" y="41" text-anchor="middle" font-size="14" fill="hsl(0,72%,60%)">Active Directory</text>
+  <text x="380" y="60" text-anchor="middle" font-size="10.5" fill="hsl(40,5%,55%)">Tier-0 root of trust</text>
+
+  <!-- middle row -->
+  <rect x="40" y="128" width="218" height="64" fill="none" stroke="hsl(40,96%,52%)" stroke-opacity="0.4"/>
+  <text x="149" y="153" text-anchor="middle" font-size="13" fill="hsl(40,12%,88%)">Hypervisors</text>
+  <text x="149" y="172" text-anchor="middle" font-size="10.5" fill="hsl(40,5%,55%)">vCenter / Nutanix</text>
+
+  <rect x="271" y="128" width="218" height="64" fill="none" stroke="hsl(40,96%,52%)" stroke-opacity="0.4"/>
+  <text x="380" y="153" text-anchor="middle" font-size="13" fill="hsl(40,12%,88%)">Enterprise SAN</text>
+  <text x="380" y="172" text-anchor="middle" font-size="10.5" fill="hsl(40,5%,55%)">NFS / iSCSI</text>
+
+  <rect x="502" y="128" width="218" height="64" fill="none" stroke="hsl(40,96%,52%)" stroke-opacity="0.4"/>
+  <text x="611" y="153" text-anchor="middle" font-size="13" fill="hsl(40,12%,88%)">Hybrid Cloud / IdP</text>
+  <text x="611" y="172" text-anchor="middle" font-size="10.5" fill="hsl(40,5%,55%)">Entra ID / Okta</text>
+
+  <!-- bottom row -->
+  <rect x="40" y="252" width="218" height="52" fill="hsl(40,96%,52%)" fill-opacity="0.04" stroke="hsl(40,40%,16%)"/>
+  <text x="149" y="283" text-anchor="middle" font-size="12" fill="hsl(40,12%,88%)">Domain Hosts</text>
+
+  <rect x="271" y="252" width="218" height="52" fill="hsl(40,96%,52%)" fill-opacity="0.04" stroke="hsl(40,40%,16%)"/>
+  <text x="380" y="283" text-anchor="middle" font-size="12" fill="hsl(40,12%,88%)">Tier-1 Apps &amp; DBs</text>
+
+  <rect x="502" y="252" width="218" height="52" fill="hsl(40,96%,52%)" fill-opacity="0.04" stroke="hsl(40,40%,16%)"/>
+  <text x="611" y="283" text-anchor="middle" font-size="12" fill="hsl(40,12%,88%)">User Workstations</text>
+
+  <!-- caption -->
+  <text x="380" y="328" text-anchor="middle" font-size="11" fill="hsl(40,5%,55%)">compromise the domain — everything below it falls</text>
+</svg>

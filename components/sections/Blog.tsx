@@ -14,8 +14,14 @@ interface Post {
 
 const posts: Post[] = [
   {
+    title: "Active Directory at Scale: Hardening the Tier-0 Core (and Why I Built My Own Management Tool)",
+    description: "The backbone of enterprise identity, hardening, scaling, and modernizing AD operations, plus the native tool I built to fix its daily frictions",
+    tag: "active-directory",
+    slug: "active-directory-at-scale",
+  },
+  {
     title: "Demystifying OpenStack: Architecture, Economics, and the Post-VMware Reality",
-    description: "A practitioner's guide to deploying, scaling, and evaluating OpenStack — written from real deployments, not vendor decks",
+    description: "A practitioner's guide to deploying, scaling, and evaluating OpenStack, written from real deployments, not vendor decks",
     tag: "openstack",
     slug: "demystifying-openstack",
   },
@@ -23,11 +29,6 @@ const posts: Post[] = [
     title: "Automating the Boring Stuff",
     description: "Turning manual ops runbooks into repeatable systems with Ansible and Python",
     tag: "automation",
-  },
-  {
-    title: "When the Tool Doesn't Exist, Build It",
-    description: "Hitting a wall with Active Directory at scale — and solving it by writing my own software",
-    tag: "active-directory",
   },
   {
     title: "From Break-Fix to SRE",
