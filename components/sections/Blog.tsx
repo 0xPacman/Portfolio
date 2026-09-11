@@ -14,6 +14,12 @@ interface Post {
 
 const posts: Post[] = [
   {
+    title: "The Challenge I Let Slip: Google foo.bar and the Case for Relentless Curiosity",
+    description: "A one-time invitation from Google appeared in my search results in 2019. I froze, let it expire, and learned a lesson about curiosity that outlasted any algorithm",
+    tag: "career",
+    slug: "the-challenge-i-let-slip",
+  },
+  {
     title: "Active Directory at Scale: Hardening the Tier-0 Core (and Why I Built My Own Management Tool)",
     description: "The backbone of enterprise identity, hardening, scaling, and modernizing AD operations, plus the native tool I built to fix its daily frictions",
     tag: "active-directory",
