@@ -5,6 +5,7 @@ import { ArrowLeft, Calendar, Clock, Tag } from 'lucide-react'
 import { getAllPosts, getPost } from '@/lib/blog'
 import { generateJSONLD } from '@/lib/schema'
 import { TocNav } from '@/components/blog/TocNav'
+import { ArticleLightbox } from '@/components/blog/ArticleLightbox'
 
 const BASE = 'https://0xpacman.com'
 
@@ -122,6 +123,7 @@ export default async function BlogPost({
       />
 
       <TocNav items={toc} />
+      <ArticleLightbox />
 
       <article
         className="max-w-3xl mx-auto px-4 sm:px-6 py-8 lg:py-12"
