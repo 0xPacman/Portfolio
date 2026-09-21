@@ -32,9 +32,10 @@ const posts: Post[] = [
     slug: "demystifying-openstack",
   },
   {
-    title: "Automating the Boring Stuff",
-    description: "Turning manual ops runbooks into repeatable systems with Ansible and Python",
+    title: "Automating the Boring Stuff: Turning Manual Runbooks into Repeatable Systems",
+    description: "How I turn runbooks from documents humans read into state machines software executes, with Ansible, Python, and guardrailed AI agents",
     tag: "automation",
+    slug: "automating-the-boring-stuff",
   },
   {
     title: "From Break-Fix to SRE",

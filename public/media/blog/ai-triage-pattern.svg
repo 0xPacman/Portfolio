@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 500" font-family="'JetBrains Mono', ui-monospace, monospace">
+  <rect width="720" height="500" fill="#050505"/>
+
+  <!-- input -->
+  <rect x="210" y="18" width="300" height="44" fill="none" stroke="hsl(40,5%,55%)" stroke-opacity="0.45"/>
+  <text x="360" y="45" text-anchor="middle" font-size="12" fill="hsl(40,12%,88%)">Incident Alert &amp; Logs</text>
+
+  <g stroke="hsl(40,96%,52%)" stroke-opacity="0.6" stroke-width="1.5" fill="none">
+    <line x1="360" y1="62" x2="360" y2="88"/>
+    <polyline points="354,82 360,88 366,82"/>
+  </g>
+
+  <!-- AI triage agent -->
+  <rect x="110" y="96" width="500" height="92" fill="hsl(150,65%,45%)" fill-opacity="0.06" stroke="hsl(150,65%,45%)" stroke-opacity="0.55"/>
+  <text x="360" y="122" text-anchor="middle" font-size="14" fill="hsl(150,65%,45%)">AI TRIAGE AGENT</text>
+  <text x="360" y="146" text-anchor="middle" font-size="10.5" fill="hsl(40,5%,55%)">correlates alert context · filters false positives</text>
+  <text x="360" y="166" text-anchor="middle" font-size="10.5" fill="hsl(40,5%,55%)">selects one authorized tool via function calling</text>
+
+  <g stroke="hsl(40,96%,52%)" stroke-opacity="0.6" stroke-width="1.5" fill="none">
+    <line x1="360" y1="188" x2="360" y2="214"/>
+    <polyline points="354,208 360,214 366,208"/>
+  </g>
+  <text x="378" y="206" font-size="11" fill="hsl(40,96%,52%)" fill-opacity="0.8">strict JSON payload schema</text>
+
+  <!-- policy gate -->
+  <rect x="110" y="222" width="500" height="92" fill="hsl(0,72%,51%)" fill-opacity="0.07" stroke="hsl(0,72%,51%)" stroke-opacity="0.6"/>
+  <text x="360" y="248" text-anchor="middle" font-size="14" fill="hsl(0,72%,60%)">POLICY &amp; VALIDATION GATEWAY</text>
+  <text x="360" y="272" text-anchor="middle" font-size="10.5" fill="hsl(40,5%,55%)">schema validation rejects arbitrary input</text>
+  <text x="360" y="292" text-anchor="middle" font-size="10.5" fill="hsl(40,5%,55%)">staging vs production checks · human approval triggers</text>
+
+  <g stroke="hsl(40,96%,52%)" stroke-opacity="0.6" stroke-width="1.5" fill="none">
+    <line x1="360" y1="314" x2="360" y2="340"/>
+    <polyline points="354,334 360,340 366,334"/>
+  </g>
+  <text x="378" y="332" font-size="11" fill="hsl(40,96%,52%)" fill-opacity="0.8">validated playbook dispatch</text>
+
+  <!-- execution engine -->
+  <rect x="110" y="348" width="500" height="92" fill="hsl(40,96%,52%)" fill-opacity="0.05" stroke="hsl(40,96%,52%)" stroke-opacity="0.45"/>
+  <text x="360" y="374" text-anchor="middle" font-size="14" fill="hsl(40,96%,52%)">ANSIBLE / AWX / PYTHON ENGINE</text>
+  <text x="360" y="398" text-anchor="middle" font-size="10.5" fill="hsl(40,5%,55%)">idempotent · auditable · declarative execution</text>
+  <text x="360" y="418" text-anchor="middle" font-size="10.5" fill="hsl(40,5%,55%)">full audit logging · Git-backed definitions</text>
+
+  <!-- caption -->
+  <text x="360" y="478" text-anchor="middle" font-size="11" fill="hsl(40,5%,55%)">the model decides which door to knock on, never holds the keys</text>
+</svg>
