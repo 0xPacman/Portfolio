@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { JetBrains_Mono, Space_Grotesk } from 'next/font/google'
+import { JetBrains_Mono, Space_Grotesk, IBM_Plex_Sans_Arabic } from 'next/font/google'
 import './globals.css'
 import React from 'react'
 import { getStructuredData, generateJSONLD } from '@/lib/schema'
@@ -13,6 +13,13 @@ const jetbrainsMono = JetBrains_Mono({
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
   variable: '--font-sans',
+  display: 'swap',
+})
+
+const ibmPlexSansArabic = IBM_Plex_Sans_Arabic({
+  subsets: ['arabic', 'latin'],
+  weight: ['400', '600', '700'],
+  variable: '--font-arabic',
   display: 'swap',
 })
 
@@ -87,7 +94,7 @@ export default function RootLayout({
   const structuredData = getStructuredData()
 
   return (
-    <html lang="en" className={`dark ${jetbrainsMono.variable} ${spaceGrotesk.variable}`}>
+    <html lang="en" className={`dark ${jetbrainsMono.variable} ${spaceGrotesk.variable} ${ibmPlexSansArabic.variable}`}>
       <head>
         {/* No-FOUC theme: dark is the default; apply a saved light preference before paint */}
         <script

@@ -3,7 +3,13 @@ import path from 'node:path'
 import matter from 'gray-matter'
 import { marked } from 'marked'
 
+export type Locale = 'en' | 'ar'
+
 const BLOG_DIR = path.join(process.cwd(), 'content', 'blog')
+
+function dirFor(locale: Locale): string {
+  return locale === 'ar' ? path.join(BLOG_DIR, 'ar') : BLOG_DIR
+}
 
 export interface PostMeta {
   slug: string
@@ -11,6 +17,7 @@ export interface PostMeta {
   description: string
   date: string
   tags: string[]
+  locale: Locale
 }
 
 export interface TocItem {
@@ -21,21 +28,9 @@ export interface TocItem {
 function slugify(text: string): string {
   return text
     .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/[^\p{L}\p{N}\s-]/gu, '')
     .trim()
     .replace(/\s+/g, '-')
-}
-
-/** Extract H2 sections from markdown (skipping fenced code blocks). */
-function extractToc(content: string): TocItem[] {
-  const withoutCode = content.replace(/```[\s\S]*?```/g, '')
-  return withoutCode
-    .split('\n')
-    .filter((l) => l.startsWith('## '))
-    .map((l) => {
-      const text = l.replace(/^##\s+/, '').replace(/[*_`]/g, '').trim()
-      return { id: slugify(text), text }
-    })
 }
 
 function decodeEntities(s: string): string {
@@ -50,6 +45,18 @@ function decodeEntities(s: string): string {
     .replace(/&#x([0-9a-fA-F]+);/g, (_, h: string) => String.fromCharCode(parseInt(h, 16)))
 }
 
+/** Extract H2 sections from markdown (skipping fenced code blocks). */
+function extractToc(content: string): TocItem[] {
+  const withoutCode = content.replace(/```[\s\S]*?```/g, '')
+  return withoutCode
+    .split('\n')
+    .filter((l) => l.startsWith('## '))
+    .map((l) => {
+      const text = l.replace(/^##\s+/, '').replace(/[*_`]/g, '').trim()
+      return { id: slugify(text), text }
+    })
+}
+
 /** Add id anchors to rendered H2s so the TOC can target them. */
 function addHeadingIds(html: string): string {
   return html.replace(/<h2>(.*?)<\/h2>/g, (_, inner: string) => {
@@ -58,28 +65,34 @@ function addHeadingIds(html: string): string {
   })
 }
 
-export function getAllPosts(): PostMeta[] {
+function readMeta(file: string, locale: Locale): PostMeta {
+  const raw = fs.readFileSync(file, 'utf8')
+  const { data } = matter(raw)
+  return {
+    slug: path.basename(file).replace(/\.md$/, ''),
+    title: data.title ?? '',
+    description: data.description ?? '',
+    date: data.date ?? '',
+    tags: data.tags ?? [],
+    locale,
+  }
+}
+
+export function getAllPosts(locale: Locale = 'en'): PostMeta[] {
+  const dir = dirFor(locale)
+  if (!fs.existsSync(dir)) return []
   return fs
-    .readdirSync(BLOG_DIR)
+    .readdirSync(dir)
     .filter((f) => f.endsWith('.md'))
-    .map((f) => {
-      const raw = fs.readFileSync(path.join(BLOG_DIR, f), 'utf8')
-      const { data } = matter(raw)
-      return {
-        slug: f.replace(/\.md$/, ''),
-        title: data.title ?? '',
-        description: data.description ?? '',
-        date: data.date ?? '',
-        tags: data.tags ?? [],
-      }
-    })
+    .map((f) => readMeta(path.join(dir, f), locale))
     .sort((a, b) => b.date.localeCompare(a.date))
 }
 
 export function getPost(
-  slug: string
+  slug: string,
+  locale: Locale = 'en'
 ): { meta: PostMeta; html: string; toc: TocItem[] } | null {
-  const file = path.join(BLOG_DIR, `${slug}.md`)
+  const file = path.join(dirFor(locale), `${slug}.md`)
   if (!fs.existsSync(file)) return null
   const raw = fs.readFileSync(file, 'utf8')
   const { data, content } = matter(raw)
@@ -91,8 +104,19 @@ export function getPost(
       description: data.description ?? '',
       date: data.date ?? '',
       tags: data.tags ?? [],
+      locale,
     },
     html,
     toc: extractToc(content),
   }
+}
+
+/** If a translation of this post exists in the other locale, return its slug. */
+export function getTranslation(
+  slug: string,
+  locale: Locale
+): { slug: string; locale: Locale } | null {
+  const other: Locale = locale === 'en' ? 'ar' : 'en'
+  const file = path.join(dirFor(other), `${slug}.md`)
+  return fs.existsSync(file) ? { slug, locale: other } : null
 }

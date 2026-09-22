@@ -4,7 +4,7 @@ import { ArticleView, articleMetadata, staticParams } from '@/components/blog/Ar
 export const dynamicParams = false
 
 export function generateStaticParams() {
-  return staticParams('en')
+  return staticParams('ar')
 }
 
 export async function generateMetadata({
@@ -13,14 +13,14 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>
 }): Promise<Metadata> {
   const { slug } = await params
-  return articleMetadata(slug, 'en')
+  return articleMetadata(slug, 'ar')
 }
 
-export default async function BlogPost({
+export default async function BlogPostAr({
   params,
 }: {
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
-  return <ArticleView slug={slug} locale="en" />
+  return <ArticleView slug={slug} locale="ar" />
 }

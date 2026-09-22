@@ -2,7 +2,8 @@
 
 import React from "react"
 import Link from "next/link"
-import { FileText, ArrowUpRight, Rss } from "lucide-react"
+import { useRouter } from "next/navigation"
+import { FileText, ArrowUpRight, Languages, Rss } from "lucide-react"
 import { SectionPrompt } from "@/components/shell/SectionPrompt"
 
 interface Post {
@@ -10,6 +11,7 @@ interface Post {
   description: string
   tag: string
   slug?: string
+  langAr?: boolean
 }
 
 const posts: Post[] = [
@@ -18,24 +20,28 @@ const posts: Post[] = [
     description: "A one-time invitation from Google appeared in my search results in 2019. I froze, let it expire, and learned a lesson about curiosity that outlasted any algorithm",
     tag: "career",
     slug: "the-challenge-i-let-slip",
+    langAr: true,
   },
   {
     title: "Active Directory at Scale: Hardening the Tier-0 Core (and Why I Built My Own Management Tool)",
     description: "The backbone of enterprise identity, hardening, scaling, and modernizing AD operations, plus the native tool I built to fix its daily frictions",
     tag: "active-directory",
     slug: "active-directory-at-scale",
+    langAr: true,
   },
   {
     title: "Demystifying OpenStack: Architecture, Economics, and the Post-VMware Reality",
     description: "A practitioner's guide to deploying, scaling, and evaluating OpenStack, written from real deployments, not vendor decks",
     tag: "openstack",
     slug: "demystifying-openstack",
+    langAr: true,
   },
   {
     title: "Automating the Boring Stuff: Turning Manual Runbooks into Repeatable Systems",
     description: "How I turn runbooks from documents humans read into state machines software executes, with Ansible, Python, and guardrailed AI agents",
     tag: "automation",
     slug: "automating-the-boring-stuff",
+    langAr: true,
   },
   {
     title: "From Break-Fix to SRE",
@@ -45,6 +51,46 @@ const posts: Post[] = [
 ]
 
 function PostRow({ post }: { post: Post }) {
+  const router = useRouter()
+
+  const stop = (e: React.SyntheticEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+  }
+
+  const langButton = post.slug ? (
+    post.langAr ? (
+      <span
+        role="link"
+        tabIndex={0}
+        title="اقرأ النسخة بالدارجة"
+        onClick={(e) => {
+          stop(e)
+          router.push(`/blog/ar/${post.slug}/`)
+        }}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            stop(e)
+            router.push(`/blog/ar/${post.slug}/`)
+          }
+        }}
+        className="inline-flex items-center gap-1 text-[10px] font-mono text-primary border border-primary/30 px-1.5 py-0.5 hover:bg-primary hover:text-primary-foreground transition-colors cursor-pointer"
+      >
+        <Languages size={10} aria-hidden="true" />
+        دارجة
+      </span>
+    ) : (
+      <span
+        title="Translation coming soon"
+        aria-disabled="true"
+        className="inline-flex items-center gap-1 text-[10px] font-mono text-muted-foreground/40 border border-primary/10 px-1.5 py-0.5 cursor-not-allowed select-none"
+      >
+        <Languages size={10} aria-hidden="true" />
+        دارجة
+      </span>
+    )
+  ) : null
+
   const inner = (
     <div className="flex items-start gap-3 p-4">
       <FileText size={14} className="text-primary/50 mt-0.5 flex-shrink-0" aria-hidden="true" />
@@ -55,9 +101,12 @@ function PostRow({ post }: { post: Post }) {
         </div>
         <div className="text-[12px] text-muted-foreground mt-1 leading-relaxed">{post.description}</div>
       </div>
-      <span className="text-[10px] font-mono text-primary/50 border border-primary/15 px-1.5 py-0.5 flex-shrink-0">
-        {post.slug ? post.tag : `${post.tag} · soon`}
-      </span>
+      <div className="flex items-center gap-1.5 flex-shrink-0 mt-0.5">
+        {langButton}
+        <span className="text-[10px] font-mono text-primary/50 border border-primary/15 px-1.5 py-0.5">
+          {post.slug ? post.tag : `${post.tag} · soon`}
+        </span>
+      </div>
     </div>
   )
 

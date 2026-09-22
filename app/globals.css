@@ -150,6 +150,30 @@ body, .dark body { transition: background-color 0.4s ease, color 0.4s ease; }
   .blog-content tbody tr:last-child td { border-bottom: 0; }
 }
 
+/* Arabic (RTL) articles */
+@layer components {
+  .blog-content[dir='rtl'] {
+    direction: rtl;
+    text-align: right;
+    font-family: var(--font-arabic), 'Segoe UI', Tahoma, Arial, sans-serif;
+  }
+  .blog-content[dir='rtl'] h2,
+  .blog-content[dir='rtl'] h3 {
+    font-family: var(--font-arabic), var(--font-mono), monospace;
+    text-align: right;
+  }
+  .blog-content[dir='rtl'] h2::before,
+  .blog-content[dir='rtl'] h3::before {
+    font-family: var(--font-mono), monospace;
+  }
+  .blog-content[dir='rtl'] ul li { @apply pl-0 pr-5; }
+  .blog-content[dir='rtl'] ul li::before { left: auto; right: 0; }
+  .blog-content[dir='rtl'] ol { @apply list-decimal space-y-2 pr-6 pl-0; }
+  .blog-content[dir='rtl'] blockquote { @apply border-l-0 border-r-2 border-primary/50 pr-4 pl-0; }
+  .blog-content[dir='rtl'] code,
+  .blog-content[dir='rtl'] pre { direction: ltr; text-align: left; unicode-bidi: embed; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

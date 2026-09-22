@@ -22,6 +22,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
       }
     })
 
+  const arDir = path.join(blogDir, 'ar')
+  const arPosts = fs.existsSync(arDir)
+    ? fs
+        .readdirSync(arDir)
+        .filter((f) => f.endsWith('.md'))
+        .map((f) => {
+          const raw = fs.readFileSync(path.join(arDir, f), 'utf8')
+          const { data } = matter(raw)
+          return {
+            url: `https://0xpacman.com/blog/ar/${f.replace(/\.md$/, '')}/`,
+            lastModified: new Date(data.date ?? Date.now()),
+            changeFrequency: 'monthly' as const,
+            priority: 0.7,
+          }
+        })
+    : []
+
   const sections = ['skills', 'projects', 'blog', 'contact'].map((s) => ({
     url: `https://0xpacman.com/${s}/`,
     lastModified: new Date(),
@@ -38,5 +55,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     ...sections,
     ...posts,
+    ...arPosts,
   ]
 }
