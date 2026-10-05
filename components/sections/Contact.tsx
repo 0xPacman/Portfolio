@@ -23,7 +23,7 @@ const channels: Channel[] = [
   { key: "phone", label: "phone", value: "+212 708 429 995", href: "tel:+212708429995", copy: "+212708429995", icon: Phone, itemProp: "telephone", contactType: "telephone" },
   { key: "github", label: "github", value: "github.com/0xPacman", href: "https://github.com/0xPacman", icon: GithubIcon },
   { key: "linkedin", label: "linkedin", value: "linkedin.com/in/0xpacman", href: "https://linkedin.com/in/0xpacman", icon: LinkedinIcon },
-  { key: "location", label: "location", value: "Casablanca, Morocco · GMT+1", icon: MapPin },
+  { key: "location", label: "location", value: "Casablanca, Morocco · GMT+0", icon: MapPin },
 ]
 
 export function Contact() {
@@ -49,7 +49,7 @@ export function Contact() {
           <span className="text-primary">*</span> Available for consulting &amp; collaboration
         </div>
         <div className="text-muted-foreground">
-          <span className="text-primary">*</span> Timezone: GMT+1 (Africa/Casablanca) · 09:00–18:00
+          <span className="text-primary">*</span> Timezone: GMT+0 (Africa/Casablanca) · 09:00–18:00
         </div>
       </div>
 
