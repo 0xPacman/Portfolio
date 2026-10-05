@@ -10,7 +10,7 @@ export default function HomePage() {
         <meta itemProp="jobTitle" content="Cloud Infrastructure Engineer" />
         <meta itemProp="description" content="Cloud Infrastructure Engineer specializing in private cloud architecture, VMware, OpenStack, and enterprise automation. Open to collaboration and consultation." />
         <meta itemProp="url" content="https://0xpacman.com" />
-        <meta itemProp="image" content="https://0xpacman.com/media/PDP.jpg" />
+        <meta itemProp="image" content="https://0xpacman.com/media/PDP.png" />
         <div itemProp="address" itemScope itemType="https://schema.org/PostalAddress">
           <meta itemProp="addressLocality" content="Casablanca" />
           <meta itemProp="addressCountry" content="Morocco" />

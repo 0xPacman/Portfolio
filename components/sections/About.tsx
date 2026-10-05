@@ -43,7 +43,7 @@ export function About() {
       <div className="flex flex-col sm:flex-row gap-6 items-start">
         <div className="relative w-32 h-32 sm:w-36 sm:h-36 flex-shrink-0 border border-primary/25 overflow-hidden">
           <Image
-            src="/media/PDP.jpg"
+            src="/media/PDP.png"
             alt="Ahmed Jadani"
             fill
             sizes="144px"

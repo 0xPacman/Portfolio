@@ -10,7 +10,7 @@ export const personSchema: Person = {
   name: 'Ahmed Jadani',
   alternateName: 'Pacman',
   url: BASE_URL,
-  image: `${BASE_URL}/media/PDP.jpg`,
+  image: `${BASE_URL}/media/PDP.png`,
   jobTitle: 'Cloud Infrastructure Engineer',
   email: 'ahmed.jadani@0xpacman.com',
   address: {

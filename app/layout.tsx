@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     siteName: 'Ahmed Jadani Portfolio',
     images: [
       {
-        url: '/media/PDP.jpg',
+        url: '/media/PDP.png',
         width: 800,
         height: 600,
         alt: 'Ahmed Jadani - Cloud Infrastructure Engineer',
@@ -71,7 +71,7 @@ export const metadata: Metadata = {
     title: 'Ahmed Jadani | Cloud Infrastructure Engineer',
     description:
       'Cloud Infrastructure Engineer, private cloud architecture, VMware, OpenStack, and enterprise automation. Open to collaboration and consultation.',
-    images: ['/media/PDP.jpg'],
+    images: ['/media/PDP.png'],
   },
   robots: {
     index: true,
