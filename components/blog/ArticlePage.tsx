@@ -94,17 +94,8 @@ export function ArticleView({ slug, locale }: ArticlePageProps) {
         itemScope
         itemType="https://schema.org/BlogPosting"
       >
-        {/* back nav */}
-        <Link
-          href="/blog/"
-          className="inline-flex items-center gap-1.5 text-[12px] font-mono text-muted-foreground hover:text-primary transition-colors"
-        >
-          <ArrowLeft size={12} aria-hidden="true" />
-          cd ~/blog
-        </Link>
-
         {/* prompt header */}
-        <div className="mt-6 font-mono text-[13px] flex flex-wrap items-center gap-1.5">
+        <div className="font-mono text-[13px] flex flex-wrap items-center gap-1.5">
           <span className="text-term-green">root@0xpacman</span>
           <span className="text-muted-foreground">:</span>
           <span className="text-primary/70">~/blog</span>

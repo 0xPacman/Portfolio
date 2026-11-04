@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { StatusBar } from "./StatusBar";
-import { TabBar } from "./TabBar";
+import { TabBar, TABS } from "./TabBar";
 export function ShellFrame({
   active,
   children,
@@ -9,27 +9,40 @@ export function ShellFrame({
   active: string;
   children: React.ReactNode;
 }) {
+  const windowNumber = TABS.findIndex((tab) => tab.id === active) + 1;
   return (
-    <div className="flex h-[100dvh] flex-col overflow-hidden bg-background">
+    <div className="tmux-shell">
       <a href="#main-content" className="skip-link">
         Skip to content
       </a>
       <TabBar active={active} />
-      <main
-        id="main-content"
-        tabIndex={-1}
-        className="min-h-0 flex-1 overflow-y-auto outline-none"
-        data-shell-scroll
-      >
-        {children}
-        <footer className="page-container flex flex-wrap justify-between gap-3 border-t border-primary/15 py-6 text-xs text-muted-foreground">
-          <span>
-            Ahmed Jadani <span className="text-primary/60">/</span> 0xPacman
+      <div className="tmux-pane">
+        <div className="tmux-pane-title" aria-hidden="true">
+          <span className="flex min-w-0 items-center gap-3">
+            <span className="text-primary">
+              {windowNumber}:{active}
+            </span>
+            <span className="truncate">~/portfolio/{active}</span>
           </span>
-          <span>Cloud infrastructure. Thoughtfully operated.</span>
-        </footer>
-      </main>
-      <StatusBar />
+          <span className="shrink-0 text-primary/60">pane 01</span>
+        </div>
+        <main
+          id="main-content"
+          tabIndex={-1}
+          className="tmux-content"
+          data-shell-scroll
+        >
+          {children}
+          <footer className="page-container flex flex-wrap justify-between gap-3 border-t border-primary/15 py-6 text-xs text-muted-foreground">
+            <span>
+              <span className="text-primary">[end]</span> Ahmed Jadani /
+              0xPacman
+            </span>
+            <span>Cloud infrastructure. Thoughtfully operated.</span>
+          </footer>
+        </main>
+      </div>
+      <StatusBar active={active} />
     </div>
   );
 }

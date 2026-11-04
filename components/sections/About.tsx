@@ -4,12 +4,14 @@ import { ArrowRight, ArrowUpRight, MapPin } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/brand-icons";
 import { FeaturedWork } from "./FeaturedWork";
 import { BinaryText } from "@/components/ui/binary-text";
+import { SectionPrompt } from "@/components/shell/SectionPrompt";
 
 export function About() {
   return (
     <div>
       <section className="hero-grid" aria-labelledby="intro-heading">
         <div className="py-4 lg:py-10">
+          <SectionPrompt command="whoami" />
           <p className="mb-4 text-sm text-muted-foreground">
             Ahmed Jadani <span className="text-primary/60">/</span> Cloud
             Infrastructure Engineer
@@ -60,8 +62,8 @@ export function About() {
         </div>
         <aside className="identity-panel">
           <div className="flex items-center justify-between border-b border-primary/20 px-4 py-3 text-xs text-muted-foreground">
-            <span>~/about/profile</span>
-            <span className="text-primary">01</span>
+            <span>profile.jpg</span>
+            <span className="text-primary">[preview]</span>
           </div>
           <div className="relative aspect-[4/3] overflow-hidden sm:aspect-square lg:aspect-[4/5]">
             <Image
@@ -98,7 +100,7 @@ export function About() {
       <section className="section-space" aria-labelledby="work-heading">
         <div className="section-header">
           <div>
-            <p className="eyebrow mb-3">01 / Selected work</p>
+            <p className="eyebrow mb-3 normal-case">01 / ls ~/selected-work</p>
             <h2 id="work-heading" className="section-title">
               Built to do the work.
             </h2>
@@ -115,7 +117,7 @@ export function About() {
         aria-labelledby="about-heading"
       >
         <div>
-          <p className="eyebrow mb-3">02 / Behind the terminal</p>
+          <p className="eyebrow mb-3 normal-case">02 / cat experience.md</p>
           <h2 id="about-heading" className="section-title">
             Built on experience.
             <br />

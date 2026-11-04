@@ -94,7 +94,7 @@ export default function RootLayout({
   const structuredData = getStructuredData()
 
   return (
-    <html lang="en" className={`dark ${jetbrainsMono.variable} ${spaceGrotesk.variable} ${ibmPlexSansArabic.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`dark ${jetbrainsMono.variable} ${spaceGrotesk.variable} ${ibmPlexSansArabic.variable}`}>
       <head>
         {/* No-FOUC theme: dark is the default; apply a saved light preference before paint */}
         <script

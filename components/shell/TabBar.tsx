@@ -47,33 +47,44 @@ export function TabBar({ active }: { active: string }) {
     return () => window.removeEventListener("keydown", onKey);
   }, [router]);
   return (
-    <header className="site-header">
-      <div className="header-inner">
-        <Link href="/" aria-label="0xPacman home" className="brand">
-          <span className="brand-mark" aria-hidden="true">
-            0x
-          </span>
-          <BinaryText text="Pacman" />
-          <span className="text-primary">_</span>
+    <header className="tmux-header">
+      <div className="tmux-session">
+        <Link href="/" aria-label="0xPacman home" className="tmux-brand">
+          <span aria-hidden="true">[</span>
+          <BinaryText text="0xPacman" />
+          <span aria-hidden="true">]</span>
         </Link>
-        <nav aria-label="Portfolio sections" className="main-nav">
-          {TABS.map((tab, i) => (
-            <Link
-              key={tab.id}
-              href={tab.href}
-              aria-current={active === tab.id ? "page" : undefined}
-              aria-keyshortcuts={`Alt+Shift+${i + 1}`}
-              title={`${tab.label} · Alt+Shift+${i + 1}`}
-              className={`nav-link ${active === tab.id ? "nav-link-active" : ""}`}
-            >
-              <span className="nav-number" aria-hidden="true">
-                {i + 1}
-              </span>
-              <BinaryText text={tab.label} />
-            </Link>
-          ))}
-        </nav>
+        <span className="text-[10px] text-muted-foreground md:hidden">
+          tmux / portfolio
+        </span>
       </div>
+      <nav aria-label="Portfolio sections" className="tmux-windows">
+        {TABS.map((tab, i) => (
+          <Link
+            key={tab.id}
+            href={tab.href}
+            aria-current={active === tab.id ? "page" : undefined}
+            aria-keyshortcuts={`Alt+Shift+${i + 1}`}
+            title={`${tab.label} · Alt+Shift+${i + 1}`}
+            className={`tmux-window ${active === tab.id ? "tmux-window-active" : ""}`}
+          >
+            <span className="tmux-window-number" aria-hidden="true">
+              {i + 1}:
+            </span>
+            <BinaryText text={tab.label.toLowerCase()} />
+            <span className="tmux-window-marker" aria-hidden="true">
+              {active === tab.id ? "*" : ""}
+            </span>
+          </Link>
+        ))}
+      </nav>
+      <span
+        className="ml-auto hidden items-center gap-3 px-5 text-[11px] text-muted-foreground lg:flex"
+        aria-hidden="true"
+      >
+        <span className="text-primary">tmux</span>
+        <span>session: portfolio</span>
+      </span>
     </header>
   );
 }
