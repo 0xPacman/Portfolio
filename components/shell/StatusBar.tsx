@@ -29,7 +29,7 @@ export function StatusBar({ active }: { active: string }) {
       </div>
       <div className="flex shrink-0 items-center gap-3 sm:gap-5">
         <span className="hidden text-[10px] text-muted-foreground lg:inline">
-          switch window <kbd className="text-foreground">Alt + Shift + 1–5</kbd>
+          switch window <kbd className="text-foreground">Alt + 1–5</kbd>
         </span>
         <span
           className="text-[11px]"

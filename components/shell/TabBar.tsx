@@ -23,7 +23,7 @@ export function TabBar({ active }: { active: string }) {
     const onKey = (e: KeyboardEvent) => {
       if (
         !e.altKey ||
-        !e.shiftKey ||
+        e.shiftKey ||
         e.ctrlKey ||
         e.metaKey ||
         e.repeat ||
@@ -64,8 +64,8 @@ export function TabBar({ active }: { active: string }) {
             key={tab.id}
             href={tab.href}
             aria-current={active === tab.id ? "page" : undefined}
-            aria-keyshortcuts={`Alt+Shift+${i + 1}`}
-            title={`${tab.label} · Alt+Shift+${i + 1}`}
+            aria-keyshortcuts={`Alt+${i + 1}`}
+            title={`${tab.label} · Alt+${i + 1}`}
             className={`tmux-window ${active === tab.id ? "tmux-window-active" : ""}`}
           >
             <span className="tmux-window-number" aria-hidden="true">
