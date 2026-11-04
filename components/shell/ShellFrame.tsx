@@ -1,29 +1,35 @@
-'use client'
-
-import React from 'react'
-import { StatusBar } from './StatusBar'
-import { TabBar } from './TabBar'
-
-interface ShellFrameProps {
-  active: string
-  children: React.ReactNode
-}
-
-/** Shared terminal chrome: dotgrid + scanlines, tmux tab bar, status bar. */
-export function ShellFrame({ active, children }: ShellFrameProps) {
+"use client";
+import React from "react";
+import { StatusBar } from "./StatusBar";
+import { TabBar } from "./TabBar";
+export function ShellFrame({
+  active,
+  children,
+}: {
+  active: string;
+  children: React.ReactNode;
+}) {
   return (
-    <div className="flex flex-col h-[100dvh] overflow-hidden bg-background relative">
-      <div className="absolute inset-0 dotgrid" aria-hidden="true" />
-      <div className="absolute inset-0 scanlines opacity-40" aria-hidden="true" />
-
-      <div className="flex flex-col flex-1 min-h-0 relative z-10">
-        <TabBar active={active} />
-        <div className="flex-1 min-h-0 overflow-y-auto" data-shell-scroll>
-          {children}
-        </div>
-      </div>
-
+    <div className="flex h-[100dvh] flex-col overflow-hidden bg-background">
+      <a href="#main-content" className="skip-link">
+        Skip to content
+      </a>
+      <TabBar active={active} />
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className="min-h-0 flex-1 overflow-y-auto outline-none"
+        data-shell-scroll
+      >
+        {children}
+        <footer className="page-container flex flex-wrap justify-between gap-3 border-t border-primary/15 py-6 text-xs text-muted-foreground">
+          <span>
+            Ahmed Jadani <span className="text-primary/60">/</span> 0xPacman
+          </span>
+          <span>Cloud infrastructure. Thoughtfully operated.</span>
+        </footer>
+      </main>
       <StatusBar />
     </div>
-  )
+  );
 }

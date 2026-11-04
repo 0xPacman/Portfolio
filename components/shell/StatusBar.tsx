@@ -1,84 +1,50 @@
-'use client'
-
-import React from 'react'
-import { Sun, Moon } from 'lucide-react'
-
-function formatUptime(seconds: number) {
-  const m = Math.floor(seconds / 60)
-  const s = seconds % 60
-  return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`
-}
-
+"use client";
+import React from "react";
+import { Sun, Moon } from "lucide-react";
+import { useCasablancaTime } from "@/hooks/use-casablanca-time";
 export function StatusBar() {
-  const [now, setNow] = React.useState<string | null>(null)
-  const [uptime, setUptime] = React.useState(0)
-  const [isDark, setIsDark] = React.useState(true)
-
+  const now = useCasablancaTime();
+  const [isDark, setIsDark] = React.useState(true);
   React.useEffect(() => {
-    setIsDark(document.documentElement.classList.contains('dark'))
-
-    const fmt = new Intl.DateTimeFormat('en-GB', {
-      timeZone: 'Africa/Casablanca',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: false,
-    })
-    const tick = () => setNow(fmt.format(new Date()))
-    tick()
-    const start = Date.now()
-    const id = setInterval(() => {
-      tick()
-      setUptime(Math.floor((Date.now() - start) / 1000))
-    }, 1000)
-    return () => clearInterval(id)
-  }, [])
-
+    setIsDark(document.documentElement.classList.contains("dark"));
+  }, []);
   const toggleTheme = () => {
-    const el = document.documentElement
-    const next = !el.classList.contains('dark')
-    el.classList.toggle('dark', next)
-    try { localStorage.setItem('theme', next ? 'dark' : 'light') } catch {}
-    const meta = document.querySelector('meta[name="theme-color"]')
-    if (meta) meta.setAttribute('content', next ? '#0A0A0A' : '#F6F1E7')
-    setIsDark(next)
-  }
-
+    const next = !document.documentElement.classList.contains("dark");
+    document.documentElement.classList.toggle("dark", next);
+    try {
+      localStorage.setItem("theme", next ? "dark" : "light");
+    } catch {}
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute("content", next ? "#0A0A0A" : "#F6F1E7");
+    setIsDark(next);
+  };
   return (
-    <div
-      role="status"
-      aria-live="off"
-      className="flex items-center justify-between gap-3 border-t border-primary/15 bg-background px-3 h-7 font-mono text-[11px] select-none flex-shrink-0"
-    >
-      <div className="flex items-center gap-2 min-w-0">
-        <span className="bg-primary text-primary-foreground px-1.5 font-bold">[main]</span>
-        <span className="text-muted-foreground truncate">root@0xpacman.com</span>
+    <div className="status-bar">
+      <div className="flex min-w-0 items-center gap-3">
+        <span className="text-primary">[main]</span>
+        <span className="hidden sm:inline">root@0xpacman</span>
+        <span className="flex items-center gap-2 text-term-green">
+          <span className="h-1.5 w-1.5 bg-term-green" />
+          Available
+        </span>
       </div>
-      <div className="flex items-center gap-3 flex-shrink-0 text-muted-foreground">
-        <span className="hidden sm:inline" title="Session uptime">
-          up {formatUptime(uptime)}
+      <div className="flex shrink-0 items-center gap-3">
+        <span
+          className="hidden min-[360px]:inline"
+          aria-label={`Casablanca local time ${now ?? ""}`}
+        >
+          MA {now ?? "—:—"}
         </span>
-        <span className="hidden md:inline" aria-hidden="true">|</span>
-        {now && (
-          <span title="Local time, Casablanca, Morocco">
-            MA {now}
-          </span>
-        )}
-        <span aria-hidden="true" className="hidden md:inline">|</span>
-        <span className="flex items-center gap-1.5 text-term-green">
-          <span className="w-1.5 h-1.5 rounded-full bg-term-green animate-blink" aria-hidden="true" />
-          available
-        </span>
-        <span aria-hidden="true">|</span>
         <button
           onClick={toggleTheme}
-          aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
-          title="Toggle theme"
-          className="flex items-center -my-1 py-1 hover:text-primary transition-colors"
+          aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
+          className="flex min-h-11 min-w-11 items-center justify-center gap-2 hover:text-primary"
         >
-          {isDark ? <Sun size={12} /> : <Moon size={12} />}
+          {isDark ? <Sun size={16} /> : <Moon size={16} />}
+          <span className="hidden sm:inline">{isDark ? "Light" : "Dark"}</span>
         </button>
       </div>
     </div>
-  )
+  );
 }

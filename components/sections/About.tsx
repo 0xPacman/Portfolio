@@ -1,138 +1,165 @@
-'use client'
-
-import React from "react"
-import Image from "next/image"
-import Link from "next/link"
-import { Phone, MapPin, Activity } from "lucide-react"
-import { GithubIcon, LinkedinIcon } from "@/components/ui/brand-icons"
-import { SectionPrompt } from "@/components/shell/SectionPrompt"
-import { useCountUp } from "@/hooks/use-count-up"
-
-interface StatDef { value: string; label: string; sub: string }
-
-const stats: StatDef[] = [
-  { value: "3+", label: "years pro", sub: "+5y overall IT" },
-  { value: "100+", label: "enterprise workloads", sub: "designed & operated" },
-  { value: "99.9%", label: "uptime SLA", sub: "architected & run" },
-  { value: "20+", label: "certifications", sub: "cloud & virt" },
-]
-
-const socials = [
-  { href: "https://github.com/0xPacman", icon: GithubIcon, label: "GitHub" },
-  { href: "https://linkedin.com/in/0xpacman", icon: LinkedinIcon, label: "LinkedIn" },
-  { href: "https://wa.me/212708429995", icon: Phone, label: "WhatsApp" },
-]
-
-function StatCell({ value, label, sub }: StatDef) {
-  const display = useCountUp(value)
-  return (
-    <div className="flex-1 min-w-[7rem] px-4 py-3">
-      <div className="text-2xl font-bold font-mono tabular-nums text-primary">{display}</div>
-      <div className="text-[12px] text-foreground mt-0.5">{label}</div>
-      <div className="text-[10px] text-muted-foreground font-mono">{sub}</div>
-    </div>
-  )
-}
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight, ArrowUpRight, MapPin } from "lucide-react";
+import { GithubIcon, LinkedinIcon } from "@/components/ui/brand-icons";
+import { FeaturedWork } from "./FeaturedWork";
+import { BinaryText } from "@/components/ui/binary-text";
 
 export function About() {
   return (
-    <section className="space-y-6" itemScope itemType="https://schema.org/Person">
-      <SectionPrompt command="cat about.md" />
-
-      {/* Identity */}
-      <div className="flex flex-col sm:flex-row gap-6 items-start">
-        <div className="relative w-32 h-32 sm:w-36 sm:h-36 flex-shrink-0 border border-primary/25 overflow-hidden">
-          <Image
-            src="/media/PDP.png"
-            alt="Ahmed Jadani"
-            fill
-            sizes="144px"
-            className="object-cover"
-            itemProp="image"
-            priority
-          />
-          <span className="absolute bottom-0 left-0 right-0 bg-black/80 text-primary text-[10px] font-mono text-center py-0.5 border-t border-primary/25">
-            0xPacman
-          </span>
-        </div>
-
-        <div className="space-y-2 min-w-0">
-          <h1 className="text-3xl sm:text-4xl font-bold font-sans tracking-tight" itemProp="name">
-            Ahmed Jadani
+    <div>
+      <section className="hero-grid" aria-labelledby="intro-heading">
+        <div className="py-4 lg:py-10">
+          <p className="mb-4 text-sm text-muted-foreground">
+            Ahmed Jadani <span className="text-primary/60">/</span> Cloud
+            Infrastructure Engineer
+          </p>
+          <h1 id="intro-heading" className="hero-heading">
+            Reliable infrastructure.
+            <br />
+            <span className="text-primary">Repeatable operations.</span>
           </h1>
-          <meta itemProp="alternateName" content="0xPacman" />
-          <div className="font-mono text-sm text-primary" itemProp="jobTitle">
-            Cloud Infrastructure Engineer
+          <p className="mt-6 max-w-xl font-sans text-lg leading-relaxed text-muted-foreground">
+            I build and run the systems other people&apos;s work depends on.
+            Private clouds, VMware, OpenStack, and the automation that keeps it
+            all coherent.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link href="/projects/" className="action-primary">
+              <BinaryText text="View selected work" />{" "}
+              <ArrowRight size={17} aria-hidden="true" />
+            </Link>
+            <Link href="/contact/" className="action-secondary">
+              <BinaryText text="Discuss a project" />{" "}
+              <ArrowUpRight size={17} aria-hidden="true" />
+            </Link>
           </div>
-          <div className="flex flex-wrap gap-x-5 gap-y-1.5 text-[12px] text-muted-foreground font-mono pt-1">
+          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-muted-foreground">
             <span className="flex items-center gap-1.5">
-              <MapPin size={12} className="text-primary/70" /> Casablanca, Morocco
+              <MapPin size={13} aria-hidden="true" /> Casablanca, Morocco
             </span>
-            <span className="flex items-center gap-1.5">
-              <Activity size={12} className="text-primary/70" /> Open to collaboration &amp; consultation
-            </span>
+            <a
+              href="https://github.com/0xPacman"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center gap-2 hover:text-primary"
+            >
+              <GithubIcon size={15} /> <BinaryText text="GitHub" />{" "}
+              <ArrowUpRight size={12} aria-hidden="true" />
+            </a>
+            <a
+              href="https://linkedin.com/in/0xpacman"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center gap-2 hover:text-primary"
+            >
+              <LinkedinIcon size={15} /> <BinaryText text="LinkedIn" />{" "}
+              <ArrowUpRight size={12} aria-hidden="true" />
+            </a>
           </div>
-          <div className="flex gap-2 pt-2">
-            {socials.map(({ href, icon: Icon, label }) => (
-              <Link
-                key={href}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-                className="w-8 h-8 flex items-center justify-center border border-primary/20 text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors"
-              >
-                <Icon size={14} />
-              </Link>
-            ))}
+        </div>
+        <aside className="identity-panel">
+          <div className="flex items-center justify-between border-b border-primary/20 px-4 py-3 text-xs text-muted-foreground">
+            <span>~/about/profile</span>
+            <span className="text-primary">01</span>
           </div>
+          <div className="relative aspect-[4/3] overflow-hidden sm:aspect-square lg:aspect-[4/5]">
+            <Image
+              src="/media/PDP.png"
+              alt="Ahmed Jadani"
+              fill
+              priority
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 360px"
+              className="object-cover object-[65%_center]"
+            />
+          </div>
+          <div className="border-t border-primary/20 px-5 py-4">
+            <p className="font-sans text-xl font-semibold">
+              Ahmed Jadani<span className="text-primary">.</span>
+            </p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              Engineer. Builder. <span className="text-primary">0xPacman.</span>
+            </p>
+          </div>
+        </aside>
+      </section>
+      <div className="expertise-strip" aria-label="Core areas of expertise">
+        {[
+          "Private cloud architecture",
+          "Infrastructure automation",
+          "Reliability & observability",
+        ].map((item, i) => (
+          <div key={item} className="flex items-center gap-3 px-5 py-4 text-sm">
+            <span className="text-primary/70">0{i + 1}</span>
+            {item}
+          </div>
+        ))}
+      </div>
+      <section className="section-space" aria-labelledby="work-heading">
+        <div className="section-header">
+          <div>
+            <p className="eyebrow mb-3">01 / Selected work</p>
+            <h2 id="work-heading" className="section-title">
+              Built to do the work.
+            </h2>
+          </div>
+          <Link href="/projects/" className="text-link">
+            <BinaryText text="All projects" />{" "}
+            <ArrowUpRight size={16} aria-hidden="true" />
+          </Link>
         </div>
-      </div>
-
-      {/* whoami prose */}
-      <div className="space-y-3 font-sans text-[15px] leading-relaxed text-foreground/80 max-w-2xl" itemProp="description">
-        <p>
-          I&apos;m a{" "}
-          <span className="text-primary font-medium">cloud infrastructure engineer</span>. I build and run the
-          systems other people&apos;s work quietly depends on, private cloud architecture, VMware and VxRail,
-          OpenStack, and the automation that keeps all of it coherent.
-        </p>
-        <p>
-          Most of my experience is on enterprise platforms, where downtime is expensive and a fix has to be
-          right the first time. That shaped how I work. I care about{" "}
-          <span className="text-primary font-medium">reliability engineering</span> and pragmatic automation,
-          turning manual, repetitive processes into repeatable systems, and building the observability and
-          backup discipline that keeps infrastructure standing at scale.
-        </p>
-        <p>
-          Away from the data center I write code for the fun of it, poke at security tooling, and ship small
-          web projects, most of which end up in <span className="font-mono text-primary/80">~/projects</span>.
-          Always open to an interesting problem.
-        </p>
-      </div>
-
-      {/* system monitor strip */}
-      <div className="border border-primary/15 bg-card">
-        <div className="flex items-center gap-2 px-4 py-1.5 border-b border-primary/10 text-[11px] font-mono text-muted-foreground">
-          <Activity size={11} className="text-primary/60" aria-hidden="true" />
-          <span>~/stats, system monitor</span>
+        <FeaturedWork />
+      </section>
+      <section
+        className="section-space grid gap-8 border-t border-primary/15 lg:grid-cols-[0.7fr_1.3fr]"
+        aria-labelledby="about-heading"
+      >
+        <div>
+          <p className="eyebrow mb-3">02 / Behind the terminal</p>
+          <h2 id="about-heading" className="section-title">
+            Built on experience.
+            <br />
+            Driven by curiosity.
+          </h2>
+          <Link href="/skills/" className="text-link mt-5">
+            <BinaryText text="Explore my experience" />{" "}
+            <ArrowRight size={16} aria-hidden="true" />
+          </Link>
         </div>
-        <div className="flex flex-wrap divide-x divide-primary/10">
-          {stats.map((s) => (
-            <StatCell key={s.label} {...s} />
-          ))}
+        <div className="space-y-5 font-sans text-lg leading-relaxed text-muted-foreground">
+          <p>
+            Most of my experience is on enterprise platforms, where downtime is
+            expensive and a fix has to be right the first time. That shaped how
+            I work.
+          </p>
+          <p>
+            I care about reliability engineering and pragmatic automation:
+            turning manual processes into repeatable systems, and building the
+            observability and backup discipline that keeps infrastructure
+            standing.
+          </p>
+          <p>
+            Away from the data center, I write code for the fun of it, explore
+            security tooling, and ship small web projects. Always open to an
+            interesting problem.
+          </p>
         </div>
-      </div>
-
-      <div style={{ display: "none" }}>
-        <meta itemProp="url" content="https://0xpacman.com" />
-        <meta itemProp="sameAs" content="https://github.com/0xPacman" />
-        <meta itemProp="sameAs" content="https://linkedin.com/in/0xpacman" />
-        <meta itemProp="knowsAbout" content="Cloud Infrastructure" />
-        <meta itemProp="knowsAbout" content="VMware" />
-        <meta itemProp="knowsAbout" content="OpenStack" />
-        <meta itemProp="knowsAbout" content="DevOps" />
-      </div>
-    </section>
-  )
+      </section>
+      <section className="contact-banner" aria-labelledby="cta-heading">
+        <div>
+          <p className="eyebrow mb-3">Let&apos;s work together</p>
+          <h2 id="cta-heading" className="section-title">
+            Have an infrastructure challenge?
+          </h2>
+          <p className="mt-3 font-sans text-muted-foreground">
+            Tell me what you&apos;re building, operating, or trying to improve.
+          </p>
+        </div>
+        <Link href="/contact/" className="action-primary shrink-0">
+          <BinaryText text="Start a conversation" />{" "}
+          <ArrowUpRight size={17} aria-hidden="true" />
+        </Link>
+      </section>
+    </div>
+  );
 }
