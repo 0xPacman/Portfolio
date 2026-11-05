@@ -175,8 +175,7 @@ export function ArticleView({ slug, locale }: ArticlePageProps) {
             <span className="text-foreground">cat note.txt</span>
           </div>
           <p className="mt-2 text-muted-foreground">
-            This article reflects personal experience and opinion. AI assisted with grammar the
-            way a linter assists with code. The thinking is mine; so are any mistakes.
+            {meta.authorNote ?? 'This article reflects personal experience and opinion. AI assisted with grammar the way a linter assists with code. The thinking is mine; so are any mistakes.'}
           </p>
         </div>
 
@@ -199,6 +198,7 @@ export function articleMetadata(slug: string, locale: Locale): Metadata {
   const post = getPost(slug, locale)
   if (!post) return {}
   const { meta } = post
+  const translation = getTranslation(slug, locale)
   const rtl = locale === 'ar'
   const ogImage = {
     url: `${hrefFor(slug, locale)}og.png`,
@@ -216,8 +216,8 @@ export function articleMetadata(slug: string, locale: Locale): Metadata {
     alternates: {
       canonical: hrefFor(slug, locale),
       languages: {
-        en: hrefFor(slug, 'en'),
-        ar: hrefFor(slug, 'ar'),
+        [locale]: hrefFor(slug, locale),
+        ...(translation ? { [translation.locale]: hrefFor(translation.slug, translation.locale) } : {}),
       },
     },
     openGraph: {

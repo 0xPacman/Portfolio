@@ -12,6 +12,14 @@ interface Post {
 const posts: Post[] = [
   {
     title:
+      "VMware vSphere Express: What You Get, What You Lose, and What It Actually Costs",
+    description:
+      "Broadcom's smaller vSphere bundle, the 128-core limit, the $9,600 pricing reference, and the operational details worth checking before a renewal.",
+    tag: "vmware",
+    slug: "vmware-vsphere-express",
+  },
+  {
+    title:
       "The Challenge I Let Slip: Google foo.bar and the Case for Relentless Curiosity",
     description:
       "A one-time invitation from Google appeared in my search results in 2019. I froze, let it expire, and learned a lesson about curiosity that outlasted any algorithm",

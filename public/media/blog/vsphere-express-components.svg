@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 530" role="img" aria-labelledby="title desc" font-family="'JetBrains Mono', ui-monospace, monospace">
+  <title id="title">The four required vSphere Express components</title>
+  <desc id="desc">Broadcom lists ESX, vCenter, VCF Operations, and a license server as mandatory. VCF Operations is restricted to licensing in Express. This is a component inventory, not a network topology or count of additional virtual machines.</desc>
+  <rect width="920" height="530" fill="#080808"/>
+  <path d="M30 74H890M30 462H890" stroke="#4a3b20"/>
+  <text x="34" y="36" fill="#ffb91f" font-size="13" letter-spacing="2">VSPHERE EXPRESS / OPERATING FOOTPRINT</text>
+  <text x="34" y="59" fill="#aaa69c" font-size="12">A smaller edition still needs its management and licensing components.</text>
+  <g fill="#10100d" stroke="#6a5123">
+    <rect x="34" y="100" width="414" height="152"/>
+    <rect x="472" y="100" width="414" height="152"/>
+    <rect x="34" y="278" width="414" height="152"/>
+    <rect x="472" y="278" width="414" height="152"/>
+  </g>
+  <g fill="#ffb91f" font-size="12" letter-spacing="1">
+    <text x="56" y="130">01 / COMPUTE</text><text x="494" y="130">02 / MANAGEMENT</text>
+    <text x="56" y="308">03 / ENTITLEMENT MANAGEMENT</text><text x="494" y="308">04 / LICENSING SERVICE</text>
+  </g>
+  <g fill="#e2dfd5" font-size="24">
+    <text x="56" y="172">ESX hosts</text><text x="494" y="172">vCenter</text>
+    <text x="56" y="350">VCF Operations</text><text x="494" y="350">License server</text>
+  </g>
+  <g fill="#b7b3a9" font-size="14">
+    <text x="56" y="207">Run the virtual machines.</text><text x="494" y="207">Manage the virtual infrastructure.</text>
+    <text x="56" y="385">Licensing only in Express.</text><text x="494" y="385">Required in the deployment guide.</text>
+  </g>
+  <text x="34" y="488" fill="#aaa69c" font-size="12">Logical components, not a count of extra VMs. Size and protect the complete stack.</text>
+  <text x="34" y="510" fill="#817d73" font-size="11">Source: Broadcom vSphere Express TechDocs / checked 2026-11-05</text>
+</svg>

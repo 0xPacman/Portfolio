@@ -18,6 +18,7 @@ export interface PostMeta {
   date: string
   tags: string[]
   locale: Locale
+  authorNote?: string
 }
 
 export interface TocItem {
@@ -75,6 +76,7 @@ function readMeta(file: string, locale: Locale): PostMeta {
     date: data.date ?? '',
     tags: data.tags ?? [],
     locale,
+    authorNote: typeof data.authorNote === 'string' ? data.authorNote : undefined,
   }
 }
 
@@ -105,6 +107,7 @@ export function getPost(
       date: data.date ?? '',
       tags: data.tags ?? [],
       locale,
+      authorNote: typeof data.authorNote === 'string' ? data.authorNote : undefined,
     },
     html,
     toc: extractToc(content),
