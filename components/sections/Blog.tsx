@@ -11,6 +11,13 @@ interface Post {
 
 const posts: Post[] = [
   {
+    title: "The $5 Developer Lead: When a Job Offer Becomes an Attack Surface",
+    description:
+      "A WhatsApp recruitment message, a public OSINT trail, and the lessons for developers facing suspicious coding assignments.",
+    tag: "security",
+    slug: "the-five-dollar-developer-lead",
+  },
+  {
     title:
       "VMware vSphere Express: What You Get, What You Lose, and What It Actually Costs",
     description:
