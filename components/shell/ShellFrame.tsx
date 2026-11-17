@@ -2,6 +2,7 @@
 import React from "react";
 import { StatusBar } from "./StatusBar";
 import { TabBar, TABS } from "./TabBar";
+import { OrbHint } from "./OrbHint";
 export function ShellFrame({
   active,
   children,
@@ -43,6 +44,7 @@ export function ShellFrame({
           </footer>}
         </main>
       </div>
+      <OrbHint />
       <StatusBar active={active} />
     </div>
   );
