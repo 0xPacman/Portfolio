@@ -168,7 +168,7 @@
   const fragment = `
     precision mediump float;
     uniform vec3 uColor;
-    uniform float uGlowPass;
+    uniform float uGlowPass,uLight;
     varying float vAlpha,vRadiance,vHeat,vSecret,vWarmth;
     varying vec3 vTint;
     void main() {
@@ -178,7 +178,15 @@
       color=mix(color,vec3(1.,.78,.46),max(vHeat*.72,vWarmth));
       float opacity=vAlpha*coverage;
       if(uGlowPass>.5) opacity=vAlpha*exp(-r*r*19.)*.075*(1.-vSecret*.92);
-      gl_FragColor=vec4(color*min(1.,vRadiance+vHeat*.4),opacity);
+      color*=min(1.,vRadiance+vHeat*.4);
+      if(uLight>.5) {
+        float warmth=clamp((vTint.r-vTint.b)*2.+.2,0.,1.);
+        vec3 ink=mix(vec3(.10,.17,.19),vec3(.38,.25,.12),warmth*.55);
+        ink=mix(ink,vec3(.19,.16,.12),vSecret);
+        color=mix(ink,vec3(.40,.25,.10),max(vHeat*.70,vWarmth*.5));
+        opacity=min(1.,opacity*1.08);
+      }
+      gl_FragColor=vec4(color,opacity);
     }
   `;
   window.OrbAppearance={vertex,fragment};

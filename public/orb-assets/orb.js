@@ -7,6 +7,7 @@
   },window.ORB_CONFIG);
   const canvas = document.querySelector('canvas');
   const motion = matchMedia('(prefers-reduced-motion:reduce)');
+  let lightTheme=document.documentElement.getAttribute('data-theme')==='light';
   const clamp = (x,lo,hi) => Math.max(lo,Math.min(hi,x));
   const state = { time:0,morph:0,target:0,velocity:0,charge:0,down:false,
     hover:0,hoverTarget:0,x:0,y:0,tx:0,ty:0,last:0,frame:0,width:1,height:1,dpr:1,
@@ -54,15 +55,17 @@
     const uniforms={};
     for(const name of ['uTime','uMorph','uMomentum','uCharge','uHover','uAspect','uScale',
       'uPixelRatio','uPointSize','uTurbulence','uPointer','uColor','uPulses[0]',
-      'uMessage','uMyth','uStoryTime','uStone','uSlope','uPointerVelocity','uTrail[0]','uGlowPass']) uniforms[name]=gl.getUniformLocation(program,name);
+      'uMessage','uMyth','uStoryTime','uStone','uSlope','uPointerVelocity','uTrail[0]','uGlowPass','uLight']) uniforms[name]=gl.getUniformLocation(program,name);
     gl.uniform3fv(uniforms.uStone,[...destinations.rockCenter,destinations.rockRadius]);
     gl.uniform1f(uniforms.uSlope,destinations.slope);
     const pulseData=new Float32Array(16);
     gl.disable(gl.DEPTH_TEST); gl.enable(gl.BLEND);
-    gl.blendFuncSeparate(gl.SRC_ALPHA,gl.ONE,gl.ONE,gl.ONE_MINUS_SRC_ALPHA); gl.clearColor(0,0,0,0);
+    gl.clearColor(0,0,0,0);
     resizeRenderer=() => gl.viewport(0,0,display.width,display.height);
     draw=() => {
       if(gl.isContextLost()) return;
+      // Ink accumulates on paper; light accumulates in the dark palette.
+      gl.blendFuncSeparate(gl.SRC_ALPHA,lightTheme?gl.ONE_MINUS_SRC_ALPHA:gl.ONE,gl.ONE,gl.ONE_MINUS_SRC_ALPHA);
       gl.clear(gl.COLOR_BUFFER_BIT);
       for(const [name,value] of Object.entries({
         uTime:state.time*config.speed,uMorph:((state.morph%4)+4)%4,
@@ -70,13 +73,14 @@
         uAspect:state.width/state.height,uScale:scale(),uPixelRatio:state.dpr,
         uPointSize:config.pointSize,uTurbulence:config.turbulence,
         uMessage:state.message,uMyth:state.myth,uStoryTime:state.time-state.storyStart,
+        uLight:lightTheme?1:0,
       })) gl.uniform1f(uniforms[name],value);
       gl.uniform2f(uniforms.uPointer,state.x,state.y); gl.uniform3fv(uniforms.uColor,config.color);
       gl.uniform2f(uniforms.uPointerVelocity,state.vx,state.vy);
       trails.forEach((p,i)=>trailData.set(p,i*2)); gl.uniform2fv(uniforms['uTrail[0]'],trailData);
       pulses.forEach((p,i) => pulseData.set([p.x,p.y,clamp(state.time-p.start,0,100),motion.matches?0:p.strength],i*4));
       gl.uniform4fv(uniforms['uPulses[0]'],pulseData);
-      if(state.message+state.myth<.99) {
+      if(!lightTheme && state.message+state.myth<.99) {
         gl.uniform1f(uniforms.uGlowPass,1); gl.drawArrays(gl.POINTS,0,count);
       }
       gl.uniform1f(uniforms.uGlowPass,0); gl.drawArrays(gl.POINTS,0,count);
@@ -120,7 +124,12 @@
         const ink=destinations.message[at4+3]<.5?.85:.2;
         const storyInk=destinations.mythStyle[i*2];
         const alpha=clamp(.35+.25*z+energy*.3,.15,.95)*(1-secret)+ink*state.message+storyInk*state.myth;
-        ctx.fillStyle=`rgba(${Math.round(219-energy*50*(1-secret)+30*secret)},${Math.round(227-secret*16)},${Math.round(237-secret*60)},${alpha})`;
+        if(lightTheme) {
+          const warmth=clamp(energy*.55*(1-secret)+secret*.6,0,1);
+          ctx.fillStyle=`rgba(${Math.round(34+warmth*44)},${Math.round(43+warmth*10)},${Math.round(44-warmth*16)},${Math.min(1,alpha*1.08)})`;
+        } else {
+          ctx.fillStyle=`rgba(${Math.round(219-energy*50*(1-secret)+30*secret)},${Math.round(227-secret*16)},${Math.round(237-secret*60)},${alpha})`;
+        }
         ctx.fillRect(state.width/2+px*pixels,state.height/2-py*pixels,1,1);
       }
     };
@@ -253,5 +262,13 @@
   });
   addEventListener('resize',resize,{passive:true}); addEventListener('blur',cancelContact);
   document.addEventListener('visibilitychange',syncAnimation); motion.addEventListener('change',syncAnimation);
+  // Only the frame's own root is observed, so removing the iframe releases it.
+  const themeObserver=new MutationObserver(() => {
+    const next=document.documentElement.getAttribute('data-theme')==='light';
+    if(next===lightTheme) return;
+    lightTheme=next;
+    if(!document.hidden) draw();
+  });
+  themeObserver.observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
   resize(); syncAnimation();
 })();

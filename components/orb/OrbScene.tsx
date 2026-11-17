@@ -13,9 +13,20 @@ export function OrbScene() {
   useEffect(() => {
     const frame = frameRef.current;
     if (!frame) return;
+    const themeRoot = document.documentElement;
+    const syncTheme = () => {
+      const frameRoot = frame.contentDocument?.documentElement;
+      const theme = themeRoot.classList.contains("dark") ? "dark" : "light";
+      if (frameRoot && frameRoot.dataset.theme !== theme) {
+        frameRoot.dataset.theme = theme;
+      }
+    };
+    const themeObserver = new MutationObserver(syncTheme);
+    themeObserver.observe(themeRoot, { attributes: true, attributeFilter: ["class"] });
     let detach: (() => void) | undefined;
     const connectFrame = () => {
       detach?.();
+      syncTheme();
       const frameWindow = frame.contentWindow;
       if (!frameWindow) return;
       const onKey = (event: KeyboardEvent) => {
@@ -30,6 +41,7 @@ export function OrbScene() {
     frame.addEventListener("load", connectFrame);
     connectFrame();
     return () => {
+      themeObserver.disconnect();
       frame.removeEventListener("load", connectFrame);
       detach?.();
     };

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -10,6 +10,7 @@
   <link rel="icon" href="data:,">
   <style>
     :root { color-scheme: dark; background: transparent; }
+    :root[data-theme="light"] { color-scheme: light; }
     * { box-sizing: border-box; }
     html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
     body { background: transparent; overscroll-behavior: none; }
@@ -18,6 +19,14 @@
   </style>
 </head>
 <body>
+  <script>
+    // Match the saved portfolio theme before the canvas draws its first frame.
+    try {
+      if (window.parent !== window) {
+        document.documentElement.dataset.theme = window.parent.document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+      }
+    } catch { /* Standalone and cross-origin embeds keep the default dark theme. */ }
+  </script>
   <canvas tabindex="0" role="img" aria-label="Interactive particle orb. Scroll or swipe to change its shape. Move your pointer to stir the particles. Click for a ripple, or hold and release for a burst. Arrow keys change shape; Space sends a ripple."></canvas>
   <script src="./secrets.js"></script>
   <script src="./appearance.js"></script>
