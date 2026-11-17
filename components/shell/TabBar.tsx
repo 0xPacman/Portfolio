@@ -3,14 +3,10 @@ import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { BinaryText } from "@/components/ui/binary-text";
-export const TABS = [
-  { id: "about", label: "About", href: "/" },
-  { id: "skills", label: "Skills", href: "/skills/" },
-  { id: "projects", label: "Projects", href: "/projects/" },
-  { id: "blog", label: "Blog", href: "/blog/" },
-  { id: "contact", label: "Contact", href: "/contact/" },
-];
+import { PUBLIC_WINDOWS, windowShortcutHref } from "@/lib/window-shortcuts";
+export const TABS = PUBLIC_WINDOWS;
 export function tabIdForPath(pathname: string) {
+  if (pathname === "/absurd" || pathname === "/absurd/") return "absurd";
   return (
     TABS.find(
       (tab) => tab.id !== "about" && pathname.startsWith(tab.href.slice(0, -1)),
@@ -21,26 +17,10 @@ export function TabBar({ active }: { active: string }) {
   const router = useRouter();
   React.useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (
-        !e.altKey ||
-        e.shiftKey ||
-        e.ctrlKey ||
-        e.metaKey ||
-        e.repeat ||
-        e.defaultPrevented
-      )
-        return;
-      const target = e.target as HTMLElement | null;
-      if (
-        target?.closest(
-          'input, textarea, select, [contenteditable]:not([contenteditable="false"]), [role="dialog"]',
-        )
-      )
-        return;
-      const index = Number(e.code.replace("Digit", "")) - 1;
-      if (index >= 0 && index < TABS.length && e.code.startsWith("Digit")) {
+      const href = windowShortcutHref(e);
+      if (href) {
         e.preventDefault();
-        router.push(TABS[index].href);
+        router.push(href);
       }
     };
     window.addEventListener("keydown", onKey);

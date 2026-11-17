@@ -5,6 +5,13 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
 
+# The hidden orb is embedded by the portfolio on the same origin.
+/orb-assets/*
+  ! X-Frame-Options
+  X-Frame-Options: SAMEORIGIN
+  Content-Security-Policy: frame-ancestors 'self'
+  X-Robots-Tag: noindex, nofollow
+
 /_next/static/*
   Cache-Control: public, max-age=31536000, immutable
 

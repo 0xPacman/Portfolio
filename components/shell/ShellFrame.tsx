@@ -10,6 +10,7 @@ export function ShellFrame({
   children: React.ReactNode;
 }) {
   const windowNumber = TABS.findIndex((tab) => tab.id === active) + 1;
+  const isOrb = active === "absurd";
   return (
     <div className="tmux-shell">
       <a href="#main-content" className="skip-link">
@@ -29,17 +30,17 @@ export function ShellFrame({
         <main
           id="main-content"
           tabIndex={-1}
-          className="tmux-content"
+          className={`tmux-content${isOrb ? " flex flex-col [&>div]:flex [&>div]:flex-1 [&>div]:flex-col" : ""}`}
           data-shell-scroll
         >
           {children}
-          <footer className="page-container flex flex-wrap justify-between gap-3 border-t border-primary/15 py-6 text-xs text-muted-foreground">
+          {!isOrb && <footer className="page-container flex flex-wrap justify-between gap-3 border-t border-primary/15 py-6 text-xs text-muted-foreground">
             <span>
               <span className="text-primary">[end]</span> Ahmed Jadani /
               0xPacman
             </span>
             <span>Cloud infrastructure. Thoughtfully operated.</span>
-          </footer>
+          </footer>}
         </main>
       </div>
       <StatusBar active={active} />
