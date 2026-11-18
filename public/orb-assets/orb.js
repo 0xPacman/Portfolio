@@ -1,14 +1,39 @@
 (() => {
   'use strict';
   const config = Object.assign({
-    color: [.86,.89,.93], background: [8/255,11/255,16/255],
     particles: matchMedia('(max-width:700px)').matches ? 20000 : 33000,
     size:.64, speed:1, pointSize:1.60, turbulence:1, interaction:1,
   },window.ORB_CONFIG);
   const canvas = document.querySelector('canvas');
+  const orbLabel = canvas.getAttribute('aria-label');
   const motion = matchMedia('(prefers-reduced-motion:reduce)');
   let lightTheme=document.documentElement.getAttribute('data-theme')==='light';
   const clamp = (x,lo,hi) => Math.max(lo,Math.min(hi,x));
+  // The shell owns the palette. The iframe also has matching tokens for standalone use.
+  function readPalette() {
+    const standalone = getComputedStyle(document.documentElement);
+    let host;
+    try { if (parent !== window) host = parent.getComputedStyle(parent.document.documentElement); }
+    catch { /* A cross-origin embed uses the standalone colors. */ }
+    const swatch = document.createElement('canvas');
+    swatch.width = swatch.height = 1;
+    const context = swatch.getContext('2d', {willReadFrequently:true});
+    function rgb(token) {
+      const value = host?.getPropertyValue(token).trim() || standalone.getPropertyValue(token);
+      context.fillStyle = 'hsl(' + value + ')';
+      context.fillRect(0,0,1,1);
+      return Array.from(context.getImageData(0,0,1,1).data.subarray(0,3), channel => channel / 255);
+    }
+    const ink = (!lightTheme && config.color) || rgb('--foreground');
+    const amber = rgb('--primary');
+    // Cache the ramp so the Canvas fallback only adjusts opacity per particle.
+    const ramp = Array.from({length:32}, (_, i) => {
+      const channels = ink.map((base, channel) => Math.round(255 * (base + (amber[channel] - base) * i / 31)));
+      return 'rgb(' + channels.join(',') + ')';
+    });
+    return {ink,amber,ramp};
+  }
+  let palette = readPalette();
   const state = { time:0,morph:0,target:0,velocity:0,charge:0,down:false,
     hover:0,hoverTarget:0,x:0,y:0,tx:0,ty:0,last:0,frame:0,width:1,height:1,dpr:1,
     secret:'orb',message:0,myth:0,storyStart:0,vx:0,vy:0,pressTime:0 };
@@ -54,7 +79,7 @@
     }
     const uniforms={};
     for(const name of ['uTime','uMorph','uMomentum','uCharge','uHover','uAspect','uScale',
-      'uPixelRatio','uPointSize','uTurbulence','uPointer','uColor','uPulses[0]',
+      'uPixelRatio','uPointSize','uTurbulence','uPointer','uInk','uAmber','uPulses[0]',
       'uMessage','uMyth','uStoryTime','uStone','uSlope','uPointerVelocity','uTrail[0]','uGlowPass','uLight']) uniforms[name]=gl.getUniformLocation(program,name);
     gl.uniform3fv(uniforms.uStone,[...destinations.rockCenter,destinations.rockRadius]);
     gl.uniform1f(uniforms.uSlope,destinations.slope);
@@ -75,7 +100,8 @@
         uMessage:state.message,uMyth:state.myth,uStoryTime:state.time-state.storyStart,
         uLight:lightTheme?1:0,
       })) gl.uniform1f(uniforms[name],value);
-      gl.uniform2f(uniforms.uPointer,state.x,state.y); gl.uniform3fv(uniforms.uColor,config.color);
+      gl.uniform2f(uniforms.uPointer,state.x,state.y);
+      gl.uniform3fv(uniforms.uInk,palette.ink); gl.uniform3fv(uniforms.uAmber,palette.amber);
       gl.uniform2f(uniforms.uPointerVelocity,state.vx,state.vy);
       trails.forEach((p,i)=>trailData.set(p,i*2)); gl.uniform2fv(uniforms['uTrail[0]'],trailData);
       pulses.forEach((p,i) => pulseData.set([p.x,p.y,clamp(state.time-p.start,0,100),motion.matches?0:p.strength],i*4));
@@ -124,12 +150,11 @@
         const ink=destinations.message[at4+3]<.5?.85:.2;
         const storyInk=destinations.mythStyle[i*2];
         const alpha=clamp(.35+.25*z+energy*.3,.15,.95)*(1-secret)+ink*state.message+storyInk*state.myth;
-        if(lightTheme) {
-          const warmth=clamp(energy*.55*(1-secret)+secret*.6,0,1);
-          ctx.fillStyle=`rgba(${Math.round(34+warmth*44)},${Math.round(43+warmth*10)},${Math.round(44-warmth*16)},${Math.min(1,alpha*1.08)})`;
-        } else {
-          ctx.fillStyle=`rgba(${Math.round(219-energy*50*(1-secret)+30*secret)},${Math.round(227-secret*16)},${Math.round(237-secret*60)},${alpha})`;
-        }
+        const orbWarmth=shell?.16:clamp(.55+x*.33+y*.2+energy*.45,0,1);
+        const inscriptionWarmth=destinations.message[at4+3]>.5?.75:(destinations.message[at4+1]<0?.97:.12);
+        const warmth=orbWarmth*(1-secret)+inscriptionWarmth*state.message+destinations.mythStyle[i*2+1]*state.myth;
+        ctx.fillStyle=palette.ramp[Math.round(clamp(warmth,0,1)*31)];
+        ctx.globalAlpha=clamp(alpha*(lightTheme?1.08:1),0,1);
         ctx.fillRect(state.width/2+px*pixels,state.height/2-py*pixels,1,1);
       }
     };
@@ -162,7 +187,7 @@
     state.down=false; state.charge=0;
     pulses.forEach(p=>{p.strength=0;});
     if(state.secret==='myth') state.storyStart=state.time;
-    const labels={orb:'Interactive particle orb. Scroll to change shape. Hover to stir. Click for a ripple.',
+    const labels={orb:orbLabel,
       message:'THE WORLD IS ABSURD. A hidden inscription made of particles. Scroll or press Escape to return.',
       myth:'Sisyphus pushes a boulder uphill, only to begin again. Scroll or press Escape to return.'};
     display.setAttribute('aria-label',labels[state.secret]);
@@ -235,9 +260,14 @@
   });
   display.addEventListener('pointerup',event => {
     if(!contact || contact.id!==event.pointerId) return;
-    if(!contact.dragged && state.charge>.20) pulse(state.tx,state.ty,1+state.charge*1.7);
-    if(!contact.dragged && event.timeStamp-contact.start<500) taps.tap(event.clientX,event.clientY,event.timeStamp);
-    else taps.cancel();
+    if (!contact.dragged && state.charge > .20) {
+      taps.cancel();
+      pulse(state.tx, state.ty, 1 + state.charge * 1.7);
+    } else if (!contact.dragged && event.timeStamp - contact.start < 500) {
+      taps.tap(event.clientX, event.clientY, event.timeStamp);
+    } else {
+      taps.cancel();
+    }
     contact=null; state.down=false;
     if(display.hasPointerCapture(event.pointerId)) display.releasePointerCapture(event.pointerId);
     if(event.pointerType==='touch') resetPointer();
@@ -247,6 +277,13 @@
   display.addEventListener('lostpointercapture',() => { if(contact) cancelContact(); });
   display.addEventListener('pointerleave',() => { if(!contact) resetPointer(); });
   display.addEventListener('keydown',event => {
+    if(event.key==='Enter') {
+      if(event.repeat || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey || event.isComposing) return;
+      event.preventDefault();
+      pulse(0,0,.90);
+      taps.tap(state.width/2,state.height/2,event.timeStamp);
+      return;
+    }
     if(['Escape','ArrowDown','ArrowRight','PageDown','ArrowUp','ArrowLeft','PageUp',' ','Home'].includes(event.key)) taps.cancel();
     if(event.key==='Escape') { taps.cancel(); reveal('orb'); }
     if(['ArrowDown','ArrowRight','PageDown','ArrowUp','ArrowLeft','PageUp',' ','Home'].includes(event.key)) event.preventDefault();
@@ -267,6 +304,7 @@
     const next=document.documentElement.getAttribute('data-theme')==='light';
     if(next===lightTheme) return;
     lightTheme=next;
+    palette=readPalette();
     if(!document.hidden) draw();
   });
   themeObserver.observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});

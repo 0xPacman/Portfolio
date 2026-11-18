@@ -1,11 +1,12 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { ArrowLeft, Calendar, Clock, Languages, Tag } from 'lucide-react'
+import { ArrowLeft, ArrowUpRight, Clock, Languages } from 'lucide-react'
 import { getAllPosts, getPost, getTranslation, type Locale } from '@/lib/blog'
 import { generateJSONLD } from '@/lib/schema'
 import { TocNav } from '@/components/blog/TocNav'
 import { ArticleLightbox } from '@/components/blog/ArticleLightbox'
+import styles from './Journal.module.css'
 
 const BASE = 'https://0xpacman.com'
 
@@ -31,7 +32,11 @@ export function ArticleView({ slug, locale }: ArticlePageProps) {
   const { meta, html, toc } = post
   const translation = getTranslation(slug, locale)
   const rtl = locale === 'ar'
-  const promptPath = rtl ? `ar/${slug}` : slug
+  const archive = getAllPosts(locale)
+  const nextPost = archive.length > 1 ? archive[(archive.findIndex((entry) => entry.slug === slug) + 1) % archive.length] : undefined
+  const dateLabel = new Intl.DateTimeFormat(rtl ? 'ar-MA' : 'en-GB', {
+    day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC',
+  }).format(new Date(meta.date))
 
   const words = html.replace(/<[^>]*>/g, ' ').split(/\s+/).filter(Boolean).length
   const readingTime = Math.max(1, Math.round(words / 200))
@@ -86,108 +91,63 @@ export function ArticleView({ slug, locale }: ArticlePageProps) {
         dangerouslySetInnerHTML={generateJSONLD([articleSchema, breadcrumbSchema])}
       />
 
-      <TocNav items={toc} />
-      <ArticleLightbox />
+      <ArticleLightbox key={`${locale}/${slug}`} rtl={rtl} />
 
       <article
-        className="max-w-3xl mx-auto px-4 sm:px-6 py-8 lg:py-12"
+        className={`page-container page-content ${styles.reader}`}
+        dir={rtl ? 'rtl' : 'ltr'}
+        lang={rtl ? 'ar-MA' : 'en'}
         itemScope
         itemType="https://schema.org/BlogPosting"
       >
-        {/* prompt header */}
-        <div className="font-mono text-[13px] flex flex-wrap items-center gap-1.5">
-          <span className="text-term-green">root@0xpacman</span>
-          <span className="text-muted-foreground">:</span>
-          <span className="text-primary/70">~/blog</span>
-          <span className="text-muted-foreground">$</span>
-          <span className="text-foreground">cat {promptPath}.md</span>
+        <div className={styles.readerNav}>
+          <Link href="/blog/" className={styles.backLink}>
+            <ArrowLeft size={15} aria-hidden="true" /> {rtl ? 'جميع المقالات' : 'All field notes'}
+          </Link>
+          {translation && (
+            <Link href={hrefFor(translation.slug, translation.locale)} className={styles.translationLink}
+              lang={rtl ? 'en' : 'ar-MA'} hrefLang={rtl ? 'en' : 'ar-MA'}>
+              <Languages size={15} aria-hidden="true" /> {rtl ? 'Read in English' : 'اقرا بالدارجة'}
+            </Link>
+          )}
         </div>
-
-        {/* meta header */}
-        <header className="mt-6 pb-6 border-b border-primary/15">
-          <h1
-            className="text-2xl sm:text-3xl font-bold font-sans tracking-tight text-foreground"
-            dir={rtl ? 'rtl' : undefined}
-            style={rtl ? { fontFamily: 'var(--font-arabic), sans-serif' } : undefined}
-            itemProp="headline"
-          >
-            {meta.title}
-          </h1>
-          <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-1.5 text-[12px] font-mono text-muted-foreground">
-            <span className="flex items-center gap-1.5">
-              <Calendar size={12} className="text-primary/70" aria-hidden="true" />
-              <time dateTime={meta.date} itemProp="datePublished">{meta.date}</time>
-            </span>
-            <span className="flex items-center gap-1.5">
-              <Clock size={12} className="text-primary/70" aria-hidden="true" />
-              {readingTime} min read
-            </span>
-            {meta.tags.length > 0 && (
-              <span className="flex items-center gap-1.5">
-                <Tag size={12} className="text-primary/70" aria-hidden="true" />
-                {meta.tags.map((t) => (
-                  <span key={t} className="border border-primary/20 text-primary/80 px-1.5 py-0.5 text-[10px]">
-                    {t}
-                  </span>
-                ))}
-              </span>
-            )}
-            {/* translate button: active when a translation exists, greyed out otherwise */}
-            {translation ? (
-              <Link
-                href={hrefFor(translation.slug, translation.locale)}
-                className="flex items-center gap-1.5 text-primary hover:text-foreground transition-colors"
-                title={rtl ? 'Read in English' : 'اقرأ المقال بالدارجة'}
-              >
-                <Languages size={12} aria-hidden="true" />
-                {rtl ? 'English' : 'الدارجة'}
-              </Link>
-            ) : (
-              <span
-                className="flex items-center gap-1.5 opacity-40 cursor-not-allowed select-none"
-                title="Translation coming soon"
-                aria-disabled="true"
-              >
-                <Languages size={12} aria-hidden="true" />
-                {rtl ? 'English' : 'الدارجة'}
-              </span>
-            )}
+        <header className={styles.articleHeader}>
+          <div className={styles.tags} dir="ltr">
+            {meta.tags.map((tag) => <span key={tag}>{tag}</span>)}
           </div>
-          <meta itemProp="author" content="Ahmed Jadani" />
+          <h1 itemProp="headline">{meta.title}</h1>
+          <div className={styles.byline}>
+            <span itemProp="author">{rtl ? 'أحمد جداني' : 'Ahmed Jadani'}</span>
+            <time dateTime={meta.date} itemProp="datePublished">{dateLabel}</time>
+            <span><Clock size={13} aria-hidden="true" /> {readingTime} {rtl ? 'دقايق للقراءة' : 'min read'}</span>
+          </div>
           <meta itemProp="description" content={meta.description} />
         </header>
-
-        {/* rendered markdown */}
-        <div
-          className="blog-content mt-8"
-          dir={rtl ? 'rtl' : undefined}
-          itemProp="articleBody"
-          dangerouslySetInnerHTML={{ __html: html }}
-        />
-
-        {/* author note */}
-        <div className="mt-12 border border-primary/15 bg-card/30 px-4 py-3 font-mono text-[12px] leading-relaxed">
-          <div className="flex flex-wrap items-center gap-1.5">
-            <span className="text-term-green">root@0xpacman</span>
-            <span className="text-muted-foreground">:</span>
-            <span className="text-primary/70">~/blog</span>
-            <span className="text-muted-foreground">$</span>
-            <span className="text-foreground">cat note.txt</span>
+        <div className={styles.readingLayout}>
+          <TocNav items={toc} rtl={rtl} />
+          <div className={styles.readingColumn}>
+            <div className={`blog-content ${styles.prose}`} dir={rtl ? 'rtl' : 'ltr'}
+              itemProp="articleBody" dangerouslySetInnerHTML={{ __html: html }} />
+            <aside className={styles.authorNote}>
+              <h2>{rtl ? 'ملاحظة الكاتب' : 'Author’s note'}</h2>
+              <p dir="auto">
+                {meta.authorNote ?? (rtl
+                  ? 'هاد المقال كيعكس التجربة والرأي ديالي. الذكاء الاصطناعي عاوني نصحح اللغة بحال كيفاش اللينتر كيعاون فمراجعة الكود. الأفكار ديالي، وحتى الأخطاء ديالي.'
+                  : 'This article reflects personal experience and opinion. AI assisted with grammar the way a linter assists with code. The thinking is mine; so are any mistakes.')}
+              </p>
+            </aside>
+            <div className={styles.articleFooter}>
+              {nextPost && (
+                <Link className={styles.nextArticle} href={hrefFor(nextPost.slug, locale)}>
+                  <span>{rtl ? 'المقال الموالي' : 'Read next'} <ArrowUpRight size={14} aria-hidden="true" /></span>
+                  <strong>{nextPost.title}</strong>
+                </Link>
+              )}
+              <Link href="/blog/" className={styles.backLink}>
+                <ArrowLeft size={15} aria-hidden="true" /> {rtl ? 'جميع المقالات' : 'All field notes'}
+              </Link>
+            </div>
           </div>
-          <p className="mt-2 text-muted-foreground">
-            {meta.authorNote ?? 'This article reflects personal experience and opinion. AI assisted with grammar the way a linter assists with code. The thinking is mine; so are any mistakes.'}
-          </p>
-        </div>
-
-        {/* footer nav */}
-        <div className="mt-12 pt-6 border-t border-primary/15">
-          <Link
-            href="/blog/"
-            className="inline-flex items-center gap-1.5 text-[12px] font-mono text-muted-foreground hover:text-primary transition-colors"
-          >
-            <ArrowLeft size={12} aria-hidden="true" />
-            back to ~/blog
-          </Link>
         </div>
       </article>
     </>

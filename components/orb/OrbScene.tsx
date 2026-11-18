@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { windowShortcutHref } from "@/lib/window-shortcuts";
+import { handleFinderShortcut, windowShortcutHref } from "@/lib/window-shortcuts";
 import styles from "./OrbScene.module.css";
 
 export function OrbScene() {
@@ -30,6 +30,7 @@ export function OrbScene() {
       const frameWindow = frame.contentWindow;
       if (!frameWindow) return;
       const onKey = (event: KeyboardEvent) => {
+        handleFinderShortcut(event);
         const href = windowShortcutHref(event);
         if (!href) return;
         event.preventDefault();
@@ -53,15 +54,15 @@ export function OrbScene() {
         <iframe
           ref={frameRef}
           className={styles.frame}
-          src="/orb-assets/index.html"
+          src="/orb-assets/index.html?v=2"
           title="Interactive particle orb. Scroll, hover, or click to explore."
         />
       </div>
       <figure className={styles.quotation}>
         <blockquote>
           <p>
-            <span className={styles.opening}>“I said that the world is absurd,</span>{" "}
-            but I was too hasty. This world in itself is not reasonable, that is
+            <span className={styles.opening}>“I said that the world is absurd, but I was too hasty.</span>{" "}
+            This world in itself is not reasonable, that is
             all that can be said. But what is absurd is the confrontation of this
             irrational and the <em>wild longing for clarity</em> whose call echoes
             in the human heart.”

@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
+import { Terminal } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { BinaryText } from "@/components/ui/binary-text";
 import { PUBLIC_WINDOWS, windowShortcutHref } from "@/lib/window-shortcuts";
@@ -13,7 +14,7 @@ export function tabIdForPath(pathname: string) {
     )?.id ?? "about"
   );
 }
-export function TabBar({ active }: { active: string }) {
+export function TabBar({ active, search }: { active: string; search: React.ReactNode }) {
   const router = useRouter();
   React.useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -30,13 +31,9 @@ export function TabBar({ active }: { active: string }) {
     <header className="tmux-header">
       <div className="tmux-session">
         <Link href="/" aria-label="0xPacman home" className="tmux-brand">
-          <span aria-hidden="true">[</span>
+          <span className="tmux-brand-icon" aria-hidden="true"><Terminal size={17} strokeWidth={2.5} /></span>
           <BinaryText text="0xPacman" />
-          <span aria-hidden="true">]</span>
         </Link>
-        <span className="text-[10px] text-muted-foreground md:hidden">
-          tmux / portfolio
-        </span>
       </div>
       <nav aria-label="Portfolio sections" className="tmux-windows">
         {TABS.map((tab, i) => (
@@ -58,13 +55,7 @@ export function TabBar({ active }: { active: string }) {
           </Link>
         ))}
       </nav>
-      <span
-        className="ml-auto hidden items-center gap-3 px-5 text-[11px] text-muted-foreground lg:flex"
-        aria-hidden="true"
-      >
-        <span className="text-primary">tmux</span>
-        <span>session: portfolio</span>
-      </span>
+      {search}
     </header>
   );
 }

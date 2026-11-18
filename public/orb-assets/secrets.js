@@ -21,9 +21,8 @@
   }
   function makeTargets(count,random) {
     const words=maskPoints(ctx=>{
-      trackedText(ctx,'THE WORLD',340,'82px Georgia, serif',7);
-      trackedText(ctx,'IS',430,'44px Georgia, serif',12);
-      trackedText(ctx,'ABSURD',590,'168px Georgia, serif',5);
+      trackedText(ctx,'THE WORLD',457,'bold 124px "Courier New", monospace',5);
+      trackedText(ctx,'IS ABSURD',607,'bold 148px "Courier New", monospace',3);
     });
     const figure=maskPoints(ctx=>{
       ctx.setTransform(530,0,0,-530,640,640);
@@ -120,11 +119,11 @@
         const crack=crackDistance(nx,ny),etch=crack<.009?.12:crack<.02?.62:1;
         const light=edge?.80:(.09+.69*Math.pow(diffuse,1.7))*facet*etch;
         myth.set([rockCenter[0]+nx*rockRadius*contour,rockCenter[1]+ny*rockRadius*contour,nz*rockRadius,0],i*4);
-        mythStyle.set([light,.22],i*2);
+        mythStyle.set([light,.29],i*2);
       } else if(f<.76) {
         const p=figure[Math.floor(random()*figure.length)];
         myth.set([p[0]+(random()-.5)*.003,p[1]+(random()-.5)*.003,(random()-.5)*.045,1],i*4);
-        mythStyle.set([.74+random()*.15,.53],i*2);
+        mythStyle.set([.74+random()*.15,.94],i*2);
       } else if(f<.96) {
         // Broken strata, rather than a uniform band: the slope feels cut from rock.
         const lane=i%73,stroke=random()>.25;

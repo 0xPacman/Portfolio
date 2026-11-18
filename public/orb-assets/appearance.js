@@ -15,7 +15,6 @@
     uniform vec4 uPulses[4];
     uniform vec2 uTrail[3];
     varying float vAlpha,vRadiance,vHeat,vSecret,vWarmth;
-    varying vec3 vTint;
     const float PI=3.14159265359;
     const float TAU=6.28318530718;
     mat3 turnY(float a) { float c=cos(a),s=sin(a); return mat3(c,0.,-s,0.,1.,0.,s,0.,c); }
@@ -139,7 +138,8 @@
         float gathering=sin(secret*PI);
         p+=vec3(-n.y,n.x,n.z*.3)*gathering*.18;
         sceneInk=(aMessage.w<.5?.72:.13)*uMessage+aMythStyle.x*uMyth;
-        sceneWarmth=uMessage*.65+uMyth*aMythStyle.y;
+        // The lower line takes the same amber as an active tmux window.
+        sceneWarmth=uMessage*(aMessage.w>.5?.75:(aMessage.y<0.?.97:.12))+uMyth*aMythStyle.y;
       }
       float perspective=mix(4.8/(4.8-p.z),1.,secret);
       vec2 xy=p.xy*perspective*uScale; xy.x/=uAspect;
@@ -153,12 +153,10 @@
       vAlpha=alpha*(1.-secret)+sceneInk;
       vRadiance=mix(.78+front*.22,.97,secret);
       vHeat=min(energy,1.)*(1.-secret);
-      vWarmth=sceneWarmth;
+      float amber=smoothstep(-.65,.7,n.x*.65+n.y*.4);
+      float patina=.18+.65*amber+.12*filament;
+      vWarmth=mix(patina,.16,core)*(1.-secret)+sceneWarmth;
       vSecret=secret;
-      vec3 silver=vec3(.76,.86,.88),ice=vec3(.31,.70,.79),gold=vec3(.99,.73,.39);
-      float warm=smoothstep(.15,.85,n.x*.6+n.y*.5+.45);
-      vTint=mix(mix(silver,ice,(1.-front)*.5),gold,warm*.45);
-      vTint=mix(vTint,vec3(.72,.87,.92),core*.45);
       float point=uPixelRatio*uPointSize*perspective*mix(.85,1.13,aSeed);
       point*=mix(1.,.66,dust*(1.-secret));
       point*=mix(1.,1.18,secret);
@@ -167,25 +165,17 @@
   `;
   const fragment = `
     precision mediump float;
-    uniform vec3 uColor;
+    uniform vec3 uInk,uAmber;
     uniform float uGlowPass,uLight;
     varying float vAlpha,vRadiance,vHeat,vSecret,vWarmth;
-    varying vec3 vTint;
     void main() {
       float r=length(gl_PointCoord-.5);
       float coverage=1.-smoothstep(.22,.50,r);
-      vec3 color=mix(vTint,uColor,vSecret);
-      color=mix(color,vec3(1.,.78,.46),max(vHeat*.72,vWarmth));
+      vec3 color=mix(uInk,uAmber,mix(vWarmth,1.,vHeat*.85));
       float opacity=vAlpha*coverage;
       if(uGlowPass>.5) opacity=vAlpha*exp(-r*r*19.)*.075*(1.-vSecret*.92);
-      color*=min(1.,vRadiance+vHeat*.4);
-      if(uLight>.5) {
-        float warmth=clamp((vTint.r-vTint.b)*2.+.2,0.,1.);
-        vec3 ink=mix(vec3(.10,.17,.19),vec3(.38,.25,.12),warmth*.55);
-        ink=mix(ink,vec3(.19,.16,.12),vSecret);
-        color=mix(ink,vec3(.40,.25,.10),max(vHeat*.70,vWarmth*.5));
-        opacity=min(1.,opacity*1.08);
-      }
+      if(uLight>.5) opacity=min(1.,opacity*1.08);
+      else color*=min(1.,vRadiance+vHeat*.4);
       gl_FragColor=vec4(color,opacity);
     }
   `;

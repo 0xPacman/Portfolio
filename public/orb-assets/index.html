@@ -3,19 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#080b10">
   <meta name="description" content="An animated, flowing sphere of light.">
   <meta name="robots" content="noindex, nofollow">
   <title>Orb</title>
   <link rel="icon" href="data:,">
   <style>
-    :root { color-scheme: dark; background: transparent; }
-    :root[data-theme="light"] { color-scheme: light; }
+    :root { color-scheme: dark; --foreground: 42 18% 91%; --primary: 40 94% 61%; background: transparent; }
+    :root[data-theme="light"] { color-scheme: light; --foreground: 30 18% 14%; --primary: 29 81% 33%; }
     * { box-sizing: border-box; }
     html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
     body { background: transparent; overscroll-behavior: none; }
     canvas { display: block; width: 100%; height: 100%; touch-action: none; outline: none; cursor: grab; user-select: none; }
     canvas:active { cursor: grabbing; }
+    canvas:focus-visible { outline: 1px solid hsl(var(--primary)); outline-offset: -3px; }
   </style>
 </head>
 <body>
@@ -27,9 +27,9 @@
       }
     } catch { /* Standalone and cross-origin embeds keep the default dark theme. */ }
   </script>
-  <canvas tabindex="0" role="img" aria-label="Interactive particle orb. Scroll or swipe to change its shape. Move your pointer to stir the particles. Click for a ripple, or hold and release for a burst. Arrow keys change shape; Space sends a ripple."></canvas>
-  <script src="./secrets.js"></script>
-  <script src="./appearance.js"></script>
-  <script src="./orb.js"></script>
+  <canvas tabindex="0" role="button" aria-label="Interactive particle orb. Scroll, swipe or use the arrow keys to change its shape. Move your pointer to stir the particles. Click or press Enter to interact, hold and release for a burst, or press Space for a ripple."></canvas>
+  <script src="./secrets.js?v=2"></script>
+  <script src="./appearance.js?v=2"></script>
+  <script src="./orb.js?v=2"></script>
 </body>
 </html>

@@ -96,11 +96,12 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={`dark ${jetbrainsMono.variable} ${spaceGrotesk.variable} ${ibmPlexSansArabic.variable}`}>
       <head>
+        <meta name="theme-color" content="#181816" />
         {/* No-FOUC theme: dark is the default; apply a saved light preference before paint */}
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "try{var t=localStorage.getItem('theme');if(t==='light'){document.documentElement.classList.remove('dark');}else if(t==='dark'){document.documentElement.classList.add('dark');}}catch(e){}",
+              "try{if(localStorage.getItem('theme')==='light'){document.documentElement.classList.remove('dark');document.querySelector('meta[name=theme-color]').content='#F2EEE8';}}catch(e){}",
           }}
         />
         <script
@@ -109,7 +110,6 @@ export default function RootLayout({
         />
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2240%22 fill=%22%23FFD700%22/><path d=%22M50 50 L90 30 A40 40 0 0 1 90 70 Z%22 fill=%22%23000%22/><circle cx=%2265%22 cy=%2235%22 r=%224%22 fill=%22%23000%22/></svg>" />
         <link rel="alternate" type="application/rss+xml" title="Ahmed Jadani | Blog" href="/feed.xml" />
-        <meta name="theme-color" content="#0A0A0A" />
       </head>
       <body className="min-h-screen bg-background text-foreground antialiased font-mono">
         {children}

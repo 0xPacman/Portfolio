@@ -7,6 +7,7 @@
 
 # The hidden orb is embedded by the portfolio on the same origin.
 /orb-assets/*
+  Cache-Control: no-cache
   ! X-Frame-Options
   X-Frame-Options: SAMEORIGIN
   Content-Security-Policy: frame-ancestors 'self'

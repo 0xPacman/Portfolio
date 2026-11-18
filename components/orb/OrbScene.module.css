@@ -1,116 +1,123 @@
 .scene {
-  --orb-center: #fffdf8;
-  --orb-middle: #f6f1e7;
-  --orb-edge: #eee8dd;
-  --orb-text: #3e3932;
-  --orb-opening: #29251f;
-  --orb-accent: #846135;
-  --orb-rule: #967348;
-  --orb-caption: #75654c;
-  --orb-glow-x: 32%;
-  --orb-glow-y: 48%;
   flex: 1 0 auto;
-  color-scheme: light;
-  min-height: 100%;
   display: grid;
-  grid-template-columns: minmax(0, 1.55fr) minmax(280px, 1fr);
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
   align-items: center;
-  background: radial-gradient(ellipse at var(--orb-glow-x) var(--orb-glow-y), var(--orb-center) 0%, var(--orb-middle) 42%, var(--orb-edge) 78%);
-  color: var(--orb-text);
-  isolation: isolate;
-}
-
-:global(.dark) .scene {
-  --orb-center: #141c24;
-  --orb-middle: #0a0f15;
-  --orb-edge: #07090d;
-  --orb-text: #d9d5cd;
-  --orb-opening: #f0ede6;
-  --orb-accent: #c6ac84;
-  --orb-rule: #b59a71;
-  --orb-caption: #a79d8c;
-  color-scheme: dark;
+  align-content: center;
+  gap: clamp(2.25rem, 5vw, 4.8rem);
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding: clamp(2rem, 5vh, 4rem) clamp(2rem, 4vw, 3rem);
 }
 
 .artwork {
-  height: 100%;
-  min-height: 490px;
+  position: relative;
+  isolation: isolate;
+  height: clamp(20rem, min(45vw, 68svh), 40rem);
   overflow: hidden;
+  border: 1px solid hsl(var(--border));
+  background-color: hsl(var(--card));
+  background-image:
+    radial-gradient(ellipse at center, hsl(var(--primary) / .052), transparent 70%),
+    linear-gradient(hsl(var(--foreground) / .045) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(var(--foreground) / .045) 1px, transparent 1px);
+  background-size: auto, 52px 52px, 52px 52px;
+  background-position: center;
+}
+
+.artwork::before,
+.artwork::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  width: .9rem;
+  height: .9rem;
+  pointer-events: none;
+  border-color: hsl(var(--primary) / .75);
+}
+
+.artwork::before {
+  inset: .65rem auto auto .65rem;
+  border-width: 1px 0 0 1px;
+}
+
+.artwork::after {
+  inset: auto .65rem .65rem auto;
+  border-width: 0 1px 1px 0;
 }
 
 .frame {
   display: block;
   width: 100%;
   height: 100%;
-  min-height: inherit;
   border: 0;
   background: transparent;
 }
 
 .quotation {
-  position: relative;
   margin: 0;
-  padding: 56px clamp(32px, 5vw, 90px) 56px 12px;
-  max-width: 580px;
-  animation: arrive 1.4s ease both;
-}
-
-.quotation::before {
-  content: "";
-  position: absolute;
-  top: 24px;
-  width: 34px;
-  height: 1px;
-  background: var(--orb-rule);
+  max-width: 35rem;
 }
 
 .quotation blockquote {
   margin: 0;
-  font-family: "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
-  font-size: clamp(20px, 1.85vw, 30px);
-  font-weight: 400;
-  line-height: 1.57;
-  letter-spacing: -0.025em;
+  font: 400 clamp(1.025rem, 1.4vw, 1.22rem)/1.65 var(--font-sans), sans-serif;
+  color: hsl(var(--muted-foreground));
   text-wrap: pretty;
 }
 
-.opening { color: var(--orb-opening); }
-.quotation em { color: var(--orb-accent); }
+.opening {
+  display: block;
+  margin-bottom: 1rem;
+  font-size: clamp(1.85rem, 3.2vw, 3rem);
+  line-height: 1.1;
+  font-weight: 550;
+  letter-spacing: -.05em;
+  color: hsl(var(--foreground));
+}
+
+.quotation em {
+  color: hsl(var(--primary));
+  font-style: normal;
+  font-weight: 550;
+}
 
 .quotation figcaption {
-  margin-top: 28px;
-  color: var(--orb-caption);
-  font-size: 10px;
-  line-height: 1.5;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  margin-top: clamp(1rem, 2.5vw, 1.75rem);
+  font: 500 .75rem/1.5 var(--font-mono), monospace;
+  color: hsl(var(--foreground));
 }
 
-.quotation figcaption::before { content: "— "; }
-
-@keyframes arrive {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+.quotation figcaption::before {
+  content: "";
+  width: 1.75rem;
+  height: 1px;
+  background: hsl(var(--primary));
 }
 
-@media (max-width: 900px) {
+@media (min-width: 750px) and (max-width: 1000px) and (max-aspect-ratio: 1/1) {
   .scene {
-    --orb-glow-x: 50%;
-    --orb-glow-y: 30%;
     grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: minmax(280px, 1fr) auto;
+    max-width: 48rem;
+    gap: 2rem;
   }
-  .artwork { min-height: 280px; }
-  .quotation {
-    justify-self: center;
-    padding: 28px 32px 34px;
-    max-width: 680px;
-  }
-  .quotation::before { top: 7px; }
-  .quotation blockquote { font-size: clamp(17px, 2.7vw, 23px); line-height: 1.5; }
-  .quotation figcaption { margin-top: 18px; font-size: 9px; }
+
+  .artwork { height: clamp(20rem, 42svh, 31rem); }
+  .quotation { max-width: 40rem; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .quotation { animation: none; }
+@media (max-width: 749px) {
+  .scene {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+    max-width: 36rem;
+    padding: 1.25rem 1.25rem 2rem;
+  }
+
+  .artwork { height: clamp(13rem, min(87vw, 43svh), 25rem); }
+  .opening { font-size: clamp(1.55rem, 5.2vw, 1.95rem); margin-bottom: .65rem; }
 }

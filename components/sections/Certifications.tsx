@@ -1,5 +1,5 @@
-import { ArrowUpRight, Award } from "lucide-react";
-import { BinaryText } from "@/components/ui/binary-text";
+import { ArrowUpRight, ChevronDown } from "lucide-react";
+import styles from "./Directories.module.css";
 
 // Names, issue/expiry dates and public links read from LinkedIn on 2026-11-02.
 const credentials = [
@@ -46,59 +46,62 @@ const credentials = [
     historical: true,
   },
 ];
+function CredentialList({ entries }: { entries: typeof credentials }) {
+  return (
+    <ul className={styles.credentials}>
+      {entries.map((cert) => (
+        <li key={cert.href}>
+          <a
+            href={cert.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`View credential: ${cert.title}`}
+          >
+            <span className={styles.issuer}>{cert.issuer}</span>
+            <span className={styles.certName}>
+              <strong>{cert.title}</strong>
+              <small>{cert.date}</small>
+            </span>
+            <ArrowUpRight size={18} aria-hidden />
+          </a>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 export function Certifications() {
+  const historical = credentials.filter((cert) => cert.historical);
   return (
     <section
       id="credentials"
       className="section-space scroll-mt-6"
       aria-labelledby="credentials-heading"
     >
-      <div className="section-header">
-        <div>
-          <p className="eyebrow mb-3">Learning, backed by credentials</p>
-          <h2 id="credentials-heading" className="section-title">
-            Selected certifications.
-          </h2>
-        </div>
+      <div className={styles.sectionHead}>
+        <h2 id="credentials-heading" className="section-title">
+          Certifications
+        </h2>
         <a
           href="https://www.linkedin.com/in/0xpacman/details/certifications/"
           target="_blank"
           rel="noopener noreferrer"
           className="text-link"
         >
-          <BinaryText text="Full list on LinkedIn" /> <ArrowUpRight size={16} />
+          Full list on LinkedIn <ArrowUpRight size={15} aria-hidden />
         </a>
       </div>
-      <div className="grid gap-4 sm:grid-cols-2">
-        {credentials.map((cert) => (
-          <article
-            key={cert.title}
-            className="flex flex-col border border-primary/20 bg-card p-5 sm:p-6"
-          >
-            <div className="mb-4 flex items-center gap-2 text-xs text-primary">
-              <Award size={17} />
-              <span>{cert.issuer}</span>
-              {cert.historical && (
-                <span className="ml-auto border border-primary/20 px-2 py-1 text-muted-foreground">
-                  Previously earned
-                </span>
-              )}
-            </div>
-            <h3 className="font-sans text-lg font-semibold">{cert.title}</h3>
-            <p className="mb-5 mt-3 text-xs leading-relaxed text-muted-foreground">
-              {cert.date}
-            </p>
-            <a
-              href={cert.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-link mt-auto"
-              aria-label={`View credential: ${cert.title}`}
-            >
-              <BinaryText text="View credential" /> <ArrowUpRight size={15} />
-            </a>
-          </article>
-        ))}
+      <div className={styles.list}>
+        <CredentialList
+          entries={credentials.filter((cert) => !cert.historical)}
+        />
+        <details className={styles.archive}>
+          <summary>
+            Previously earned ({historical.length}){" "}
+            <ChevronDown size={16} aria-hidden />
+          </summary>
+          <CredentialList entries={historical} />
+        </details>
       </div>
     </section>
   );

@@ -23,12 +23,13 @@ function zoomAt(prev: Transform, nextScale: number, cx: number, cy: number): Tra
 }
 
 /** Fullscreen lightbox for article images: click to open, wheel/double-click to zoom, drag to pan. */
-export function ArticleLightbox() {
+export function ArticleLightbox({ rtl }: { rtl: boolean }) {
   const [src, setSrc] = React.useState<string | null>(null)
   const [alt, setAlt] = React.useState('')
   const [t, setT] = React.useState<Transform>({ scale: 1, x: 0, y: 0 })
   const [dragging, setDragging] = React.useState(false)
-  const overlayRef = React.useRef<HTMLDivElement>(null)
+  const overlayRef = React.useRef<HTMLDialogElement>(null)
+  const opener = React.useRef<HTMLImageElement | null>(null)
   const dragRef = React.useRef<{ px: number; py: number; ox: number; oy: number } | null>(null)
 
   // Wire up click-to-open on every article image
@@ -37,22 +38,42 @@ export function ArticleLightbox() {
     const open = (e: Event) => {
       e.preventDefault()
       const img = e.currentTarget as HTMLImageElement
+      opener.current = img
+      setT({ scale: 1, x: 0, y: 0 })
+      setDragging(false)
+      dragRef.current = null
       setAlt(img.alt)
       setSrc(img.currentSrc || img.src)
     }
-    imgs.forEach((img) => img.addEventListener('click', open))
-    return () => imgs.forEach((img) => img.removeEventListener('click', open))
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Enter' || e.key === ' ') open(e)
+    }
+    imgs.forEach((img) => {
+      img.setAttribute('role', 'button')
+      img.setAttribute('aria-haspopup', 'dialog')
+      img.tabIndex = 0
+      img.addEventListener('click', open)
+      img.addEventListener('keydown', onKey)
+    })
+    return () => imgs.forEach((img) => {
+      img.removeAttribute('role')
+      img.removeAttribute('aria-haspopup')
+      img.removeAttribute('tabindex')
+      img.removeEventListener('click', open)
+      img.removeEventListener('keydown', onKey)
+    })
   }, [])
 
   const close = React.useCallback(() => setSrc(null), [])
 
   // Reset transform on open, lock background scroll, bind keyboard + non-passive wheel
   React.useEffect(() => {
-    if (!src) return
-    setT({ scale: 1, x: 0, y: 0 })
+    const dialog = overlayRef.current
+    if (!src || !dialog) return
+    dialog.showModal()
 
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') close()
+      if (e.ctrlKey || e.metaKey || e.altKey) return
       if (e.key === '+' || e.key === '=') setT((p) => zoomAt(p, p.scale * 1.25, 0, 0))
       if (e.key === '-' || e.key === '_') setT((p) => zoomAt(p, p.scale / 1.25, 0, 0))
       if (e.key === '0') setT({ scale: 1, x: 0, y: 0 })
@@ -66,8 +87,8 @@ export function ArticleLightbox() {
       setT((p) => zoomAt(p, p.scale * (e.deltaY < 0 ? 1.15 : 1 / 1.15), cx, cy))
     }
 
-    window.addEventListener('keydown', onKey)
-    overlayRef.current?.addEventListener('wheel', onWheel, { passive: false })
+    dialog.addEventListener('keydown', onKey)
+    dialog.addEventListener('wheel', onWheel, { passive: false })
 
     // Lock the shell scroll container while open
     const container = document.querySelector<HTMLElement>('[data-shell-scroll]')
@@ -75,9 +96,11 @@ export function ArticleLightbox() {
     if (container) container.style.overflow = 'hidden'
 
     return () => {
-      window.removeEventListener('keydown', onKey)
-      overlayRef.current?.removeEventListener('wheel', onWheel)
+      dialog.removeEventListener('keydown', onKey)
+      dialog.removeEventListener('wheel', onWheel)
+      dialog.close()
       if (container) container.style.overflow = prevOverflow ?? ''
+      opener.current?.focus({ preventScroll: true })
     }
   }, [src, close])
 
@@ -110,54 +133,49 @@ export function ArticleLightbox() {
   const filename = src.split('/').pop() ?? src
 
   return createPortal(
-    <div
+    <dialog
       ref={overlayRef}
-      role="dialog"
       aria-modal="true"
-      aria-label={alt || 'Image viewer'}
-      className="fixed inset-0 z-[100] bg-background/95 backdrop-blur-sm select-none"
-      onClick={(e) => {
-        if (e.target === e.currentTarget) close()
-      }}
-      onDoubleClick={onDoubleClick}
+      aria-label={alt || (rtl ? 'عارض الصور' : 'Image viewer')}
+      onCancel={(e) => { e.preventDefault(); close() }}
+      className="fixed inset-0 m-0 h-[100dvh] max-h-none w-screen max-w-none border-0 bg-background/95 p-0 text-foreground backdrop-blur-sm select-none"
     >
       {/* header bar */}
-      <div className="absolute top-0 inset-x-0 z-10 flex items-center justify-between gap-4 px-4 py-2 border-b border-primary/15 bg-background/80 font-mono text-[12px]">
+      <div className="absolute top-0 inset-x-0 z-10 flex items-center justify-between gap-2 px-2 sm:px-4 border-b border-primary/15 bg-background font-mono text-[12px]">
         <div className="flex items-center gap-1.5 min-w-0">
-          <span className="text-term-green flex-shrink-0">root@0xpacman</span>
-          <span className="text-muted-foreground">:</span>
-          <span className="text-primary/70">~</span>
-          <span className="text-muted-foreground">$</span>
-          <span className="text-foreground truncate">view {filename}</span>
+          <span className="text-primary hidden sm:inline">$ view</span>
+          <span className="truncate">{filename}</span>
         </div>
         <div className="flex items-center gap-1 flex-shrink-0">
           <button
-            aria-label="Zoom out"
+            aria-label={rtl ? 'صغّر الصورة' : 'Zoom out'}
+            disabled={t.scale === MIN_SCALE}
             onClick={() => setT((p) => zoomAt(p, p.scale / 1.25, 0, 0))}
-            className="p-1.5 text-muted-foreground hover:text-foreground hover:bg-primary/10 transition-colors"
+            className="grid size-11 place-items-center text-muted-foreground hover:text-foreground hover:bg-primary/10 disabled:opacity-50"
           >
             <Minus size={14} aria-hidden="true" />
           </button>
           <span className="w-12 text-center text-primary tabular-nums">{Math.round(t.scale * 100)}%</span>
           <button
-            aria-label="Zoom in"
+            aria-label={rtl ? 'كبّر الصورة' : 'Zoom in'}
+            disabled={t.scale === MAX_SCALE}
             onClick={() => setT((p) => zoomAt(p, p.scale * 1.25, 0, 0))}
-            className="p-1.5 text-muted-foreground hover:text-foreground hover:bg-primary/10 transition-colors"
+            className="grid size-11 place-items-center text-muted-foreground hover:text-foreground hover:bg-primary/10 disabled:opacity-50"
           >
             <Plus size={14} aria-hidden="true" />
           </button>
           <button
-            aria-label="Reset zoom"
+            aria-label={rtl ? 'رجّع الحجم الأصلي' : 'Reset zoom'}
             onClick={() => setT({ scale: 1, x: 0, y: 0 })}
-            className="p-1.5 text-muted-foreground hover:text-foreground hover:bg-primary/10 transition-colors"
+            className="grid size-11 place-items-center text-muted-foreground hover:text-foreground hover:bg-primary/10"
           >
             <RotateCcw size={14} aria-hidden="true" />
           </button>
           <button
-            aria-label="Close"
+            aria-label={rtl ? 'سدّ الصورة' : 'Close'}
             autoFocus
             onClick={close}
-            className="p-1.5 ml-1 text-primary border border-primary/30 hover:bg-primary hover:text-primary-foreground transition-colors"
+            className="grid size-11 place-items-center text-primary hover:bg-primary hover:text-primary-foreground"
           >
             <X size={14} aria-hidden="true" />
           </button>
@@ -165,12 +183,14 @@ export function ArticleLightbox() {
       </div>
 
       {/* image */}
-      <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
+      <div className="absolute inset-0 flex items-center justify-center overflow-hidden"
+        onClick={(event) => { if (event.target === event.currentTarget) close() }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={src}
           alt={alt}
           draggable={false}
+          onDoubleClick={onDoubleClick}
           onPointerDown={onPointerDown}
           onPointerMove={onPointerMove}
           onPointerUp={endDrag}
@@ -178,7 +198,7 @@ export function ArticleLightbox() {
           className="max-w-[92vw] max-h-[88vh] w-auto h-auto object-contain border border-primary/20 bg-card shadow-2xl"
           style={{
             transform: `translate(${t.x}px, ${t.y}px) scale(${t.scale})`,
-            transition: dragRef.current ? 'none' : 'transform 0.15s ease-out',
+            touchAction: t.scale > 1 ? 'none' : 'manipulation',
             cursor: t.scale > 1 ? (dragging ? 'grabbing' : 'grab') : 'zoom-in',
           }}
         />
@@ -186,9 +206,9 @@ export function ArticleLightbox() {
 
       {/* footer hint */}
       <div className="absolute bottom-0 inset-x-0 z-10 px-4 py-2 border-t border-primary/15 bg-background/80 text-center font-mono text-[11px] text-muted-foreground">
-        scroll to zoom · double-click to toggle 250% · drag to pan · esc to close
+        {rtl ? 'كبّر الصورة وجرّها باش تحرّكها' : 'Zoom in, then drag to pan.'}
       </div>
-    </div>,
+    </dialog>,
     document.body,
   )
 }

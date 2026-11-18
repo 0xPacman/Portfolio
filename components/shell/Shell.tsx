@@ -5,7 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { ShellFrame } from "./ShellFrame";
 import { tabIdForPath, TABS } from "./TabBar";
 
-export function Shell({ children }: { children: React.ReactNode }) {
+export function Shell({ children, search }: { children: React.ReactNode; search: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
 
@@ -19,7 +19,8 @@ export function Shell({ children }: { children: React.ReactNode }) {
 
   // Reset content scroll on navigation
   React.useEffect(() => {
-    const hash = window.location.hash.slice(1);
+    let hash = window.location.hash.slice(1);
+    try { hash = decodeURIComponent(hash); } catch { /* A malformed fragment has no matching heading. */ }
     if (hash && document.getElementById(hash)) {
       document.getElementById(hash)?.scrollIntoView({ block: "start" });
     } else {
@@ -28,8 +29,6 @@ export function Shell({ children }: { children: React.ReactNode }) {
   }, [pathname]);
 
   return (
-    <>
-      <ShellFrame active={tabIdForPath(pathname)}>{children}</ShellFrame>
-    </>
+    <ShellFrame active={tabIdForPath(pathname)} pathname={pathname} search={search}>{children}</ShellFrame>
   );
 }

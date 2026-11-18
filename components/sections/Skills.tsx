@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import {
   Cloud,
@@ -7,12 +9,15 @@ import {
   Monitor,
   Building2,
   HardDrive,
+  Search,
+  X,
+  ArrowDown,
   ChevronDown,
   ArrowUpRight,
 } from "lucide-react";
-import React from "react";
+import { useRef, useState, type ElementType } from "react";
 import { Certifications } from "./Certifications";
-import { BinaryText } from "@/components/ui/binary-text";
+import styles from "./Directories.module.css";
 interface SkillItem {
   name: string;
   details: string;
@@ -20,7 +25,7 @@ interface SkillItem {
 interface SkillGroup {
   key: string;
   title: string;
-  icon: React.ElementType;
+  icon: ElementType;
   items: SkillItem[];
 }
 
@@ -308,64 +313,121 @@ const evidence: Record<string, { href: string; label: string }> = {
     label: "Read about Active Directory at scale",
   },
 };
+const orderedGroups = [...groups].sort(
+  (a, b) => order.indexOf(a.key) - order.indexOf(b.key),
+);
+
 export function Skills() {
+  const [query, setQuery] = useState("");
+  const searchInput = useRef<HTMLInputElement>(null);
+  const term = query.trim().toLowerCase();
+  const visibleGroups = orderedGroups
+    .map((group) => ({
+      ...group,
+      items: group.title.toLowerCase().includes(term)
+        ? group.items
+        : group.items.filter((item) =>
+            `${item.name} ${item.details}`.toLowerCase().includes(term),
+          ),
+    }))
+    .filter((group) => group.items.length > 0);
+  const visibleCount = visibleGroups.reduce(
+    (total, group) => total + group.items.length,
+    0,
+  );
+  const clearSearch = () => {
+    setQuery("");
+    searchInput.current?.focus();
+  };
+
   return (
-    <div>
-      <header className="page-intro">
-        <p className="eyebrow">02 / Skills &amp; experience</p>
-        <h1 className="page-title">
-          What I work with.
-          <br />
-          What I do with it.
-        </h1>
-        <p className="page-description">
-          Practical experience across private clouds, automation, and
-          operations. Explore the work behind the tools.
-        </p>
-        <a href="#credentials" className="text-link">
-          <BinaryText text="View certifications" /> <ArrowUpRight size={16} />
-        </a>
+    <div className={styles.page}>
+      <header className={styles.intro}>
+        <h1 className="page-title">Skills &amp; experience</h1>
+        <div>
+          <p className="page-description">
+            Practical experience across private clouds, automation, and
+            operations. Explore the work behind the tools.
+          </p>
+          <a href="#credentials" className="text-link">
+            View certifications <ArrowDown size={15} aria-hidden />
+          </a>
+        </div>
       </header>
-      <div className="space-y-3">
-        {[...groups]
-          .sort((a, b) => order.indexOf(a.key) - order.indexOf(b.key))
-          .map((group) => {
+      <section aria-labelledby="skills-directory-heading">
+        <div className={styles.sectionHead}>
+          <h2 id="skills-directory-heading" className="section-title">
+            Technical skills
+          </h2>
+          <span className={styles.meta} role="status">
+            {visibleCount} {visibleCount === 1 ? "skill" : "skills"} in{" "}
+            {visibleGroups.length}{" "}
+            {visibleGroups.length === 1 ? "area" : "areas"}
+          </span>
+        </div>
+        <div className={styles.searchBox}>
+          <Search size={18} aria-hidden />
+          <input
+            type="search"
+            ref={searchInput}
+            aria-label="Search skills by tool, topic, or technology"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="Search by tool, topic, or technology"
+            aria-controls="skills-directory"
+          />
+          {query && (
+            <button
+              type="button"
+              aria-label="Clear skills search"
+              onClick={clearSearch}
+            >
+              <X size={16} aria-hidden />
+            </button>
+          )}
+        </div>
+        <div id="skills-directory" className={styles.list}>
+          {visibleGroups.map((group) => {
             const Icon = group.icon;
             const proof = evidence[group.key];
             return (
               <details
-                key={group.key}
-                open={group.key === "cloud" || group.key === "automation"}
-                className="group border border-primary/20 bg-card"
+                key={`${group.key}-${term ? "search" : "browse"}`}
+                open={Boolean(term)}
+                className={styles.skillGroup}
               >
-                <summary className="flex min-h-14 cursor-pointer list-none items-center gap-3 px-4 py-4 sm:px-6">
-                  <Icon size={19} className="shrink-0 text-primary" />
-                  <h2 className="font-sans text-lg font-semibold">
-                    <BinaryText text={group.title} />
-                  </h2>
-                  <span className="ml-auto text-xs text-muted-foreground">
+                <summary>
+                  <span className={styles.iconTile}>
+                    <Icon size={20} aria-hidden />
+                  </span>
+                  <span className={styles.skillTitle}>
+                    <span>{group.title}</span>
+                    <small>
+                      {group.items
+                        .slice(0, 4)
+                        .map((item) => item.name)
+                        .join(" · ")}
+                    </small>
+                  </span>
+                  <span className={styles.skillCount}>
                     {group.items.length}
                   </span>
                   <ChevronDown
-                    size={17}
-                    className="shrink-0 text-primary transition-transform group-open:rotate-180"
+                    size={16}
+                    aria-hidden
+                    className={styles.chevron}
                   />
                 </summary>
-                <div className="divide-y divide-primary/10 border-t border-primary/15">
+                <dl className={styles.skillRows}>
                   {group.items.map((item) => (
-                    <div
-                      key={item.name}
-                      className="grid gap-2 px-5 py-5 sm:grid-cols-[190px_1fr] sm:gap-5 sm:px-6"
-                    >
-                      <h3 className="text-sm font-medium">{item.name}</h3>
-                      <p className="font-sans text-base leading-relaxed text-muted-foreground">
-                        {item.details}
-                      </p>
+                    <div key={item.name}>
+                      <dt>{item.name}</dt>
+                      <dd>{item.details}</dd>
                     </div>
                   ))}
-                </div>
+                </dl>
                 {proof && (
-                  <div className="border-t border-primary/15 px-5 py-2">
+                  <div className={styles.proof}>
                     <Link
                       href={proof.href}
                       target={
@@ -378,15 +440,23 @@ export function Skills() {
                       }
                       className="text-link"
                     >
-                      <BinaryText text={proof.label} />{" "}
-                      <ArrowUpRight size={16} />
+                      {proof.label} <ArrowUpRight size={15} aria-hidden />
                     </Link>
                   </div>
                 )}
               </details>
             );
           })}
-      </div>
+          {visibleCount === 0 && (
+            <div className={styles.empty}>
+              <p>No skills match “{query.trim()}”.</p>
+              <button type="button" onClick={clearSearch} className="text-link">
+                Clear search
+              </button>
+            </div>
+          )}
+        </div>
+      </section>
       <Certifications />
     </div>
   );

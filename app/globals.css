@@ -11,7 +11,7 @@
     --card-foreground: 30 18% 14%;
     --popover: 40 30% 93%;
     --popover-foreground: 30 18% 14%;
-    --primary: 35 90% 38%;
+    --primary: 29 81% 33%;
     --primary-foreground: 40 33% 97%;
     --secondary: 40 25% 90%;
     --secondary-foreground: 30 18% 14%;
@@ -23,21 +23,21 @@
     --destructive-foreground: 40 33% 97%;
     --border: 35 35% 74%;
     --input: 35 35% 74%;
-    --ring: 35 90% 38%;
+    --ring: 29 81% 33%;
     --radius: 0rem;
     /* Phosphor green — "live" states (darkened for light contrast) */
     --term-green: 150 55% 28%;
   }
 
   .dark {
-    /* Dark — phosphor amber on true black (the default identity) */
-    --background: 0 0% 2%;
-    --foreground: 40 12% 88%;
-    --card: 0 0% 3.5%;
-    --card-foreground: 40 12% 88%;
-    --popover: 0 0% 3.5%;
-    --popover-foreground: 40 12% 88%;
-    --primary: 40 96% 52%;
+    /* Amber terminal on warm graphite */
+    --background: 45 7% 6%;
+    --foreground: 42 18% 91%;
+    --card: 45 5% 9%;
+    --card-foreground: 42 18% 91%;
+    --popover: 45 5% 10%;
+    --popover-foreground: 42 18% 91%;
+    --primary: 40 94% 61%;
     --primary-foreground: 0 0% 4%;
     --secondary: 0 0% 8%;
     --secondary-foreground: 40 12% 88%;
@@ -47,9 +47,9 @@
     --accent-foreground: 40 12% 88%;
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 92%;
-    --border: 40 40% 16%;
-    --input: 40 40% 16%;
-    --ring: 40 96% 52%;
+    --border: 42 9% 22%;
+    --input: 42 9% 22%;
+    --ring: 40 94% 61%;
     --term-green: 150 65% 45%;
   }
 }
@@ -337,57 +337,95 @@ body,
     @apply flex h-[100dvh] flex-col overflow-hidden bg-background font-mono;
   }
   .tmux-header {
-    @apply z-30 flex shrink-0 flex-col border-b border-primary/25 bg-card md:flex-row;
+    @apply z-30 grid shrink-0 items-stretch border-b bg-card md:flex;
+    grid-template-columns: 1fr auto;
   }
   .tmux-session {
-    @apply flex items-center justify-between border-b border-primary/15 px-3 md:border-b-0 md:border-r md:px-5;
+    @apply flex items-center px-4 md:border-r md:px-5;
   }
   .tmux-brand {
-    @apply inline-flex min-h-11 items-center gap-1 text-xs font-semibold text-primary;
+    @apply inline-flex min-h-11 items-center gap-2 text-sm font-semibold tracking-tight text-foreground md:min-h-14;
+  }
+  .tmux-brand-icon {
+    @apply grid size-6 place-items-center bg-primary text-primary-foreground;
   }
   .tmux-windows {
-    @apply flex min-w-0 md:w-auto;
+    @apply col-span-2 row-start-2 flex min-w-0 border-t md:border-t-0;
   }
   .tmux-window {
-    @apply flex min-h-11 min-w-0 flex-auto items-center justify-center gap-0.5 border-r border-primary/15 px-1 text-[11px] text-muted-foreground transition-colors hover:bg-primary/10 hover:text-foreground sm:gap-1 sm:px-4 sm:text-xs md:flex-none;
+    @apply relative flex min-h-11 min-w-0 flex-1 items-center justify-center gap-0.5 px-0.5 text-[11px] text-muted-foreground transition-colors hover:bg-primary/5 hover:text-foreground sm:gap-1 sm:px-3 sm:text-xs md:flex-none lg:px-5;
   }
   .tmux-window-active {
-    @apply bg-primary font-semibold text-primary-foreground hover:bg-primary hover:text-primary-foreground;
+    @apply bg-primary/[0.06] font-semibold text-primary hover:text-primary;
+    box-shadow: inset 0 -2px hsl(var(--primary));
   }
   .tmux-window:focus-visible,
   .tmux-brand:focus-visible {
     outline-offset: -4px;
   }
   .tmux-window-active:focus-visible {
-    outline-color: hsl(var(--primary-foreground));
+    outline-color: hsl(var(--primary));
   }
   .tmux-window-number {
     @apply opacity-70;
   }
   .tmux-window-marker {
-    @apply hidden w-[1ch] min-[400px]:inline-block;
+    @apply hidden w-[1ch] md:inline-block;
+  }
+  .tmux-search {
+    @apply col-start-2 row-start-1 mx-2 flex min-h-11 min-w-11 items-center justify-center gap-2 px-2 text-xs text-muted-foreground hover:text-primary md:ml-auto md:mr-4;
+  }
+  .tmux-search kbd {
+    @apply ml-1 hidden border px-1.5 py-0.5 text-[10px] sm:inline;
+  }
+  .quick-open [cmdk-input-wrapper] {
+    @apply border-border pl-4 pr-12;
+  }
+  .quick-open [cmdk-input] {
+    @apply h-14;
+  }
+  .quick-open [cmdk-list] {
+    @apply max-h-[min(55dvh,24rem)] p-2;
+  }
+  .quick-open [cmdk-item] {
+    @apply min-h-11 cursor-pointer gap-3 rounded-none;
+  }
+  .quick-open [cmdk-item][data-selected="true"] {
+    @apply bg-primary/10 text-primary;
+  }
+  .quick-open [cmdk-item] small, .quick-open [cmdk-group-heading] {
+    @apply text-[11px] text-muted-foreground;
+  }
+  .quick-open > button {
+    @apply right-1 top-1 flex size-11 items-center justify-center;
   }
   .tmux-pane {
-    @apply relative flex min-h-0 flex-1 flex-col overflow-hidden border-primary/25 md:m-3 md:border;
+    @apply relative flex min-h-0 flex-1 flex-col overflow-hidden md:mx-4 md:my-3 md:border;
   }
   .tmux-pane-title {
-    @apply flex min-h-8 shrink-0 items-center justify-between gap-4 border-b border-primary/15 bg-card px-4 text-[10px] text-muted-foreground sm:text-[11px];
+    @apply flex h-7 shrink-0 items-center justify-between gap-4 border-b bg-card px-4 text-[10px] text-muted-foreground;
   }
   .tmux-content {
     @apply min-h-0 flex-1 overflow-y-auto outline-none;
     background-image: radial-gradient(
       circle,
-      hsl(var(--primary) / 0.075) 1px,
+      hsl(var(--foreground) / 0.042) 1px,
       transparent 1px
     );
     background-size: 24px 24px;
   }
   .tmux-status {
-    @apply flex min-h-11 shrink-0 items-center justify-between gap-2 border-t border-primary/25 bg-card pr-2 text-xs text-muted-foreground sm:pr-4;
+    @apply flex min-h-11 shrink-0 items-center justify-between gap-2 border-t bg-card pr-2 text-[11px] text-muted-foreground sm:pr-4;
     padding-bottom: env(safe-area-inset-bottom);
   }
   .tmux-status-session {
-    @apply flex min-h-11 items-center bg-primary px-3 font-semibold text-primary-foreground;
+    @apply flex min-h-11 items-center gap-2 border-r bg-primary/[0.06] px-3 font-semibold text-primary sm:px-5;
+  }
+  .tmux-footer {
+    @apply flex items-center justify-between gap-4 border-t py-2 text-[11px] text-muted-foreground;
+  }
+  .tmux-footer button {
+    @apply inline-flex min-h-11 items-center gap-2 hover:text-primary;
   }
   .skip-link {
     @apply fixed left-4 top-4 z-[100] -translate-y-24 bg-primary px-5 py-3 text-primary-foreground focus:translate-y-0;

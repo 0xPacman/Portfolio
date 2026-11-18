@@ -6,6 +6,17 @@ export const PUBLIC_WINDOWS = [
   { id: "contact", label: "Contact", href: "/contact/" },
 ];
 
+export const TOGGLE_FINDER = "portfolio:toggle-finder";
+
+// Called in the shell and its same-origin artwork frame, which receives its own key events.
+export function handleFinderShortcut(event: KeyboardEvent) {
+  if (event.key.toLowerCase() !== "k" || !(event.metaKey || event.ctrlKey)) return;
+  if (event.altKey || event.shiftKey || event.repeat || event.isComposing || event.defaultPrevented) return;
+  if (document.querySelector("dialog[open]")) return;
+  event.preventDefault();
+  window.dispatchEvent(new Event(TOGGLE_FINDER));
+}
+
 export function windowShortcutHref(event: KeyboardEvent): string | null {
   if (
     !event.altKey ||
